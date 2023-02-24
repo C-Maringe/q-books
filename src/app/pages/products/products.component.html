@@ -1,0 +1,195 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">PRODUCTS</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Products
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Add, edit and delete the types of products available for appointment
+          bookings</h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 buttons-and-inputs-container"
+          style="display: flex;justify-content: space-between;">
+          <div class="buttons-and-inputs">
+            <div class="d-flex align-items-center ">
+              <div class="search-box d-inline-block ">
+                <input type="text" class="form-control search" placeholder="Search..." [(ngModel)]="form.search"
+                  (ngModelChange)="onValueChange()" style="background-color:#D2F7EB;">
+                <i class="ri-search-line search-icon"></i>
+              </div>
+            </div>
+            <div class="buttons-and-inputs-filters">
+              <div style="margin-left: 10px;">
+                <button type="button" class="btn" style="border-color:#D7DBEC;" nz-button nz-dropdown
+                  [nzDropdownMenu]="menu1">{{productsFilterValue}}
+                  <span class="ri-arrow-down-s-line"></span>
+                  <i nz-icon nzType="down"></i>
+                </button>
+                <nz-dropdown-menu #menu1="nzDropdownMenu">
+                  <ul nz-menu>
+                    <ul *ngFor="let data of FilterTableDataItems ">
+                      <li *ngIf="productsFilterValue!==data" nz-menu-item (click)="productsFilterCategory(data)">
+                        {{data}}
+                      </li>
+                    </ul>
+                    <li *ngIf="productsFilterValue!=='Filter by Category'" nz-menu-item
+                      (click)="productsFilterCategory('Filter by Category')">Reset</li>
+                  </ul>
+                </nz-dropdown-menu>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;"
+            (click)="fullLGModal(fullLgDataModal)" id="open-product-modal">Add Product</button>
+          <ng-template #fullLgDataModal let-modal>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalFullscreenXlLabel">X New Product</h5>
+                <div>
+                  <button *ngIf="editProduct" type="button" class="btn"
+                    style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onProductUpdate()">Update Product</button>
+                  <button *ngIf="editProduct" type="button" class="btn" style="font-weight: 600;margin-left: 10px;"
+                    [style.background-color]="products.active ? 'red' : '#21D59B'" (click)="onProductDisable()">
+                    <div *ngIf="products.active===true">
+                      Disable Product
+                    </div>
+                    <div *ngIf="products.active===false">
+                      Enable Product
+                    </div>
+                  </button>
+                  <button *ngIf="!editProduct" type="button" class="btn"
+                    style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onProductSubmit()">Save</button>
+                  <button type="button" class="btn" id="close-products-modal"
+                    style="background-color:white;font-weight: 600;margin-left: 10px;border-color:#D7DBEC;"
+                    (click)="modal.dismiss('Cross click');onCancelModal()">Cancel</button>
+                </div>
+              </div>
+              <div class="modal-body" style="background-color:#F5F6FA;margin-top: 20px;padding-top: 30px;">
+                <div style="font-weight: 600;font-size: 18px;">
+                  Products Details
+                </div>
+                <p style="margin-bottom: 5px;">
+                  Fill in the following details about the product
+                </p>
+                <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
+                  <div class="row gy-4">
+                    <div class="col-xxl-3 col-md-6">
+                      <div>
+                        <label class="form-label">Product Title</label>
+                        <input type="text" class="form-control" placeholder="Product Title"
+                          [(ngModel)]="products.productName" name="productName">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                      <div>
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-control" placeholder="Category" [(ngModel)]="products.category"
+                          name="category">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                      <div>
+                        <label class="form-label">Product Description</label>
+                        <input type="text" class="form-control" placeholder="Product Description"
+                          [(ngModel)]="products.productDescription" name="productDescription">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                  <div style="font-weight: 600;margin-bottom: 15px;">
+                    PRICE
+                  </div>
+                  <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="row gy-4">
+                      <div class="col-xxl-3 col-md-6">
+                        <div>
+                          <label class="form-label">Price (Rands, excluding VAT)</label>
+                          <input type="number" class="form-control" placeholder="Price" [(ngModel)]="products.price"
+                            name="price">
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-md-6">
+                        <div>
+                          <label class="form-label">Special Price (Rands, excluding VAT)</label>
+                          <input type="number" class="form-control" placeholder="Special Price"
+                            [(ngModel)]="products.specialPrice" name="specialPrice">
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-md-6 form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="products-remember-check"
+                          style="margin-left: -10px;" [(ngModel)]="products.special">
+                        <label class="text-muted" style="margin-left: 10px;" for="products-remember-check">Check to make
+                          this a special</label>
+                      </div>
+                      <div *ngIf="products.special" class="col-xxl-3 col-md-6">
+                        <div>
+                          <label class="form-label">Select Special Price Date</label>
+                          <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                            [convertModelValue]="true" [(ngModel)]="specialEndDate">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div class="table-responsive">
+          <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+            <thead>
+              <tr style="background-color:#D2F7EB;">
+                <th style="background-color:#D2F7EB;">Products</th>
+                <th style="background-color:#D2F7EB;">Category</th>
+                <th style="background-color:#D2F7EB;">Price</th>
+                <th style="background-color:#D2F7EB;">Showing 1-1</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: #F5F6FA;">
+              <tr *ngFor="let data of rowSelectionTable.data ">
+                <td data-column-id="company" class="gridjs-td">{{data.productName}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.category}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.price}}</td>
+                <td data-column-id="company" class="gridjs-td" style="display: flex;flex-direction: row;">
+                  <span (click)="productEditSelect(data)"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #7E84A3; display: flex;justify-content: center;align-items: center;"><span
+                      class=" ri-edit-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span *ngIf="data.active===true"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #21D59B; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-check-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span *ngIf="data.active===false"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: red; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-close-line" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

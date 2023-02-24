@@ -1,0 +1,93 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">BOOKINGS</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Bookings
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Select a date and get bookings</h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 buttons-and-inputs-container"
+          style="display: flex;justify-content: space-between;">
+          <div class="buttons-and-inputs">
+            <div class="d-flex align-items-center ">
+              <div class="search-box d-inline-block ">
+                <input type="text" class="form-control search" placeholder="Search..." [(ngModel)]="form.search"
+                  (ngModelChange)="onValueChange()">
+                <i class="ri-search-line search-icon"></i>
+              </div>
+            </div>
+            <div class="buttons-and-inputs-filters">
+              <div style="margin-left: 10px"> </div>
+              <div class="col-xxl-3 col-md-6">
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" [(ngModel)]="bookingsDateSelected" name="bookingsDateSelected">
+              </div>
+              <div style="margin-left: 10px">
+                <button type="button" class="btn" style="border-color:#D7DBEC;font-weight:600"
+                  (mouseleave)="toggleButtonform2()" (click)="handleNewSelectedDate()">
+                  <!-- (mouseenter)="toggleButtonform1()" -->
+                  {{buttonform.hoverButton}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <button (click)="onNotifyAllForDate()" type="button" class="btn"
+            style="background-color:#21D59B;font-weight: 600;">Notify All
+            Bookings</button>
+        </div>
+        <div class="table-responsive">
+          <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+            <thead>
+              <tr style="background-color:#D2F7EB;">
+                <th style="background-color:#D2F7EB;">Client</th>
+                <th style="background-color:#D2F7EB;">Time</th>
+                <th style="background-color:#D2F7EB;">Service</th>
+                <th style="background-color:#D2F7EB;">Employee</th>
+                <th style="background-color:#D2F7EB;">Showing 1-1</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: #F5F6FA;">
+              <tr *ngFor="let data of rowSelectionTable.data ">
+                <td data-column-id="company" class="gridjs-td">{{data.clientFullName}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.bookingSlot}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.treatments}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.employee}}</td>
+                <td data-column-id="company" class="gridjs-td" style="display: flex;flex-direction: row;">
+                  <span (click)="onNotifyOneBooking(data)"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #21D59B; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-notification-4-line"
+                      style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span (click)="onCancelNotifyOneBooking(data)"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: red; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-close-line" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

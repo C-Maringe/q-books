@@ -1,0 +1,1044 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">HUMAN-RESOURCE</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Human-resource
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Manage your employees</h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 buttons-and-inputs-container"
+          style="display: flex;justify-content: space-between;">
+          <div class="buttons-and-inputs">
+            <div class="d-flex align-items-center ">
+              <div class="search-box d-inline-block ">
+                <input type="text" class="form-control search" placeholder="Search..." [(ngModel)]="form.search"
+                  (ngModelChange)="onValueChange()">
+                <i class="ri-search-line search-icon"></i>
+              </div>
+            </div>
+            <div class="buttons-and-inputs-filters">
+              <div style="margin-left: 10px;">
+                <button type="button" class="btn" style="border-color:#D7DBEC;" nz-button nz-dropdown
+                  [nzDropdownMenu]="menu1">
+                  {{employeeFilterType}} <span class="ri-arrow-down-s-line"></span>
+                  <i nz-icon nzType="down"></i>
+                </button>
+                <nz-dropdown-menu #menu1="nzDropdownMenu">
+                  <ul nz-menu>
+                    <ul *ngFor="let data of employeesTypesData">
+                      <li *ngIf="employeeFilterlevel!==data.employeeType" nz-menu-item
+                        (click)="employeeFilterTypeSelect(data.employeeType)">{{data.employeeType}}</li>
+                    </ul>
+                    <li *ngIf="employeeFilterlevel!=='Filter by Employe Type'" nz-menu-item
+                      (click)="employeeFilterTypeSelect('Filter by Employe Type')">Reset</li>
+                  </ul>
+                </nz-dropdown-menu>
+              </div>
+              <div style="margin-left: 10px">
+                <button type="button" class="btn" style="border-color:#D7DBEC;" nz-button nz-dropdown
+                  [nzDropdownMenu]="menu2">
+                  {{employeeFilterlevel}} <span class="ri-arrow-down-s-line"></span>
+                  <i nz-icon nzType="down"></i>
+                </button>
+
+                <nz-dropdown-menu #menu2="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li *ngIf="employeeFilterlevel!=='Junior'" nz-menu-item
+                      (click)="employeeFilterLevelSelect('Junior')">Junior</li>
+                    <li *ngIf="employeeFilterlevel!=='Senior'" nz-menu-item
+                      (click)="employeeFilterLevelSelect('Senior')">Senior</li>
+                    <li *ngIf="employeeFilterlevel!=='Filter by Employe level'" nz-menu-item
+                      (click)="employeeFilterLevelSelect('Filter by Employe level')">Reset</li>
+                  </ul>
+                </nz-dropdown-menu>
+              </div>
+              <div style="margin-left: 10px">
+                <button type="button" class="btn" style="border-color:#D7DBEC;" nz-button nz-dropdown
+                  [nzDropdownMenu]="menu3">
+                  {{employeeFilterStatus}} <span class="ri-arrow-down-s-line"></span>
+                  <i nz-icon nzType="down"></i>
+                </button>
+                <nz-dropdown-menu #menu3="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li *ngIf="employeeFilterStatus!=='ACTIVE'" nz-menu-item
+                      (click)="employeeFilterStatusSelect('ACTIVE')">ACTIVE</li>
+                    <li *ngIf="employeeFilterStatus!=='BLOCKED'" nz-menu-item
+                      (click)="employeeFilterStatusSelect('BLOCKED')">BLOCKED</li>
+                    <li *ngIf="employeeFilterStatus!=='Filter by Status'" nz-menu-item
+                      (click)="employeeFilterStatusSelect('Filter by Status')">Reset</li>
+                  </ul>
+                </nz-dropdown-menu>
+              </div>
+            </div>
+          </div>
+
+          <button id="open-employee-modal" type="button" class="btn" style="background-color:#21D59B;font-weight: 600;"
+            data-bs-toggle="modal" data-bs-target="#exampleModalFullscreenXl" (click)="fullXLModal(fullXlDataModal)">Add
+            Employee</button>
+          <!-- HandleGetData -->
+          <!-- fullXLModal(fullXlDataModal) -->
+
+          <ng-template #fullXlDataModal let-modal>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalFullscreenXlLabel">X New Employee</h5>
+                <div *ngIf="selectedEmployeeId===''">
+                  <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onEmployeeSubmit()">Save</button>
+                  <button type="button" class="btn" id="close-employee-modal"
+                    style="background-color:white;font-weight: 600;margin-left: 10px;border-color:#D7DBEC;"
+                    (click)="modal.dismiss('Cross click');reintialiseEmployee()">Cancel</button>
+                </div>
+                <div *ngIf="selectedEmployeeId!==''">
+                  <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onEmployeeEditSubmit()">Update Employee</button>
+                  <button type="button" class="btn" style="font-weight: 600;margin-left: 10px;"
+                    (click)="onEmployeeDisableSubmit()"
+                    [style.background-color]="isEmployeeEnabled ? 'red' : '#21D59B'">
+                    <div *ngIf="isEmployeeEnabled===true">
+                      Disable Employee
+                    </div>
+                    <div *ngIf="isEmployeeEnabled===false">
+                      Enable Employee
+                    </div>
+                  </button>
+                  <button type="button" class="btn" id="close-employee-modal"
+                    style="background-color:white;font-weight: 600;margin-left: 10px;border-color:#D7DBEC;"
+                    (click)="modal.dismiss('Cross click');reintialiseEmployee()">Cancel</button>
+                </div>
+              </div>
+              <div class="custom-modal-body1">
+                <div class="modal-body"
+                  style="background-color:#F5F6FA;margin-top: 20px;padding-top: 30px; display: flex;flex-direction: row;width: 100%;">
+                  <div class="app-menu" style="width:20%">
+                    <div id="scrollbar">
+                      <div class="container-fluid">
+                        <ngx-simplebar class="sidebar-menu-scroll" style="max-height: calc(100vh - 70px)">
+                          <ul class="metismenu list-unstyled navbar-nav" id="navbar-nav">
+                            <ng-container *ngFor="let item of menuItems; let i = index">
+                              <li>
+                                <a (mouseenter)="hovered = true;selectedIndex = i" (click)="activeIndex = i" [ngStyle]="{'background-color': i === selectedIndex || i === activeIndex ? '#21D59B33' : 'initial',
+                              'border-left-color': i === selectedIndex || i === activeIndex?'red':'black',
+                                 'color': i === selectedIndex || i === activeIndex ? '#21D59B' : '#7E84A3'}"
+                                  (mouseleave)="selectedIndex = null; hovered = false"
+                                  class="side-nav-link-ref nav-link menu-link">
+                                  <i class="bx {{ item.icon }} icon nav-icon"
+                                    style="margin-left: 10px;margin-right: 10px; "></i>
+                                  <span style="margin-right: 40px;"> {{ item.title }}</span>
+                                </a>
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </ngx-simplebar>
+                      </div>
+                      <!-- Sidebar -->
+                    </div>
+                  </div>
+                  <div *ngIf="activeIndex===0" style="margin-left: 20px;width: 60%;margin-right: 10px;">
+                    <div style="font-weight: 600;font-size: 18px;">
+                      Employee Details
+                    </div>
+                    <p style="margin-bottom: 5px;">fill in the following details about Employee</p>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div style="font-weight: 600;margin-bottom: 15px;">
+                        Basic Details
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name"
+                                  [(ngModel)]="employee.firstName" name="firstName">
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name"
+                                  [(ngModel)]="employee.lastName" name="lastName">
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6" *ngIf="selectedEmployeeId===''">
+                              <div>
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" placeholder="Password"
+                                  [(ngModel)]="employee.password" name="password">
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6" *ngIf="selectedEmployeeId===''">
+                              <div>
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" placeholder="Confirm Password"
+                                  [(ngModel)]="employee.clearPassword" name="clearPassword">
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Employee Type</label>
+                                <input type="text" class="form-control" placeholder="Employee Type"
+                                  [(ngModel)]="employee.employeeType" name="clearPassword">
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Employee level</label>
+                                <input type="text" class="form-control" nz-icon nzType="down" readonly
+                                  placeholder="Select Employee Level" nz-button nz-dropdown
+                                  [nzDropdownMenu]="employeelevel" [(ngModel)]="employee.employeeLevel">
+                                <nz-dropdown-menu #employeelevel="nzDropdownMenu">
+                                  <ul nz-menu>
+                                    <li nz-menu-item (click)="employeeLevelSelect('Junior')">Junior</li>
+                                    <li nz-menu-item (click)="employeeLevelSelect('Senior')">Senior</li>
+                                  </ul>
+                                </nz-dropdown-menu>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div style="font-weight: 600;margin-bottom: 15px;">
+                        Contact Details
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" placeholder="Email"
+                                  [(ngModel)]="employee.contactDetails.emailAddress" name="emailAddress">
+                                <p style="font-style: italic;font-size: 14px;">The email provided will be used as the
+                                  username, please ensure it is a valid one.</p>
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Phone</label>
+                                <input type="number" class="form-control" placeholder="Phone number"
+                                  [(ngModel)]="employee.contactDetails.mobileNumber" name="mobileNumber">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                          [(ngModel)]="employee.mustBookConsultationFirstTime">
+                        <label class="form-check-label" for="auth-remember-check">Clients must book a consultation
+                          before
+                          booking with employee.</label>
+                      </div>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div style="font-weight: 600;margin-bottom: 15px;">
+                        Employment
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Select Start Date</label>
+                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                  [convertModelValue]="true">
+
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Select End Date</label>
+                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                  [convertModelValue]="true">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div style="font-weight: 600;margin-bottom: 15px;">
+                        Location
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" placeholder="Location">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>Select more than one location if neccessary</p>
+                    </div>
+                  </div>
+                  <div *ngIf="activeIndex===0"
+                    style="width:20%;background-color: white;padding-left: 10px;padding-right: 10px;">
+                    <div style="font-weight: 600;font-size: 16px;">
+                      Permissions
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 3px;">
+                        Analytics
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="analytics-remember-check1"
+                            [(ngModel)]="employee.userPermissions.analytics.canRead">
+                          <label class="text-muted" for="analytics-remember-check1">Can read</label>
+
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="analytics-remember-check2"
+                            [(ngModel)]="employee.userPermissions.analytics.canWrite">
+                          <label class="text-muted" for="analytics-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Bookings
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="bookings-remember-check1"
+                            [(ngModel)]="employee.userPermissions.bookings.canRead">
+                          <label class="text-muted" for="bookings-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="bookings-remember-check2"
+                            [(ngModel)]="employee.userPermissions.bookings.canWrite">
+                          <label class="text-muted" for="bookings-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Clients
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="clients-remember-check1"
+                            [(ngModel)]="employee.userPermissions.clients.canRead">
+                          <label class="text-muted" for="clients-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="clients-remember-check2"
+                            [(ngModel)]="employee.userPermissions.clients.canWrite">
+                          <label class="text-muted" for="clients-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Configurations
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="configurations-remember-check1"
+                            [(ngModel)]="employee.userPermissions.configurations.canRead">
+                          <label class="text-muted" for="configurations-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="configurations-remember-check2"
+                            [(ngModel)]="employee.userPermissions.configurations.canWrite">
+                          <label class="text-muted" for="configurations-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Employees
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="employees-remember-check1"
+                            [(ngModel)]="employee.userPermissions.employees.canRead">
+                          <label class="text-muted" for="employees-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="employees-remember-check2"
+                            [(ngModel)]="employee.userPermissions.employees.canWrite">
+                          <label class="text-muted" for="employees-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Marketing
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="marketing-remember-check1"
+                            [(ngModel)]="employee.userPermissions.marketing.canRead">
+                          <label class="text-muted" for="marketing-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="marketing-remember-check2"
+                            [(ngModel)]="employee.userPermissions.marketing.canWrite">
+                          <label class="text-muted" for="marketing-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Reporting
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="reporting-remember-check1"
+                            [(ngModel)]="employee.userPermissions.reporting.canRead">
+                          <label class="text-muted" for="reporting-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="reporting-remember-check2"
+                            [(ngModel)]="employee.userPermissions.reporting.canWrite">
+                          <label class="text-muted" for="reporting-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Schedule
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="schedule-remember-check1"
+                            [(ngModel)]="employee.userPermissions.schedule.canRead">
+                          <label class="text-muted" for="schedule-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="schedule-remember-check2"
+                            [(ngModel)]="employee.userPermissions.schedule.canWrite">
+                          <label class="text-muted" for="schedule-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Sales
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="sales-remember-check1"
+                            [(ngModel)]="employee.userPermissions.sales.canRead">
+                          <label class="text-muted" for="sales-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="sales-remember-check2"
+                            [(ngModel)]="employee.userPermissions.sales.canWrite">
+                          <label class="text-muted" for="sales-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Treatments
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="treatments-remember-check1"
+                            [(ngModel)]="employee.userPermissions.treatments.canRead">
+                          <label class="text-muted" for="treatments-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="treatments-remember-check2"
+                            [(ngModel)]="employee.userPermissions.treatments.canWrite">
+                          <label class="text-muted" for="treatments-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Products
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="products-remember-check1"
+                            [(ngModel)]="employee.userPermissions.products.canRead">
+                          <label class="text-muted" for="products-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="products-remember-check2"
+                            [(ngModel)]="employee.userPermissions.products.canWrite">
+                          <label class="text-muted" for="products-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                        Goals
+                      </div>
+                      <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="goals-remember-check1"
+                            [(ngModel)]="employee.userPermissions.goals.canRead">
+                          <label class="text-muted" for="goals-remember-check1">Can read</label>
+                        </div>
+                        <div class="form-check" style="margin-right: 2px;">
+                          <input class="form-check-input" type="checkbox" value="" id="goals-remember-check2"
+                            [(ngModel)]="employee.userPermissions.goals.canWrite">
+                          <label class="text-muted" for="goals-remember-check2">Can write</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="activeIndex===1" style="margin-left: 20px;width: 60%;margin-right: 10px;">
+                    <div style="font-weight: 600;font-size: 18px;">
+                      Manage Employee's working Days
+                    </div>
+                    <p style="margin-bottom: 5px;">fill in the following details about employee working days</p>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Select Month</label>
+                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                  [convertModelValue]="true">
+
+                              </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Select Year</label>
+                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                  [convertModelValue]="true">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label class="form-label">Select The Days The Employee is working.</label>
+                          <mwl-demo-utils-calendar-header>
+                          </mwl-demo-utils-calendar-header>
+
+                          <div class="alert alert-info">
+                            Click on a day to select it
+                          </div>
+
+                          <div>
+                            <mwl-calendar-month-view [viewDate]="viewDate" [events]="events"
+                              (dayClicked)="dayClicked($event.day)">
+                            </mwl-calendar-month-view>
+                          </div>
+                          <p style="margin-bottom: 5px; margin-top: 10px;">
+                            The Team roster shows your availability for bookings and is not linked to your business
+                            opening hours.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="activeIndex===2" style="margin-left: 20px;width: 60%;margin-right: 10px;">
+                    <div style="font-weight: 600;font-size: 18px; display: flex;justify-content: space-between;">
+                      <div>
+                        Manage Employee's Goals
+                      </div>
+                      <button type="button" class="btn"
+                        style="background-color:#21D59B;font-weight: 600;margin-left: 10px;">Add Goal</button>
+                    </div>
+                    <p style="margin-bottom: 5px;">fill in the following details about employee goals</p>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-6">
+                              <div>
+                                <label class="form-label">Select Month</label>
+                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                  [convertModelValue]="true">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label class="form-label">Emplpoyee goals Table</label>
+
+                          <div class="table-responsive">
+                            <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="GoalTableData"
+                              (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+                              <thead>
+                                <tr style="background-color:#D2F7EB;">
+                                  <th style="background-color:#D2F7EB;">#</th>
+                                  <th style="background-color:#D2F7EB;">Goal Date</th>
+                                  <th style="background-color:#D2F7EB;">Goal Amount</th>
+                                  <th style="background-color:#D2F7EB;">Final Amount</th>
+                                  <th style="background-color:#D2F7EB;">Difference</th>
+                                </tr>
+                              </thead>
+                              <tbody style="background-color: #F5F6FA;">
+                                <tr *ngFor="let data of rowSelectionTable.data ">
+                                  <td data-column-id="company" class="gridjs-td">{{data.id}}</td>
+                                  <td data-column-id="company" class="gridjs-td">{{data.date}}</td>
+                                  <td data-column-id="company" class="gridjs-td">{{data.amount}}</td>
+                                  <td data-column-id="company" class="gridjs-td">{{data.final_amount}}</td>
+                                  <td data-column-id="company" class="gridjs-td">{{data.final_amount-data.amount}}</td>
+                                </tr>
+                              </tbody>
+                            </nz-table>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="custom-modal-body2">
+                <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                  <div ngbDropdown>
+                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false" ngbDropdownToggle>
+                      Menu
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+
+                      <div id="scrollbar">
+                        <div class="container-fluid">
+                          <ngx-simplebar class="sidebar-menu-scroll" style="max-height: calc(100vh - 70px)">
+                            <ul class="metismenu list-unstyled navbar-nav" id="navbar-nav">
+                              <ng-container *ngFor="let item of menuItems; let i = index">
+                                <li>
+                                  <a (mouseenter)="hovered = true;selectedIndex = i" (click)="activeIndex = i"
+                                    [ngStyle]="{'background-color': i === selectedIndex || i === activeIndex ? '#21D59B33' : 'initial',
+                                                  'border-left-color': i === selectedIndex || i === activeIndex?'red':'black',
+                                                     'color': i === selectedIndex || i === activeIndex ? '#21D59B' : '#7E84A3'}"
+                                    (mouseleave)="selectedIndex = null; hovered = false"
+                                    class="side-nav-link-ref nav-link menu-link">
+                                    <i class="bx {{ item.icon }} icon nav-icon"
+                                      style="margin-left: 10px;margin-right: 10px; "></i>
+                                    <span style="margin-right: 40px;"> {{ item.title }}</span>
+                                  </a>
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </ngx-simplebar>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div ngbDropdown>
+                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false" ngbDropdownToggle>
+                      Permissions
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 3px;">
+                          Analytics
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.analytics.canRead">
+                            <label class="text-muted">Can read</label>
+
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.analytics.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Bookings
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.bookings.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.bookings.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Clients
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.clients.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.clients.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Configurations
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.configurations.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.configurations.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Employees
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.employees.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.employees.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Marketing
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.marketing.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.marketing.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Reporting
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.reporting.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.reporting.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Schedule
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.schedule.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.schedule.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Sales
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.sales.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.sales.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Treatments
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.treatments.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.treatments.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Products
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.products.canRead">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check"
+                              [(ngModel)]="employee.userPermissions.products.canWrite">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-weight: 500;font-size: 14px;margin-top: 2px;">
+                          Goals
+                        </div>
+                        <div style=" display:flex;flex-direction:row;justify-content:space-between;margin-top: 2px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                            <label class="text-muted">Can read</label>
+                          </div>
+                          <div class="form-check" style="margin-right: 2px;">
+                            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                            <label class="text-muted">Can write</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-left: 20px;margin-right: 10px;">
+                  <div style="font-weight: 600;font-size: 18px;">
+                    Employee Details
+                  </div>
+                  <p style="margin-bottom: 5px;">fill in the following details about Employee</p>
+                  <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <div style="font-weight: 600;margin-bottom: 15px;">
+                      Basic Details
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row gy-4">
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">First Name</label>
+                              <input type="text" class="form-control" placeholder="First Name">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Last Name</label>
+                              <input type="text" class="form-control" placeholder="Last Name">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Employee Type</label>
+
+                              <select [(ngModel)]="selectedOption" class="form-select mb-3"
+                                aria-label="Default select example">
+                                <option *ngFor="let option of options" [value]="option.value">
+                                  {{ option.label }}
+                                </option>
+                              </select>
+
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Employee level</label>
+                              <input type="text" class="form-control" id="valueInput">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <div style="font-weight: 600;margin-bottom: 15px;">
+                      Contact Details
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row gy-4">
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Email Address</label>
+                              <input type="text" class="form-control" placeholder="First Name">
+                              <p style="font-style: italic;font-size: 14px;">The email provided will be used as the
+                                username, please ensure it is a valid one.</p>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Contact Details</label>
+                              <input type="text" class="form-control" placeholder="Last Name">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                      <label class="form-check-label" for="auth-remember-check">Clients must book a consultation
+                        before
+                        booking with employee.</label>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <div style="font-weight: 600;margin-bottom: 15px;">
+                      Employment
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row gy-4">
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Select Start Date</label>
+                              <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                [convertModelValue]="true">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Select End Date</label>
+                              <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                                [convertModelValue]="true">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <div style="font-weight: 600;margin-bottom: 15px;">
+                      Location
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row gy-4">
+                          <div class="col-xxl-3 col-md-6">
+                            <div>
+                              <label class="form-label">Location</label>
+                              <input type="text" class="form-control" placeholder="First Name">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>Select more than one location if neccessary</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+        </div>
+        <div class="table-responsive">
+          <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+            <thead>
+              <tr style="background-color:#D2F7EB;">
+                <th style="background-color:#D2F7EB;">First Name</th>
+                <th style="background-color:#D2F7EB;">Surname</th>
+                <th style="background-color:#D2F7EB;">Employee Type</th>
+                <th style="background-color:#D2F7EB;">Employee Level</th>
+                <th style="background-color:#D2F7EB;">Number</th>
+                <th style="background-color:#D2F7EB;">Status</th>
+                <th style="background-color:#D2F7EB;">Showing 1-1</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: #F5F6FA;">
+              <tr *ngFor="let data of rowSelectionTable.data ">
+                <td data-column-id="company" class="gridjs-td">{{data.firstName}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.lastName}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.employeeType}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.employeeLevel}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.contactDetails}}</td>
+                <td data-column-id="actions" class="gridjs-td">
+
+                  <span *ngIf="data.active === true" href="javascript:void(0);">
+                    <span class="ri-focus-fill" style="color: #21D59B;font-weight: 600;font-size: 18px;"></span>
+                  </span>
+                  <span *ngIf="data.active=== false" href="javascript:void(0);">
+                    <span class="ri-focus-fill" style="color: red;font-weight: 600;font-size: 18px;"></span>
+                  </span>
+                </td>
+                <td data-column-id="company" class="gridjs-td" style="display: flex;flex-direction: row;">
+                  <span (click)="employeeEditSelect(data.userId)"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #7E84A3; display: flex;justify-content: center;align-items: center;"><span
+                      class=" ri-edit-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #21D59B; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-check-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

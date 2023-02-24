@@ -1,0 +1,298 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">CLIENTS</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Clients
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Add, edit and delete the types of clients available </h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 buttons-and-inputs-container"
+          style="display: flex;justify-content: space-between;">
+          <div class="buttons-and-inputs">
+            <div class="d-flex align-items-center ">
+              <div class="search-box d-inline-block ">
+                <input type="text" class="form-control search" placeholder="Search..." [(ngModel)]="form.search"
+                  (ngModelChange)="onValueChange()" style="background-color:#D2F7EB;">
+                <i class="ri-search-line search-icon"></i>
+              </div>
+            </div>
+          </div>
+          <button id="open-client-modal" type="button" class="btn" style="background-color:#21D59B;font-weight: 600;"
+            data-bs-toggle="modal" data-bs-target="#exampleModalFullscreenXl" (click)="fullXLModal(fullXlDataModal)">Add
+            New Client</button>
+
+          <ng-template #fullXlDataModal let-modal>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalFullscreenXlLabel">X Client</h5>
+                <div>
+
+                  <button *ngIf="isClientEdit" type="button" class="btn"
+                    style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onClientUpdate()">Update
+                    Client</button>
+                  <button *ngIf="isClientEdit" type="button" class="btn" style="font-weight: 600;margin-left: 10px;"
+                    [style.background-color]="clients.active ? 'red' : '#21D59B'" (click)="onClientDisable()">
+                    <div *ngIf="clients.active===true">
+                      Disable Client
+                    </div>
+                    <div *ngIf="clients.active===false">
+                      Enable Client
+                    </div>
+                  </button>
+                  <button *ngIf="!isClientEdit" type="button" class="btn"
+                    style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+                    (click)="onClientSubmit()">Save</button>
+                  <button type="button" class="btn" id="close-clients-modal"
+                    style="background-color:white;font-weight: 600;margin-left: 10px;border-color:#D7DBEC;"
+                    (click)="modal.dismiss('Cross click');onCancelModal()">Cancel</button>
+
+                </div>
+              </div>
+              <div class="custom-modal-body1">
+                <div class="modal-body"
+                  style="background-color:#F5F6FA;margin-top: 20px;padding-top: 30px; display: flex;flex-direction: row;width: 100%;">
+                  <div class="app-menu" style="width:10%">
+
+                  </div>
+                  <div style="margin-left: 20px;width: 60%;margin-right: 10px;">
+                    <div style="font-weight: 600;font-size: 18px;">
+                      Client Details
+                    </div>
+                    <p style="margin-bottom: 5px;">fill in the following details about Client</p>
+                    <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row gy-4">
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" placeholder="First Name"
+                              [(ngModel)]="clients.firstName" name="firstName">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name"
+                              [(ngModel)]="clients.lastName" name="lastName">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Mobile</label>
+                            <input type="text" class="form-control" placeholder="mobile"
+                              [(ngModel)]="clients.mobileNumber" name="mobileNumber">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" placeholder="email"
+                              [(ngModel)]="clients.emailAddress" name="emailAddress">
+                          </div>
+                        </div>
+                        <div *ngIf="!isClientEdit" class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" placeholder="Password"
+                              [(ngModel)]="clients.password" name="password">
+                          </div>
+                        </div>
+                        <div *ngIf="!isClientEdit" class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="confirm password"
+                              [(ngModel)]="clients.confirmPassword" name="confirmPassword">
+                          </div>
+                        </div>
+                        <div *ngIf="isClientEdit" class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Date of Birth</label>
+                            <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                              [convertModelValue]="true" [(ngModel)]="dateOfBirth" name="dateOfBirth">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="isClientEdit" style="margin-top: 10px; margin-bottom: 10px;">
+                      <div style="font-weight: 600;margin-bottom: 15px;">
+                        Loyalty Points
+                      </div>
+                      <div style="height: 80px;width:150px;padding:5px;background-color: white;
+                         display: flex;flex-direction:column;align-items: center; border-radius: 5px;">
+                        <div style="font-size: 18px;font-weight: 600;">
+                          {{clients.loyaltyPoints}}
+                        </div>
+                        <div style="margin-top: 10px;">
+                          Total Points Available
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div *ngIf="isClientEdit"
+                    style="width:30%;background-color: white;padding-left: 10px;padding-right: 10px;">
+                    <div style="font-weight: 600;font-size: 16px;">
+                      Notes
+                    </div>
+                    <p style="margin-bottom: 5px;">Add notes about clients</p>
+                    <form>
+                      <div class="mb-3">
+                        <label for="customer-name" class="col-form-label">Note Title:</label>
+                        <input type="text" class="form-control" placeholder="Note Title"
+                          [(ngModel)]="clientsNotes.title" name="title">
+                      </div>
+                      <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Note Description:</label>
+                        <textarea class="form-control" id="message-text" rows="4" [(ngModel)]="clientsNotes.description"
+                          name="description"></textarea>
+                      </div>
+                      <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 20px;">
+                        <div> </div>
+                        <button type="button" class="btn" (click)="handleNotesSubmit()"
+                          style="background-color:#21D59B;font-weight: 600;margin-left: 10px;color: white;">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="custom-modal-body2" style="background-color:#F5F6FA;margin-top: 20px;">
+                <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                  <div>
+
+                  </div>
+                  <div ngbDropdown>
+                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false" ngbDropdownToggle
+                      style="margin-top: 20px;border-color: #D7DBEC;margin-right: 20px;">
+                      Notes
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                      <p style="margin-bottom: 5px;">Add notes about clients</p>
+                      <form>
+                        <div class="mb-3">
+                          <label for="customer-name" class="col-form-label">Note Title:</label>
+                          <input type="text" class="form-control" placeholder="Note Title">
+                        </div>
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">Note Description:</label>
+                          <textarea class="form-control" id="message-text" rows="4"></textarea>
+                        </div>
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 20px;">
+                          <div> </div>
+                          <button type="button" class="btn"
+                            style="background-color:#21D59B;font-weight: 600;margin-left: 10px;color: white;">Submit</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-left: 20px;margin-right: 20px;">
+                  <div style="font-weight: 600;font-size: 18px;">
+                    Client Details
+                  </div>
+                  <p style="margin-bottom: 5px;">fill in the following details about Client</p>
+                  <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
+                      <div class="row gy-4">
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" placeholder="First Name"
+                              [(ngModel)]="clients.firstName" name="firstName">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name"
+                              [(ngModel)]="clients.lastName" name="lastName">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Mobile</label>
+                            <input type="text" class="form-control" placeholder="mobile"
+                              [(ngModel)]="clients.mobileNumber" name="mobileNumber">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" placeholder="email"
+                              [(ngModel)]="clients.emailAddress" name="emailAddress">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                          <div>
+                            <label class="form-label">Date of Birth</label>
+                            <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                              [convertModelValue]="true" [(ngModel)]="clients.dateOfBirth" name="dateOfBirth">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div class="table-responsive">
+          <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+            <thead>
+              <tr style="background-color:#D2F7EB;">
+                <th style="background-color:#D2F7EB;">CLient</th>
+                <th style="background-color:#D2F7EB;">Email address</th>
+                <th style="background-color:#D2F7EB;">Showing 1-1</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: #F5F6FA;">
+              <tr *ngFor="let data of rowSelectionTable.data ">
+                <td data-column-id="company" class="gridjs-td">{{data.firstName}} {{data.lastName}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.emailAddress}}</td>
+                <td data-column-id="company" class="gridjs-td" style="display: flex;flex-direction: row;">
+                  <span (click)="clientEditSelect(data)"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #7E84A3; display: flex;justify-content: center;align-items: center;"><span
+                      class=" ri-edit-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #7E84A3; display: flex;justify-content: center;align-items: center;"><span
+                      class=" ri-bookmark-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span *ngIf="data.active===true"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: #21D59B; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-check-fill" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                  <span *ngIf="data.active===false"
+                    style="margin-left: 10px;height: 25px;border-radius:5px;width: 25px;background-color: red; display: flex;justify-content: center;align-items: center;"><span
+                      class="ri-close-line" style="color: white;font-weight: 600;font-size: 18px;"></span></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
