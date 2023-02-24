@@ -1,0 +1,219 @@
+<div id="viewInventory">
+    <div id="listTreatments" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Inventory</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right" id="registerSection"><i class="fas fa-edit"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="employeeTypeFilter" class="heading-text-label">Team Filter</label>
+                            <select id="employeeTypeFilter" class="form-control"></select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="searchTreatment" class="heading-text-label">Search For Service</label>
+                            <input type="text" class="form-control" id="searchTreatment">
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush" id="treatmentLists">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerTreatments" style="display:none; padding: 0px;" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>New Item Details</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form role="form" id="newTreatmentForm" name="newTreatmentForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="treatmentName" class="secondary-text-color">Item Name</label>
+                                <input name="treatmentName" type="text" class="form-control" id="treatmentName" placeholder="Item Name" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="treatmentDescription" class="secondary-text-color">Item Description</label>
+                                <input name="treatmentDescription" type="text" class="form-control" id="treatmentDescription" placeholder="Item Description" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item description.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="seniorPrice" class="secondary-text-color">Price</label>
+                                <input name="seniorPrice" type="text" class="form-control" id="seniorPrice" placeholder="Price" required value="0.0" min="0.0" >
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item price.
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input name="special" type="checkbox" id="special" style="display: inline;">
+                                <label for="special" style="display: inline; margin-left: 10px; margin-top: -5px;">Check to make this a special.</label>
+                            </div>
+                            <div class="form-group specialChecked" style="display: none">
+                                <label  class="secondary-text-color" for="specialEndDate">Date Special Ends</label>
+                                <input name="specialEndDate" type="date" id="specialEndDate" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label for="specialPrice" class="secondary-text-color">Special Price</label>
+                                <input name="specialPrice" type="text" class="form-control" id="specialPrice" placeholder="Special Price" required value="0.0" min="0.0" >
+                            </div>
+                            <div class="form-group">
+                                <label for="duration" class="secondary-text-color">Duration (Minutes)</label>
+                                <input name="duration" type="number" class="form-control" id="duration" placeholder="Duration" min="0" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item duration.
+                                </div>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="employeeType" class="secondary-text-color">Employee Type</label>-->
+<!--                                <select id="employeeType" class="form-control" required name="employeeType"> </select>-->
+<!--                                <div class="valid-feedback">-->
+<!--                                    Looks good!-->
+<!--                                </div>-->
+<!--                                <div class="invalid-feedback">-->
+<!--                                    Please select an employee type.-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <div class="col-12 col-sm-6 offset-sm-6">
+                                    <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editTreatments" style="display:none" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Edit Item Details</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form role="form" id="editTreatmentForm" name="editTreatmentForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="updateTreatmentName" class="secondary-text-color">Item Name</label>
+                                <input name="treatmentName" type="text" class="form-control" id="updateTreatmentName" placeholder="Item Name" required>
+                                <input name="treatmentId" type="hidden" id="treatmentId">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="updateTreatmentDescription" class="secondary-text-color">Item Description</label>
+                                <input name="treatmentDescription" type="text" class="form-control" id="updateTreatmentDescription" placeholder="Item Description" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item description.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="updateSeniorPrice" class="secondary-text-color">Price</label>
+                                <input name="seniorPrice" type="number" class="form-control" id="updateSeniorPrice" placeholder="Price" required value="0.0" min="0.0" step="0.01" >
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item price.
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input name="special" type="checkbox" id="updateSpecial" style="display: inline;">
+                                <label for="updateSpecial" style="display: inline; margin-left: 10px; margin-top: -5px;">Check to make this a special.</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="specialPrice" class="secondary-text-color">Special Price</label>
+                                <input name="specialPrice" type="number" class="form-control" id="updateSpecialPrice" placeholder="Special Price" required value="0.0" min="0.0" step="0.01">
+                            </div>
+                            <div class="form-group updateSpecialChecked" style="display: none">
+                                <label  class="secondary-text-color" for="updateSpecialEndDate">Date Special Ends</label>
+                                <input name="specialEndDate" type="date" id="updateSpecialEndDate" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label for="duration" class="secondary-text-color">Duration (Minutes)</label>
+                                <input name="duration" type="number" class="form-control" id="updateDuration" placeholder="Duration" min="0" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item duration.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeTypeForModal" class="secondary-text-color">Employee Type</label>
+                                <select id="employeeTypeForModal" class="form-control" required name="employeeType"> </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please select an employee type.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12 col-sm-6 offset-sm-6">
+                                    <button type="submit" class="btn btn-primary btn-block">UPDATE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/modules/treatments/treatmentsModule.js"></script>
+<script>
+    treatmentsModule.initialiseModule();
+</script>

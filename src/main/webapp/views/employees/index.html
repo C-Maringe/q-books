@@ -1,0 +1,594 @@
+<div id="employeeView">
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-12 offset-sm-9 col-sm-3 btn-goals">
+            <button type="button" class="btn btn-primary btn-block" onclick="employeeModule.navigateView('goals')">View Goals</button>
+        </div>
+        <div class="col-12 col-sm-3 btn-analytics" style="display: none; margin-left: -10px">
+            <select id="employeeList" class="form-control"></select>
+        </div>
+
+        <div class="col-12 offset-sm-3 col-sm-3 btn-analytics" style="display: none">
+            <button type="button" class="btn btn-primary btn-block" onclick="employeeModule.addEmployeeGoal()">Add Goal</button>
+        </div>
+
+        <div class="col-12 col-sm-3 btn-analytics" style="display: none">
+            <button type="button" class="btn btn-primary btn-block" onclick="employeeModule.navigateView('employees')">View Employees</button>
+        </div>
+    </div>
+
+    <section id="viewEmployees" class="companyAnalytics">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="card">
+                    <div class="card-header primary-color primary-text-color">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Employees</h4>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-light float-right" id="registerSection"><i class="fas fa-user-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0 !important;">
+                        <ul class="list-group list-group-flush" id="employeeLists">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<section id="registerEmployees" style="display:none">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="card">
+                    <div class="card-header primary-color primary-text-color">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>New Employee Details</h4>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <form role="form" id="registerForm" name="registerForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">User Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="true">User Permissions</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="basic">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="inputName" class="secondary-text-color">First Name</label>
+                                            <input name="firstName" type="text" class="form-control" id="inputName" placeholder="First Name" required>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid first name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputSurname" class="secondary-text-color">Last Name</label>
+                                            <input name="lastName" type="text" class="form-control" id="inputSurname" placeholder="Last Name" required>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid last name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="secondary-text-color">Email Address</label>
+                                            <input name="contactDetails[emailAddress]" type="email" class="form-control" id="inputEmail" placeholder="Email Address" required aria-describedby="emailInfoBlock">
+                                            <small id="emailInfoBlock" class="form-text text-muted">
+                                                The email provided will be used as the username, please ensure it is a valid one.
+                                            </small>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobileNumber" class="secondary-text-color">Mobile Number</label>
+                                            <input name="contactDetails[mobileNumber]" type="tel" class="form-control" id="mobileNumber" placeholder="Mobile Number" required>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid mobile number.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeType" class="secondary-text-color">Employee Type</label>
+                                            <input name="employeeType" type="text" class="form-control" id="employeeType" placeholder="Employee Type" aria-describedby="employeeTypeInfoBlock">
+                                            <small id="employeeTypeInfoBlock" class="form-text text-muted">
+                                                Only create a new employee type if the one you are looking for is not in the list below.
+                                            </small>
+                                            <select id="employeeTypeOptions" class="form-control" required> </select>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select an employee type.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="employeeLevel" class="secondary-text-color">Employee Level</label>
+                                            <select id="employeeLevel" class="form-control"  name="employeeLevel" required>
+                                                <option value="Senior">Senior</option>
+                                                <option value="Junior">Junior</option>
+                                            </select>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select a employee level
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="secondary-text-color">Password</label>
+                                            <input name="password" type="text" class="form-control" id="inputPassword" placeholder="Password" aria-describedby="passwordHelpBlock" required>
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                                Your password must be more than 6 characters long.
+                                            </small>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid password.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputCPassword" class="secondary-text-color">Confirm Password</label>
+                                            <input name="clearPassword" type="text" class="form-control" id="inputCPassword" placeholder="Confirm Password" aria-describedby="confirmPasswordHelp" required>
+                                            <small id="confirmPasswordHelp" class="form-text text-muted">
+                                                Please confirm the password already entered.
+                                            </small>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please confirm the password provided.
+                                            </div>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="mustBookConsultationFirstTime" type="checkbox" id="mustBookConsultationFirstTime" class="custom-control-input" >
+                                            <label class="custom-control-label" for="mustBookConsultationFirstTime">Must clients book a consultation before booking with the employee.</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-12 col-sm-6 offset-sm-6">
+                                                <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="permissions">
+                                    <div class="form-group row permissions-list"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</section>
+
+    <section id="editEmployee" style="display:none">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="card">
+                    <div class="card-header primary-color primary-text-color">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Edit Employee Details</h4>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" id="viewWorkHoursSection" class="btn btn-light float-right"><i class="fas fa-clock"></i> Work Hours</button>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <form role="form" id="updateForm" name="updateForm" action="javascript:;" method="POST" class="update-needs-validation" novalidate>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="editBasicDetails-tab" data-toggle="tab" href="#editBasicDetails" role="tab" aria-controls="editBasicDetails" aria-selected="true">User Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="editPermissions-tab" data-toggle="tab" href="#editPermissions" role="tab" aria-controls="editPermissions" aria-selected="true">User Permissions</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="editBasicDetails">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="editFirstName" class="secondary-text-color">First Name</label>
+                                            <input name="firstName" type="text" class="form-control" id="editFirstName" placeholder="First Name">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid first name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editLastName" class="secondary-text-color">Last Name</label>
+                                            <input name="lastName" type="text" class="form-control" id="editLastName" placeholder="Last Name">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid last name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmailAddress" class="secondary-text-color">Email</label>
+                                            <input name="contactDetails[emailAddress]" type="email" class="form-control" id="editEmailAddress" placeholder="Email Address">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editMobileNumber" class="secondary-text-color">Mobile Number</label>
+                                            <input name="contactDetails[mobileNumber]" type="tel" class="form-control" id="editMobileNumber" placeholder="Mobile Number">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid mobile number.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employeeType" class="secondary-text-color">Employee Type</label>
+                                            <input name="employeeType" type="text" class="form-control" id="editEmployeeType" placeholder="Employee Type">
+                                            <select id="editEmployeeTypeOptions" class="form-control" style="margin: 2px"> </select>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select an employee type.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="editEmployeeLevel" class="secondary-text-color">Employee Level</label>
+                                            <select id="editEmployeeLevel" class="form-control" name="employeeLevel">
+                                                <option value="Senior">Senior</option>
+                                                <option value="Junior">Junior</option>
+                                            </select>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please select a employee level
+                                            </div>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="mustBookConsultationFirstTime" type="checkbox" id="editMustBookConsultationFirstTime" class="custom-control-input" >
+                                            <label class="custom-control-label" for="mustBookConsultationFirstTime">Must clients book a consultation before booking with the employee.</label>
+                                        </div>
+                                        <div class="form-group">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-12 col-sm-6 offset-sm-6">
+                                                <input name="userId" type="hidden" class="form-control" id="editUserId">
+                                                <button type="submit" class="btn btn-primary btn-block">UPDATE</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="editPermissions">
+                                    <div class="col-sm-12">
+                                        <h3>Employee Permissions</h3>
+                                    </div>
+                                    <div class="form-group row edit-permission-list"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="manageWorkingDays" style="display: none">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="row primary-color primary-text-color" style="padding: 10px">
+                    <div class="col-11">
+                        <h4>Manage Employee Working Days</h4>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 responsive-top-margin">
+                        <label for="workingMonth">SELECT MONTH</label>
+                        <select name="workingMonth" id="workingMonth" class="form-control">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 responsive-top-margin">
+                        <label for="workingYear">SELECT YEAR</label>
+                        <select name="workingYear" id="workingYear" class="form-control"></select>
+                    </div>
+
+                    <div class="col-12 col-sm-3 col-md-3 col-lg-3 responsive-top-margin">
+                        <button class="btn btn-light" id="btnLoadWorkingDays" style="margin-top: 30px;">Load Working Days</button>
+                    </div>
+
+                    <div class="col-12 col-sm-1" style="display:none" id="dataLoader">
+                        <img src="/images/3.gif" alt="Loading..." height="32" width="32" style="margin-top: 30px;">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-12">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Sunday</th>
+                                        <th scope="col">Monday</th>
+                                        <th scope="col">Tuesday</th>
+                                        <th scope="col">Wednesday</th>
+                                        <th scope="col">Thursday</th>
+                                        <th scope="col">Friday</th>
+                                        <th scope="col">Saturday</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="daysInMonth">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="companyGoals" style="display: none">
+        <div class="row">
+            <div class="col-12 col-sm-3 current-goal-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title current-goal-name"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted current-goal-measure"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted current-goal-revenue"></h6>
+                        <div id="current-progress" style="margin-top: 25px; margin-bottom: 25px">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <button onclick="employeeModule.editEmployeeGoal()" class="btn btn-primary btn-block">Edit Goal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-9 past-goal-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Past Goals</h5>
+                        <div>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Goal Date</th>
+                                    <th scope="col">Goal Amount</th>
+                                    <th scope="col">Final Amount</th>
+                                    <th scope="col">Difference</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pastGoalsResults">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="selectEmployeeWorkDay" aria-hidden="true" id="selectEmployeeWorkDay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Working Day Information</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="employeeWorkingDayStartTime">START TIME</label>
+                        <input type="time" class="form-control" id="employeeWorkingDayStartTime" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="employeeWorkingDayEndTime">END TIME</label>
+                        <input type="time" class="form-control" id="employeeWorkingDayEndTime" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="employeeWorkingDayLunchStartTime">LUNCH START TIME</label>
+                        <input type="time" class="form-control" id="employeeWorkingDayLunchStartTime" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="employeeWorkingDayLunchDuration">LUNCH DURATION (Minutes)</label>
+                        <input type="number" class="form-control" id="employeeWorkingDayLunchDuration" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="applyToWholeWeek">APPLY TO WHOLE WEEK?</label>
+                        <select class="form-control" id="applyToWholeWeek" style="border-radius: 5px; border: 1px solid lightgrey">
+                            <option value="true">Yes</option>
+                            <option value="falsew">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary col-sm-6" id="confirmWorkingDayButton">SUBMIT</button>
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="allocatedEmployeeWorkDay" aria-hidden="true" id="allocatedEmployeeWorkDay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Working Day Information</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="modal-footer" id="removeWorkingDayButton">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="captureGoalModal" aria-hidden="true" id="captureGoalModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Employee Goal</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form role="form" id="goalCaptureForm" name="goalCaptureForm" action="javascript:;" method="POST">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="goalName" class="secondary-text-color">Goal Name</label>
+                                    <input name="goalName" type="text" class="form-control" id="goalName" placeholder="Goal Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalStartDate" class="secondary-text-color">Goal Start Date</label>
+                                    <input name="goalStartDate" type="date" class="form-control" id="goalStartDate" placeholder="Goal Start Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalMeasureDate" class="secondary-text-color">Goal Measure Date</label>
+                                    <input name="goalMeasureDate" type="date" class="form-control" id="goalMeasureDate" placeholder="Goal Measure Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalBestCase" class="secondary-text-color">Revenue Best Case</label>
+                                    <input name="revenueGoalBestCase" type="text" class="form-control" id="revenueGoalBestCase" placeholder="Revenue Best Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalWorstCase" class="secondary-text-color">Revenue Worst Case</label>
+                                    <input name="revenueGoalWorstCase" type="text" class="form-control" id="revenueGoalWorstCase" placeholder="Revenue Worst Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12 col-sm-6">
+                                        <button type="button" class="btn btn-dark btn-block" onclick="employeeModule.closeModal()">CANCEL</button>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editGoalModal" aria-hidden="true" id="editGoalModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Employee Goal</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form role="form" id="goalEditForm" name="goalEditForm" action="javascript:;" method="POST">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="goalName" class="secondary-text-color">Goal Name</label>
+                                    <input name="goalId" type="hidden">
+                                    <input name="goalName" type="text" class="form-control" placeholder="Goal Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalStartDate" class="secondary-text-color">Goal Start Date</label>
+                                    <input name="goalStartDate" type="date" class="form-control" placeholder="Goal Start Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalMeasureDate" class="secondary-text-color">Goal Measure Date</label>
+                                    <input name="goalMeasureDate" type="date" class="form-control" placeholder="Goal Measure Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalBestCase" class="secondary-text-color">Revenue Best Case</label>
+                                    <input name="revenueGoalBestCase" type="text" class="form-control" placeholder="Revenue Best Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalWorstCase" class="secondary-text-color">Revenue Worst Case</label>
+                                    <input name="revenueGoalWorstCase" type="text" class="form-control" placeholder="Revenue Worst Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12 col-sm-6">
+                                        <button type="button" class="btn btn-dark btn-block" onclick="employeeModule.closeModal()">CANCEL</button>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/modules/employees/employeeModule.js"></script>
+<script>
+    employeeModule.initialiseModule();
+</script>

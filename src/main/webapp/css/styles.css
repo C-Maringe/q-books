@@ -1,0 +1,227 @@
+@charset "UTF-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
+
+.primary-color{
+    background-color: #86c3bd;
+}
+
+.secondary-color {
+    background-color: #229188;
+}
+
+.tertiary-color {
+    background-color: #ffffff;
+}
+
+.accent-color {
+    background-color: #F5BECB;
+}
+
+.hover-color {
+    background-color: #7c7c7c;
+}
+
+.background-color {
+    background-color: dimgrey;
+}
+
+.fullscreen-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-size: cover;
+    background: rgba(255, 255, 255, 1) url("/images/loading.svg") no-repeat center;
+    color: #229188;
+    text-align: center;
+    padding-top: 200px;
+}
+
+.logo {
+    margin-top: -10px;
+}
+
+.logo > img{
+    height: 40px
+}
+
+/* MAIN PAGE NAVBAR */
+.navbar-default {
+    border-bottom: 5px solid  #86c3bd;
+}
+
+.navbar-fixed-bottom, .navbar-fixed-top {
+    z-index: 9;
+}
+
+.navbar-nav {
+    float: none;
+}
+
+
+/* MAIN PAGE BANNER */
+#home {
+    height: 250px;
+    width: 100vw;
+    /*background-image: url("/images/banner_new.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: 99% 99%;*/
+    background-color: #0a0a0a;
+    margin-top: 50px;
+    padding-top: 50px;
+    text-align: center;
+    font-size: 100px;
+    margin-left: 0;
+}
+
+#aboutUs p {
+    color: #6D6D6D;
+}
+
+#priceList {
+    color: white;
+    padding-bottom: 10px;
+}
+
+#priceList .service-pricelist {
+    height: 600px;
+    background-image: url("/images/service_pricelist_latest.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-top: 10px;
+}
+
+#priceList .product-pricelist {
+    height: 600px;
+    background-image: url("/images/pricelist.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-top: 10px;
+    padding: 0;
+    margin-left: 0;
+}
+
+/* GLOBAL STYLES */
+
+.btn.btn-primary,
+.btn.btn-primary.btn-block{
+    color: #FFF;
+    background-color: #86c3bd;
+    border-radius: 0;
+    height: 40px;
+    border: 2px solid #86c3bd;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+    #home {
+        height: 200px;
+        width: 100vw;
+        /*background-image: url("/images/banner_old.png");*/
+        /*background-repeat: no-repeat;*/
+        /*background-size: 99% 99%;*/
+        background-color: #0a0a0a;
+        margin-top: 50px;
+        padding-top: 25px;
+        text-align: center;
+        font-size: 75px;
+        margin-left: 0;
+    }
+
+    #aboutUs p {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #home {
+        height: 175px;
+        width: 100vw;
+        /*background-image: url("/images/banner_old.png");*/
+        /*background-repeat: no-repeat;*/
+        /*background-size: 99% 99%;*/
+        background-color: #0a0a0a;
+        margin-top: 50px;
+        padding-top: 50px;
+        text-align: center;
+        font-size: 50px;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #home {
+        height: 180px;
+        width: 100vw;
+        /*background-image: url("/images/banner_old.png");*/
+        /*background-repeat: no-repeat;*/
+        /*background-size: 99% 99%;*/
+        background-color: #0a0a0a;
+        margin-top: 50px;
+        padding-top: 50px;
+        text-align: center;
+        font-size: 35px;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #home {
+        height: 150px;
+        width: 100vw;
+        /*background-image: url("/images/banner_old.png");*/
+        /*background-repeat: no-repeat;*/
+        /*background-size: 99% 99%;*/
+        background-color: #0a0a0a;
+        margin-top: 50px;
+        padding-top: 50px;
+        text-align: center;
+        font-size: 25px;
+        margin-left: 0;
+    }
+
+    #priceList {
+        color: white;
+        padding-bottom: 10px;
+    }
+
+    #priceList .service-pricelist {
+        height: 400px;
+        background-image: url("/images/pricelist.jpeg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-top: 50px;
+        padding: 0;
+        margin-left: 0;
+    }
+
+    #priceList .product-pricelist {
+        height: 400px;
+        background-image: url("/images/pricelist.jpeg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-top: 50px;
+        padding: 0;
+        margin-left: 0;
+    }
+
+    .fullscreen-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        background-size: cover;
+        background: rgba(255, 255, 255, 1) url("/images/loading.svg") no-repeat center;
+        color: #229188;
+        text-align: center;
+        padding-top: 160px;
+    }
+}

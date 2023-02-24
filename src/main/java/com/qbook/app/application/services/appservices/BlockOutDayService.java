@@ -1,0 +1,11 @@
+package com.qbook.app.application.services.appservices;
+
+import com.qbook.app.application.models.scheduleModels.ScheduleBlockoutTimeCreatedModel;
+import com.qbook.app.application.models.scheduleModels.ScheduleNewBlockoutTimeForWorkingDayModel;
+import com.qbook.app.application.models.scheduleModels.ScheduleNewBlockoutTimeModel;
+
+public interface BlockOutDayService {
+    ScheduleBlockoutTimeCreatedModel blockoutScheduleTime(ScheduleNewBlockoutTimeModel scheduleNewBlockoutTimeModel);
+
+    ScheduleBlockoutTimeCreatedModel blockoutScheduleTimeForEmployeeHours(ScheduleNewBlockoutTimeForWorkingDayModel scheduleNewBlockoutTimeForWorkingDayModel);
+}

@@ -1,0 +1,148 @@
+<div id="configurations">
+	<div class="row">
+		<div class="col-12 col-sm-10 offset-sm-1">
+			<div class="card">
+				<div class="card-header primary-color primary-text-color">
+					<div class="row">
+						<div class="col-12">
+							<h4>Application Configuration Settings</h4>
+						</div>
+					</div>
+				</div>
+				<div class="card-body" style="padding: 0px;">
+					<form role="form" id="configurationForm" name="configurationForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+						<div class="col-12">
+							<div class="form-group">
+                                <input name="id" type="hidden" class="form-control" id="id">
+                                <input name="attendeesPerSession" type="hidden" class="form-control" id="attendeesPerSession" placeholder="Attendees Per Session" value="1">
+							</div>
+							<div class="form-group">
+                                <label for="sessionDurations">Time Between Bookings</label>
+                                <input name="sessionDurations" type="text" class="form-control" id="sessionDurations" placeholder="Time Between Bookings" required aria-describedby="emailInfoBlock">
+                                <small id="emailInfoBlock" class="form-text text-muted">
+                                    This value is measured in minutes and will determine how much time before the next booking can be made after another one
+                                </small>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+								<div class="invalid-feedback">
+									Please provide a valid time between bookings.
+								</div>
+							</div>
+                            <div class="form-group">
+                                <label>Days Available</label><br>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-sunday"  value="Sunday" id="sunday">
+                                        <label class="form-check-label" for="sunday">Sunday</label>
+                                        <input  type="time" class="form-control startAvailable-sunday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-sunday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-monday"  value="Monday" id="monday">
+                                        <label class="form-check-label" for="monday">Monday</label>
+                                        <input  type="time" class="form-control startAvailable-monday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-monday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-tuesday"  value="Tuesday" id="tuesday">
+                                        <label class="form-check-label" for="tuesday">Tuesday</label>
+                                        <input  type="time" class="form-control startAvailable-tuesday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-tuesday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-wednesday"  value="Wednesday" id="wednesday">
+                                        <label class="form-check-label" for="wednesday">Wednesday</label>
+                                        <input  type="time" class="form-control startAvailable-wednesday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-wednesday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-thursday"  value="Thursday" id="thursday">
+                                        <label class="form-check-label" for="thursday">Thursday</label>
+                                        <input  type="time" class="form-control startAvailable-thursday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-thursday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-friday"  value="Friday" id="friday">
+                                        <label class="form-check-label" for="friday">Friday</label>
+                                        <input  type="time" class="form-control startAvailable-friday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-friday" placeholder="Work End Time" >
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="checkbox" class="input-control daysAvailable-saturday"  value="Saturday" id="saturday">
+                                        <label class="form-check-label" for="saturday">Saturday</label>
+                                        <input  type="time" class="form-control startAvailable-saturday" placeholder="Work Start Time" >
+                                        <input  type="time" class="form-control endAvailable-saturday" placeholder="Work End Time" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookingNotice">Amount Of Notice Prior To Booking</label>
+                                <input name="bookingNotice" type="text" class="form-control" id="bookingNotice" placeholder="Booking Notice" required aria-describedby="noticeTimeInfo">
+                                <small id="noticeTimeInfo" class="form-text text-muted">
+                                    This value is measured in minutes.
+                                </small>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid notice duration.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cancelNotice">Amount Of Notice Prior To Cancellation</label>
+                                <input name="cancelNotice" type="text" class="form-control" id="cancelNotice" placeholder="Cancel Notice" required aria-describedby="cancelTimeInfo">
+                                <small id="cancelTimeInfo" class="form-text text-muted">
+                                    This value is measured in minutes.
+                                </small>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid cancel duration.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="depositThreshold">Deposit Threshold</label>
+                                <input name="depositThreshold" type="number" class="form-control" id="depositThreshold" placeholder="Deposit Threshold" required aria-describedby="depositThresholdHelp">
+                                <small id="depositThresholdHelp" class="form-text text-muted">
+                                    This value is measured in rands.
+                                </small>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid deposit threshold.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="depositPercentage">Deposit Amount</label>
+                                <input name="depositPercentage" type="number" class="form-control" id="depositPercentage" placeholder="Deposit Percentage" required aria-describedby="depositPercentageHelp">
+                                <small id="depositPercentageHelp" class="form-text text-muted">
+                                    This value is a flat fee measured.
+                                </small>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid deposit fee.
+                                </div>
+                            </div>
+
+							<div class="form-group">
+								<div class="col-12 col-sm-6 offset-sm-6">
+                                    <button type="button" class="btn btn-primary btn-block" id="saveConfigurations">REGISTER</button>
+                                    <button type="button" class="btn btn-primary btn-block" id="updateConfigurations" style="display: none">UPDATE</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/modules/configurations/configurationModule.js"></script>
+<script>
+	configurationModule.initialiseModule();
+</script>

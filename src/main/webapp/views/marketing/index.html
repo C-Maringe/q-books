@@ -1,0 +1,102 @@
+<div id="viewAllCampaigns" class="row">
+    <div class="col-12 col-sm-10 offset-sm-1">
+        <div class="card">
+            <div class="card-header primary-color primary-text-color">
+                <div class="row">
+                    <div class="col-md-8 col-12">
+                        <h5>All Marketing Emails</h5>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <input type="hidden" id="batchEmailIdToResend">
+                        <button type="button" class="btn btn-primary btn-block" onclick="marketingModule.setupClientBaseToEmail()">Setup Email</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" style="padding: 0px;">
+                <ul class="list-group list-group-flush" id="campaignList">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="viewAllClients" style="display: none;">
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-md-8 col-12">
+                            <h5>Step 1: Select Client Base</h5>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <button type="button" class="btn btn-primary btn-block" onclick="marketingModule.setupEmail()">Setup Email List</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0px;">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="allMarketingEmails">All Marketing Emails</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Select Client Base</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="offset-10 col-2">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="checkToSelectAll" class="custom-control-input" >
+                            <label class="custom-control-label" for="checkToSelectAll">All</label>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush" id="clientList">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="setupCampaignEmail" style="display: none;">
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <h5>Step 2: Setup Email To Send</h5>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <button id="sendCampaignButton" type="button" class="btn btn-primary btn-block" style="display: none" onclick="marketingModule.sendCampaign()">Send Campaign</button>
+                            <button id="saveCampaignContent" type="button" class="btn btn-primary btn-block" onclick="marketingModule.saveEmailContent()">Save Email Content</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a class="allMarketingEmails">All Marketing Emails</a></li>
+                                <li class="breadcrumb-item"><a class="selectClientBase">Select Client Base</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Setup Email To Send</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-12">
+                        <input type="hidden" id="batchEmailId">
+                        <input type="text" id="emailTitle" class="form-control" placeholder="Email Subject">
+                    </div>
+                    <div class="col-12">
+                        <textarea id="emailContent" cols="30" rows="20" class="form-control" placeholder="Email Content"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/modules/marketing/marketingModule.js"></script>
+<script>
+    marketingModule.initialiseModule();
+</script>

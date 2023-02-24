@@ -1,0 +1,14 @@
+package com.qbook.app.application.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class APNConversionResponseModel {//NOPMD
+    private List<APNConversionResultsModel> results;
+}

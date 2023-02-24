@@ -1,0 +1,243 @@
+<div id="profileView">
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>User Profile</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12" style="padding-right: 0; padding-left: 0;">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="details-tab" data-toggle="tab" href="#details"
+                                       role="tab" aria-controls="details">Details</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab"
+                                       aria-controls="bookings" aria-selected="true">Bookings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="points-tab" data-toggle="tab" href="#points"
+                                       role="tab" aria-controls="points">Loyalty Points</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications"
+                                       role="tab" aria-controls="notifications">Notifications</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane " id="details">
+                                    <div class="row" style="margin-top: 50px;">
+                                        <div class="col-12">
+                                            <form role="form" id="updateForm" name="updateForm" action="javascript:;"
+                                                  method="POST" class="update-needs-validation" novalidate>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="editFirstName" class="secondary-text-color">First
+                                                            Name</label>
+                                                        <input name="firstName" type="text" class="form-control"
+                                                               id="editFirstName" placeholder="First Name">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid first name.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editLastName" class="secondary-text-color">Last
+                                                            Name</label>
+                                                        <input name="lastName" type="text" class="form-control"
+                                                               id="editLastName" placeholder="Last Name">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid last name.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editEmailAddress"
+                                                               class="secondary-text-color">Email</label>
+                                                        <input name="emailAddress" type="email" class="form-control"
+                                                               id="editEmailAddress" placeholder="Email Address">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid email address.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="editMobileNumber" class="secondary-text-color">Mobile
+                                                            Number</label>
+                                                        <input name="mobileNumber" type="tel" class="form-control"
+                                                               id="editMobileNumber" placeholder="Mobile Number">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid mobile number.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit"
+                                                                class="btn btn-primary btn-block col-12 offset-md-6 col-md-6">
+                                                            UPDATE
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane active" id="bookings">
+                                    <div class="row" style="margin-top: 50px;">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-4">
+                                                    <label for="fromDate">From Date: </label>
+                                                    <input type="text" id="fromDate" class="form-control">
+                                                </div>
+                                                <div class="col-12 col-sm-4">
+                                                    <label for="toDate">To Date: </label>
+                                                    <input type="text" id="toDate" class="form-control">
+                                                </div>
+                                                <div class="col-12 col-sm-4">
+                                                    <label for="filter">Booking Type:</label>
+                                                    <select id="filter" class="form-control">
+                                                        <option value="All">All Bookings</option>
+                                                        <option value="Active">Successful Bookings</option>
+                                                        <option value="Cancelled">Cancelled Bookings</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 offset-sm-8 col-sm-4" style="padding-top: 10px;">
+                                                    <button type="button" class="btn btn-success btn-block"
+                                                            onclick="profileModule.searchBookings()">Search
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div id="bookingResults" style="margin-top: 20px">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class='active'>Date</th>
+                                                                    <th class='active'>Time</th>
+                                                                    <th class='active'>Employee</th>
+                                                                    <th class='active'>Items</th>
+                                                                    <th class='active'>Deposit Paid</th>
+                                                                    <th class='active'>Deposit Amount</th>
+                                                                    <th class='active'>Booking Total Price</th>
+                                                                    <th class='active'>Action</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody id="resultsFound">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="notifications">
+                                    <div class="row" style="margin-top: 50px;">
+                                        <div class="col-12">
+                                            <form role="form" id="updatePermissionForm" name="updatePermissionForm" action="javascript:;" method="POST">
+                                                <div class="form-group">
+                                                    <label for="receiveEmails"><input name="receiveEmails" type="checkbox"
+                                                                  id="receiveEmails">
+                                                        Would You Like To Receive Marketing Emails </label>
+                                                    <button type="submit"
+                                                            class="btn btn-primary btn-block col-12 col-md-6">
+                                                        UPDATE
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="points">
+                                    <div class="row" style="margin-top: 50px;">
+                                        <div class="col-12">
+                                            <h5 class="pointsAvailable"></h5>
+                                        </div>
+                                        <div class="col-12">
+                                            <div id="voucherResults" style="margin-top: 20px">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class='active'>Voucher Number</th>
+                                                            <th class='active'>Valid</th>
+                                                            <th class='active'>Created Date</th>
+                                                            <th class='active'>Expiry Date</th>
+                                                            <th class='active'>Redeemed Date</th>
+                                                            <th class='active'>Redeemed</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="voucherResultsFound">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>Terms and Conditions:</h3>
+                                            <ul>
+                                                <li>Once you have 30 points we will send you an electronic voucher to the value of 5% discount</li>
+                                                <li>Customers need to use it within 2 months of receiving the voucher.</li>
+                                                <li>Customers will not be allowed to use the voucher during December.</li>
+                                                <li>Customers can not use the voucher on products.</li>
+                                                <li>Customers are not allowed to use the voucher on Specials or Promotional services</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-12">
+                                            <h3>Earning loyalty points is based on the following criteria</h3>
+                                            <ul>
+                                                <li>Between R50 - R100 = 1 point</li>
+                                                <li>Between R101 - R250 = 2 points</li>
+                                                <li>Between R251 - R400 = 3 points</li>
+                                                <li>Between R401 - R550 = 4 points</li>
+                                                <li>Between R551 - R700 = 5 points</li>
+                                                <li>Between R701 - R850 = 6 points</li>
+                                                <li>Between R851 - R1000 = 7 points</li>
+                                                <li>Between R1001 - R1500 =8 points</li>
+                                                <li>Between R1501 - R2000 = 9 points</li>
+                                                <li>More than R2000 = 10 points</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/modules/profile/profileModule.js"></script>
+
+<script type="text/javascript">
+    profileModule.initialiseModule();
+</script>

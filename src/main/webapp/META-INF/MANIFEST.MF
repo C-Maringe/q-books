@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Class-Path: spring-boot-starter-data-mongodb-2.3.4.RELEASE.jar spring-bo
+ ot-starter-2.3.4.RELEASE.jar spring-boot-starter-logging-2.3.4.RELEASE.
+ jar logback-classic-1.2.3.jar logback-core-1.2.3.jar log4j-to-slf4j-2.1
+ 3.3.jar log4j-api-2.13.3.jar jul-to-slf4j-1.7.30.jar spring-core-5.2.9.
+ RELEASE.jar spring-jcl-5.2.9.RELEASE.jar snakeyaml-1.26.jar mongodb-dri
+ ver-sync-4.0.5.jar bson-4.0.5.jar mongodb-driver-core-4.0.5.jar spring-
+ data-mongodb-3.0.4.RELEASE.jar spring-tx-5.2.9.RELEASE.jar spring-conte
+ xt-5.2.9.RELEASE.jar spring-beans-5.2.9.RELEASE.jar spring-expression-5
+ .2.9.RELEASE.jar spring-data-commons-2.3.4.RELEASE.jar slf4j-api-1.7.30
+ .jar spring-boot-starter-mail-2.3.4.RELEASE.jar spring-context-support-
+ 5.2.9.RELEASE.jar jakarta.mail-1.6.5.jar jakarta.activation-1.2.2.jar s
+ pring-boot-starter-thymeleaf-2.3.4.RELEASE.jar thymeleaf-spring5-3.0.11
+ .RELEASE.jar thymeleaf-3.0.11.RELEASE.jar attoparser-2.0.5.RELEASE.jar 
+ unbescape-1.1.6.RELEASE.jar thymeleaf-extras-java8time-3.0.4.RELEASE.ja
+ r spring-boot-starter-web-2.3.4.RELEASE.jar spring-boot-starter-json-2.
+ 3.4.RELEASE.jar jackson-datatype-jdk8-2.11.2.jar jackson-datatype-jsr31
+ 0-2.11.2.jar jackson-module-parameter-names-2.11.2.jar spring-web-5.2.9
+ .RELEASE.jar spring-webmvc-5.2.9.RELEASE.jar spring-aop-5.2.9.RELEASE.j
+ ar spring-boot-2.3.4.RELEASE.jar spring-boot-autoconfigure-2.3.4.RELEAS
+ E.jar jakarta.annotation-api-1.3.5.jar annotations-13.0.jar commons-log
+ ging-1.2.jar joda-time-2.9.9.jar json-simple-1.1.1.jar junit-4.13.jar h
+ amcrest-core-2.2.jar hamcrest-2.2.jar gson-2.7.jar jasypt-1.9.2.jar jjw
+ t-0.9.0.jar jackson-databind-2.11.2.jar jackson-annotations-2.11.2.jar 
+ jackson-core-2.11.2.jar modelmapper-1.1.1.jar jaxb-api-2.3.0.jar
+

@@ -1,0 +1,231 @@
+<div id="viewAllClients">
+    <section id="viewClient">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="card">
+                    <div class="card-header primary-color primary-text-color">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Clients</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0 !important;">
+                        <div class="row">
+                            <div class="col-12 offset-md-6 col-md-6">
+                                <label for="searchClient" class="heading-text-label">Search For Client</label>
+                                <input type="text" class="form-control" id="searchClient">
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush" id="clientList" style="margin-top: 10px;">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="editClient" style="display:none">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1">
+                <div class="card">
+                    <div class="card-header primary-color primary-text-color">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Edit Client Details</h4>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <input name="clientId" type="hidden" class="form-control" id="editClientId">
+                        <ul class="nav nav-tabs" role="tablist" style="margin-top: 20px;">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Client Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="permissions" aria-selected="true">Client Notes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="points-tab" data-toggle="tab" href="#points" role="tab" aria-controls="points" aria-selected="true">Client Loyalty Points</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="basic">
+                                <form role="form" id="updateForm" name="updateForm" action="javascript:;" method="POST" class="update-needs-validation" novalidate>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="editFirstName" class="secondary-text-color">First Name</label>
+                                            <input name="firstName" type="text" class="form-control" id="editFirstName" placeholder="First Name">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid first name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editLastName" class="secondary-text-color">Last Name</label>
+                                            <input name="lastName" type="text" class="form-control" id="editLastName" placeholder="Last Name">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid last name.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmailAddress" class="secondary-text-color">Email</label>
+                                            <input name="emailAddress" type="email" class="form-control" id="editEmailAddress" placeholder="Email Address">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editMobileNumber" class="secondary-text-color">Mobile Number</label>
+                                            <input name="mobileNumber" type="tel" class="form-control" id="editMobileNumber" placeholder="Mobile Number">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid mobile number.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editDateOfBirth" class="secondary-text-color">Date Of Birth</label>
+                                            <input name="dateOfBirth" type="date" class="form-control" id="editDateOfBirth">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block col-12 offset-md-6 col-md-6">UPDATE</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="notes">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 offset-md-6">
+                                        <button type="button" class="btn btn-primary btn-block" onclick="clientModule.displayNewNoteModal()">ADD NOTE</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <td scope="col">Title</td>
+                                            <td scope="col">Detail</td>
+                                            <td scope="col">Created By</td>
+                                            <td scope="col">Date Created</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="clientNotesEditView">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="points">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="pointsAvailable"></h5>
+                                    </div>
+                                    <div class="col-12">
+                                        <div id="voucherResults" style="margin-top: 20px">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class='active'>Voucher Number</th>
+                                                        <th class='active'>Valid</th>
+                                                        <th class='active'>Created Date</th>
+                                                        <th class='active'>Expiry Date</th>
+                                                        <th class='active'>Redeemed Date</th>
+                                                        <th class='active'>Redeemed</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="voucherResultsFound">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- CLIENT NOTES MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="clientSpecificNotesViewOption" aria-hidden="true" id="clientSpecificNotesViewOption">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Client Notes</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <td scope="col">Title</td>
+                                <td scope="col">Detail</td>
+                                <td scope="col">Created By</td>
+                                <td scope="col">Date Created</td>
+                            </tr>
+                        </thead>
+                        <tbody id="clientNotesView">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CLIENT NEW NOTE MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="clientNewNoteOption" aria-hidden="true" id="clientNewNoteOption">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Client Note</h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="newNoteForm" name="newNoteForm" action="javascript:;" method="POST" class="update-needs-validation" novalidate>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="title" class="secondary-text-color">Note Title</label>
+                            <input name="title" type="text" class="form-control" id="title" placeholder="Note Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="secondary-text-color">Note Description</label>
+                            <textarea name="description" id="description" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary col-sm-6" onclick="clientModule.addClientNote()">SUBMIT</button>
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/modules/clients/clientModule.js"></script>
+<script>
+    clientModule.initialiseModule();
+</script>

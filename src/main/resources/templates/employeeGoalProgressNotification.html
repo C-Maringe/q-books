@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Goal Progress</title>
+    <style>
+
+        .button {
+            background-color: #9FD6D3;
+            border-color: #9FD6D3;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.3333333;
+            border-radius: 6px;
+            color: #fff;
+            display: inline-block;
+            font-weight:400;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+        }
+
+        .branding {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            max-height: 100%;
+            width: auto;
+        }
+
+        @media (min-width: 576px) {
+            .card {
+                margin-left: 5%;
+                flex: 0 0 95%;
+                max-width: 95%
+            }
+
+            .branding {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+                max-height: 100%;
+                width: 75%;
+            }
+        }
+
+        /*Medium devices (tablets, 768px and up)*/
+        @media (min-width: 768px) {
+            .card {
+                margin-left: 16.666666%;
+                flex: 0 0 66.66664%;
+                max-width: 66.66664%
+            }
+
+            .branding {
+                display: block;
+                /*height: 100%;*/
+                width: 50%;
+            }
+        }
+
+        /* Large devices (desktops, 992px and up)*/
+        @media (min-width: 992px) {
+            .card {
+                margin-left: 25%;
+                flex: 0 0 50%;
+                max-width: 50%
+            }
+
+            .branding {
+                display: block;
+                /*height: 100%;*/
+                width: 50%;
+            }
+        }
+
+        /*Extra large devices (large desktops, 1200px and up)*/
+        @media (min-width: 1200px) {
+            .card {
+                margin-left: 25%;
+                flex: 0 0 50%;
+                max-width: 50%
+            }
+
+            .branding {
+                display: block;
+                /*height: 100%;*/
+                width: 50%;
+            }
+        }
+
+    </style>
+</head>
+<body style="background-color: #F4F8FB; color: #95989A !important; width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto;">
+
+    <div style="margin-top: 50px;display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;">
+        <div class="card">
+            <div style="position: relative; display: flex;flex-direction: column; min-width:0;word-wrap:break-word;background-color:#fff;background-clip: border-box;border:1px solid rgba(0,0,0,.125);border-radius:.25rem">
+                <div style="flex: 1 1 auto;padding:1.25rem">
+<!--                    <div style="height: 250px; margin: auto; min-width: 100%; margin-bottom: 20px">-->
+<!--                        <img src="https://s3.us-east-2.amazonaws.com/assets2.trustlink.africa/company-logo.png" alt="Amphora-BeautySalon" class="branding">-->
+<!--                    </div>-->
+
+                    <div style="display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;">
+                        <div style="flex: 0 0 100%; max-width: 100%">
+                            <p>Hello <span th:text="${fullName}"></span>,</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;">
+                        <div style="flex: 0 0 100%; max-width: 100%">
+                            <p> You are <span th:text="${goalProgress}"></span> towards your goal of <span th:text="${goal}"></span>.
+                                There is <span th:text="${daysToMeasureDate}"></span> remaining until <span th:text="${measureDate}"></span>.
+                                Keep pushing!</p>
+                        </div>
+                    </div>
+
+<!--                    <div style="margin-top: 20px; text-align: center; display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;">-->
+<!--                        <div style="flex: 0 0 100%; max-width: 100%">-->
+<!--                            <p>Follow us on</p>-->
+<!--                            <a href="https://www.facebook.com/Amphorabeautysalon/" target="_blank"><img src="https://s3.af-south-1.amazonaws.com/cdn.amphora-beautysalon.co.za/assets/facebook.png" alt="Facebook" height="50" width="50"></a>-->
+<!--                            <a href="https://www.instagram.com/amphorabeautysalon/" target="_blank"><img src="https://s3.af-south-1.amazonaws.com/cdn.amphora-beautysalon.co.za/assets/instagram.png" alt="Instagram" height="50" width="50"></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div style="margin-top: 20px; text-align: center; display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;">-->
+<!--                        <div style="flex: 0 0 100%; max-width: 100%">-->
+<!--                            <p>Download our App for easier booking</p>-->
+<!--                            <div style="width: 100%">-->
+<!--                                <a href="https://play.google.com/store/apps/details?id=za.co.qbook.amphora&hl=en_US" target="_blank"><img src="https://s3.af-south-1.amazonaws.com/cdn.amphora-beautysalon.co.za/assets/android.png" alt="Google Play Store" height="100"></a>-->
+<!--                            </div>-->
+<!--                            <div style="width: 100%">-->
+<!--                                <a href="https://apps.apple.com/us/app/amphora-beautysalon/id1352357477" target="_blank"><img src="https://s3.af-south-1.amazonaws.com/cdn.amphora-beautysalon.co.za/assets/ios.png" alt="IOS App Store" height="100"></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<div id="viewAnalytics" class="col-12">
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-12 offset-sm-9 col-sm-3 btn-goals">
+            <button type="button" class="btn btn-primary btn-block" onclick="analyticsModule.navigateView('goals')">View Goals</button>
+        </div>
+
+        <div class="col-12 offset-sm-6 col-sm-3 btn-analytics" style="display: none">
+            <button type="button" class="btn btn-primary btn-block" onclick="analyticsModule.addEmployeeGoal()">Add Goal</button>
+        </div>
+
+        <div class="col-12 col-sm-3 btn-analytics" style="display: none">
+            <button type="button" class="btn btn-primary btn-block" onclick="analyticsModule.navigateView('analytics')">View Analytics</button>
+        </div>
+    </div>
+
+
+    <div class="row companyAnalytics">
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color">Total Clients To Date</div>
+            <div class="card-body">
+                <p class="card-text">
+                <div class="row">
+                    <div class="col-12 secondary-text-color">
+                        <i class="fa fa-users fa-5x"></i> <span id="clientsToDate" class="totalHeadingValue"></span>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color">Total Bookings To Date</div>
+            <div class="card-body">
+                <p class="card-text">
+                <div class="row">
+                    <div class="col-12 secondary-text-color">
+                        <i class="fa fa-money-bill-alt fa-5x"></i> <span id="bookingsToDate" class="totalHeadingValue"></span>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color">Total Work Done (Hours)</div>
+            <div class="card-body">
+                <p class="card-text">
+                <div class="row">
+                    <div class="col-12 secondary-text-color">
+                        <i class="fa fa-clock fa-5x"></i> <span id="workDone" class="totalHeadingValue"></span>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row chartViews companyAnalytics">
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color"><i class="fa fa-user-plus"></i> New Sign Ups</div>
+            <div class="card-body">
+                <canvas id="barChart" width="550" height="400" style="margin-left: -15px"></canvas>
+            </div>
+        </div>
+
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color"><i class="fa fa-chart-pie"></i> Bookings Figures</div>
+            <div class="card-body">
+                <canvas id="bookingChart" width="550" height="400" style="margin-left: -20px"></canvas>
+            </div>
+        </div>
+
+        <div class="card border-secondary col-12 col-sm-4">
+            <div class="card-header primary-color primary-text-color"><i class="fa fa-chart-line"></i> Bookings Per Month</div>
+            <div class="card-body">
+                <canvas id="timeChart" width="550" height="400" style="margin-left: -15px"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row topTreatmentsBooked companyAnalytics">
+        <div class="card border-secondary col-12 col-sm-6">
+            <div class="card-header primary-color primary-text-color"><i class="fa fa-sort-amount-down"></i> Top Treatments Booked</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" id="topTreatmentsBooked"></ul>
+            </div>
+        </div>
+
+        <div class="card border-secondary col-12 col-sm-6">
+            <div class="card-header primary-color primary-text-color"><i class="fa fa-sort-amount-down"></i> Top Clients Booked</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" id="topClientsBooked"></ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="companyGoals" style="display: none">
+        <div class="row">
+            <div class="col-12 col-sm-3 current-goal-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title current-goal-name"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted current-goal-measure"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted current-goal-revenue"></h6>
+                        <div id="current-progress" style="margin-top: 25px; margin-bottom: 25px">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <button onclick="analyticsModule.editEmployeeGoal()" class="btn btn-primary btn-block">Edit Goal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-9 past-goal-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Past Goals</h5>
+                        <div>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Goal Date</th>
+                                    <th scope="col">Goal Amount</th>
+                                    <th scope="col">Final Amount</th>
+                                    <th scope="col">Difference</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pastGoalsResults">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="captureGoalModal" aria-hidden="true" id="captureGoalModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Company Goal</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form role="form" id="goalCaptureForm" name="goalCaptureForm" action="javascript:;" method="POST">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="goalName" class="secondary-text-color">Goal Name</label>
+                                    <input name="goalName" type="text" class="form-control" id="goalName" placeholder="Goal Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalStartDate" class="secondary-text-color">Goal Start Date</label>
+                                    <input name="goalStartDate" type="date" class="form-control" id="goalStartDate" placeholder="Goal Start Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalMeasureDate" class="secondary-text-color">Goal Measure Date</label>
+                                    <input name="goalMeasureDate" type="date" class="form-control" id="goalMeasureDate" placeholder="Goal Measure Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalBestCase" class="secondary-text-color">Revenue Best Case</label>
+                                    <input name="revenueGoalBestCase" type="text" class="form-control" id="revenueGoalBestCase" placeholder="Revenue Best Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalWorstCase" class="secondary-text-color">Revenue Worst Case</label>
+                                    <input name="revenueGoalWorstCase" type="text" class="form-control" id="revenueGoalWorstCase" placeholder="Revenue Worst Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12 col-sm-6">
+                                        <button type="button" class="btn btn-dark btn-block" onclick="analyticsModule.closeModal()">CANCEL</button>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editGoalModal" aria-hidden="true" id="editGoalModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Company Goal</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form role="form" id="goalEditForm" name="goalEditForm" action="javascript:;" method="POST">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="goalName" class="secondary-text-color">Goal Name</label>
+                                    <input name="goalId" type="hidden">
+                                    <input name="goalName" type="text" class="form-control" placeholder="Goal Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalStartDate" class="secondary-text-color">Goal Start Date</label>
+                                    <input name="goalStartDate" type="date" class="form-control" placeholder="Goal Start Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="goalMeasureDate" class="secondary-text-color">Goal Measure Date</label>
+                                    <input name="goalMeasureDate" type="date" class="form-control" placeholder="Goal Measure Date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalBestCase" class="secondary-text-color">Revenue Best Case</label>
+                                    <input name="revenueGoalBestCase" type="text" class="form-control" placeholder="Revenue Best Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="revenueGoalWorstCase" class="secondary-text-color">Revenue Worst Case</label>
+                                    <input name="revenueGoalWorstCase" type="text" class="form-control" placeholder="Revenue Worst Case" value="0.0" min="0.0">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12 col-sm-6">
+                                        <button type="button" class="btn btn-dark btn-block" onclick="analyticsModule.closeModal()">CANCEL</button>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/libs/chart.min.js"></script>
+<script type="text/javascript" src="/js/modules/analytics/analyticsModule.js"></script>
+<script>
+    analyticsModule.initialiseModule();
+</script>

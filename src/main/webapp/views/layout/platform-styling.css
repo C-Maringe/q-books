@@ -1,0 +1,347 @@
+/*
+    GENERAL STYLING
+*/
+
+/*
+    SCHEDULE VIEW
+*/
+#scheduleView {
+    padding-top: 30px;
+}
+
+#scheduleView #cancellationViewOptionsSection {
+    margin-bottom: 40px;
+}
+
+#scheduleView #employeeSchedule {
+    height: 100%;
+}
+
+#scheduleView .btn-float {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 1;
+}
+
+#scheduleView .btn-circle {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+}
+
+#employeesScheduleToViewModal div.modal-header,
+#scheduleDayClickContextOption div.modal-header,
+#scheduleSpecificViewOption div.modal-header,
+#startBookingDateTimeSelectionModal div.modal-header,
+.join-cancellation-queue-modal div.modal-header,
+.view-cancellation-queue-modal div.modal-header,
+#startTreatmentSelectionModal div.modal-header,
+#blockoutSpecificViewOption div.modal-header,
+#confirmCashupCompleted div.modal-header{
+    background-color: dimgrey !important;
+    color: white !important;
+}
+
+#employeesScheduleToViewModal div.modal-body,
+#employeesScheduleToViewModal div.modal-body .col-12,
+#scheduleDayClickContextOption div.modal-body,
+#scheduleDayClickContextOption div.modal-body .col-12{
+    padding: 0 !important;
+}
+
+#scheduleView #bookingTimeAndDateOptions {
+    margin-bottom: 15px;
+}
+#scheduleView .bookingSummaryDetails {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(105, 105, 105, 0.75);
+    height: 80px;
+    z-index: 25;
+    padding-left: 10px;
+}
+
+#scheduleView .bookingSummaryDetails .row {
+    height: 80px;
+}
+
+#scheduleView .bookingSummaryDetails button {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+#scheduleView .bookingSummaryDetails .col-sm-7 {
+    padding-top: 30px;
+    color: white;
+    border-right: 2px solid white;
+}
+
+#scheduleView #bookingTreatmentsSection {
+    margin-bottom: 50px;
+}
+/*
+    CONFIGURATIONS VIEW
+*/
+#configurations {
+    padding-top: 60px;
+}
+/*
+    INVENTORY VIEW
+*/
+#viewInventory {
+    padding-top: 60px;
+}
+
+#viewInventory #treatmentLists {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+/*
+    MARKETING VIEW
+*/
+#viewAllCampaigns,
+#viewAllClients,
+#setupCampaignEmail {
+    padding-top: 60px;
+}
+
+#setupCampaignEmail #emailTitle {
+    margin-bottom: 20px;
+}
+/*
+    BOOKINGS VIEW
+*/
+#bookingsView {
+    padding-top: 60px;
+}
+
+#bookingsView .card {
+    margin-bottom: 10px;
+}
+
+#bookingsView .card-text {
+    font-size: 14px;
+}
+
+#bookingsView .col-12 .col-sm-3 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/*
+SALES VIEW
+*/
+#salesView {
+    padding-top: 60px;
+}
+
+#salesView .card {
+    margin-bottom: 10px;
+}
+
+#salesView .card-text {
+    font-size: 14px;
+}
+
+#salesView .col-12 .col-sm-3 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#salesView #backNavbar {
+    top: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    background-color: dimgrey;
+    height: 50px;
+    z-index: 25;
+    padding-left: 200px;
+}
+
+#salesView #backToCashupView {
+    padding-top: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+#salesView .btn-float {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 1;
+}
+
+#salesView .btn-circle {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+}
+
+/*
+    EMPLOYEE VIEW
+*/
+
+#employeeView {
+    padding-top: 60px;
+}
+
+#employeeView #registerEmployees {
+    margin-top: 20px;
+}
+
+#employeeView #registerEmployees .permissionLabel,
+#employeeView #editEmployee .permissionLabel {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#employeeView #registerEmployees .permissions-list,
+#employeeView #editEmployee .permissions-list {
+    padding-top: 20px;
+}
+
+#employeeView #registerEmployees .nav-tabs .nav-link,
+#employeeView #editEmployee .nav-tabs .nav-link {
+    color: black
+}
+
+#employeeView #registerEmployees .nav-tabs .nav-link.active,
+#employeeView #editEmployee .nav-tabs .nav-link.active {
+    color: #86c3bd !important;
+}
+
+/*
+    ANALYTICS VIEW
+*/
+#viewAnalytics {
+    padding-top: 60px;
+}
+
+#viewAnalytics .totalHeadingValue {
+    padding-left: 15px;
+    font-size: 60px;
+}
+
+#viewAnalytics .topTreatmentsBooked,
+#viewAnalytics .chartViews {
+    margin-top: 20px;
+}
+
+#viewAnalytics .chartViews {
+    margin-bottom: 50px;
+}
+
+#viewAnalytics .col-12.col-sm-6 ,
+#viewAnalytics .col-12.col-sm-4 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#viewAnalytics .card-body {
+    padding: 1.25em !important;
+}
+
+#viewAnalytics .topTreatmentsBooked .card{
+    height: 500px;
+    overflow: scroll;
+}
+
+@media screen and (max-width: 480px) {
+    .responsive-top-margin {
+        margin-top: 10px;
+    }
+
+    .heading {
+        text-align: center;
+    }
+
+    #scheduleView .btn-float {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        /*z-index: 599;*/
+    }
+
+    #scheduleView .btn-circle {
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+    }
+
+    #scheduleView .bookingSummaryDetails .col-6 {
+        padding-top: 5px;
+        color: white;
+        border-right: 2px solid white;
+    }
+
+    #scheduleView .bookingSummaryDetails button {
+        margin-top: 5px;
+    }
+
+    #scheduleView .bookingSummaryDetails .row {
+        height: 80px;
+    }
+
+    #scheduleView {
+        padding-top: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+/*
+    REPORTING VIEW
+*/
+
+#reportingView {
+    padding-top: 60px;
+}
+
+#reportingView #search,
+#reportingView #bookings,
+#reportingView #clients {
+    padding-top: 30px;
+}
+
+#reportingView .nav-tabs .nav-link{
+    color: black
+}
+
+#reportingView .nav-link.active {
+    color: #86c3bd !important;
+}
+
+#reportingView #clientResultLists {
+    margin-top: 20px;
+}
+
+#reportingView .grandTotals,
+#reportingView .signupsGrandTotals{
+    margin-top: 20px;
+}
+
+#reportingView .totalHeadingValue {
+    padding: 15px;
+    font-size: 25px;
+}
+
+#reportingView .totalClientsHeadingValue {
+    padding: 5px;
+    font-size: 18px;
+}
+
+/*
+    PROFILE VIEW
+*/
+#profileView {
+    padding-top: 60px;
+}

@@ -1,0 +1,29 @@
+<div id="bookingsView">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <h5 class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <input type="date" id="dateToView" class="form-control" placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <button type="button" class="btn btn-dark btn-block" id="getBookings">Get Bookings</button>
+                            <button type="button" class="btn btn-primary btn-block margin-item-grid" id="notifyAllClients" style="display: none;">Notify All</button>
+                        </div>
+                    </div>
+                </h5>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" id="bookingResults">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/js/modules/bookings/bookingsModule.js"></script>
+<script>
+    bookingsModule.initialiseModule();
+</script>

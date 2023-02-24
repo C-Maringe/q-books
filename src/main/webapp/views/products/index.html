@@ -1,0 +1,204 @@
+<div id="viewProducts">
+    <div id="listProducts" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Products</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right" id="registerSection"><i class="fas fa-edit"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="searchProduct" class="heading-text-label">Search For Product</label>
+                            <input type="text" class="form-control" id="searchProduct">
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush" id="productLists">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerProducts" style="display:none; padding: 0;" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>New Item Details</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form role="form" id="newProductForm" name="newProductForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="productName" class="secondary-text-color">Item Name</label>
+                                <input name="productName" type="text" class="form-control" id="productName" placeholder="Item Name" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDescription" class="secondary-text-color">Item Description</label>
+                                <input name="productDescription" type="text" class="form-control" id="productDescription" placeholder="Item Description" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item description.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="secondary-text-color">Price</label>
+                                <input name="price" type="text" class="form-control" id="price" placeholder="Price" required value="0.0" min="0.0" >
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item price.
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input name="special" type="checkbox" id="special" style="display: inline;">
+                                <label for="special" style="display: inline; margin-left: 10px; margin-top: -5px;">Check to make this a special.</label>
+                            </div>
+                            <div class="form-group specialChecked" style="display: none">
+                                <label  class="secondary-text-color" for="specialEndDate">Date Special Ends</label>
+                                <input name="specialEndDate" type="date" id="specialEndDate" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label for="specialPrice" class="secondary-text-color">Special Price</label>
+                                <input name="specialPrice" type="text" class="form-control" id="specialPrice" placeholder="Special Price" required value="0.0" min="0.0" >
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="secondary-text-color">Category</label>
+                                <select id="category" class="form-control" required name="category">
+                                    <option value="Hair">Hair</option>
+                                    <option value="Beauty">Beauty</option>
+                                    <option value="General">General</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please select an category.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12 col-sm-6 offset-sm-6">
+                                    <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editProducts" style="display:none" class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Edit Item Details</h4>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-light float-right viewSection"><i class="fas fa-angle-left"></i> Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <input name="id" type="hidden" id="id">
+                    <form role="form" id="editProductForm" name="editProductForm" action="javascript:;" method="POST" class="needs-validation" novalidate>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="updateProductName" class="secondary-text-color">Item Name</label>
+                                <input name="productName" type="text" class="form-control" id="updateProductName" placeholder="Item Name" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="updateProductDescription" class="secondary-text-color">Item Description</label>
+                                <input name="productDescription" type="text" class="form-control" id="updateProductDescription" placeholder="Item Description" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item description.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="updatePrice" class="secondary-text-color">Price</label>
+                                <input name="price" type="number" class="form-control" id="updatePrice" placeholder="Price" required value="0.0" min="0.0" step="0.01" >
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid item price.
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input name="special" type="checkbox" id="updateSpecial" style="display: inline;">
+                                <label for="updateSpecial" style="display: inline; margin-left: 10px; margin-top: -5px;">Check to make this a special.</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="updateSpecialPrice" class="secondary-text-color">Special Price</label>
+                                <input name="specialPrice" type="number" class="form-control" id="updateSpecialPrice" placeholder="Special Price" required value="0.0" min="0.0" step="0.01">
+                            </div>
+                            <div class="form-group updateSpecialChecked" style="display: none">
+                                <label  class="secondary-text-color" for="updateSpecialEndDate">Date Special Ends</label>
+                                <input name="specialEndDate" type="date" id="updateSpecialEndDate" class="form-control" >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="updateCategory" class="secondary-text-color">Category</label>
+                                <select id="updateCategory" class="form-control" required name="category">
+                                    <option value="Hair">Hair</option>
+                                    <option value="Beauty">Beauty</option>
+                                    <option value="General">General</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please select an category.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12 col-sm-6 offset-sm-6">
+                                    <button type="submit" class="btn btn-primary btn-block">UPDATE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/modules/products/productsModule.js"></script>
+<script>
+    productsModule.initialiseModule();
+</script>

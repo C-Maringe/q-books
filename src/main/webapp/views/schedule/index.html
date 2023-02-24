@@ -1,0 +1,507 @@
+<!-- Main Schedule-->
+<div id="scheduleView">
+    <div class="row" id="cancellationViewOptionsSection">
+        <div class="col-12 col-md-6 col-md-6">
+            <button type="button" class="btn btn-dark btn-block" id="initiateJoinCancellationQueue">JOIN CANCELLATION QUEUE</button>
+        </div>
+        <div class="col-12 col-md-6 col-md-6 responsive-top-margin">
+            <button type="button" class="btn btn-dark btn-block" id="initiateBlockoutDay">BLOCK OUT TIME</button>
+        </div>
+    </div>
+
+    <!-- Schedule View -->
+    <div class="row">
+        <div class="col-12">
+            <div id="employeeSchedule"></div>
+        </div>
+    </div>
+
+    <!-- Schedule Treatment View -->
+    <div id="bookingTreatmentsSection" class="row" style="display: none">
+        <div class="col-12" id="bookingTimeAndDateOptions">
+            <div class="row">
+                <div class="col-12 offset-sm-8 offset-lg-9 offset-md-8 col-sm-4 col-lg-3 col-md-4">
+                    <button class="btn btn-dark btn-block" id="refreshTreatmentListButton">Refresh List</button>
+                </div>
+
+                <div class="col-12 col-sm-4 col-lg-3 col-md-4">
+                    <label for="bookingDate">SELECT DATE</label>
+                    <input type="date" class="form-control" id="bookingDate" placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-3 responsive-top-margin">
+                    <label for="bookingTime">SELECT TIME</label>
+                    <select name="bookingTime" id="bookingTime" class="form-control"></select>
+                    <span id="emptyTimeListForEmployeeText" class="secondary-text-color"></span>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-3 offset-lg-3 responsive-top-margin" style="display: none" id="clientListView">
+                    <label for="clientList">SELECT CLIENT</label>
+                    <select name="clientList" id="clientList" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="background-color primary-text-color">
+                        <tr>
+                            <th scope="col">Service</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="treatmentLists">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Overview Floating Component -->
+    <div class="row" id="bookingsOverviewView" style="display: none">
+        <div class="bookingSummaryDetails">
+            <div class="col-12 col-sm-11 offset-sm-1">
+                <div class="row">
+                    <div id="treatmentsSelectedForBooking" class="col-6 col-sm-7">
+
+                    </div>
+                    <div class="col-6 col-sm-5">
+                        <button id="completeBooking" class="btn btn-dark btn-block">BOOK NOW</button>
+                        <button id="completeBookingDeposit" class="btn btn-dark btn-block">PAY DEPOSIT NOW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="bookingDepositCaptureView" style="display: none;">
+        <div class="col-12">
+            <form action="https://cuticlenailsstudio.q-book.co.za/views/layout/index.html" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
+<!--            <form action="http://localhost:8080/views/layout/index.html" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>-->
+        </div>
+    </div>
+
+    <!-- Booking Start Floating Component -->
+    <div class="row">
+        <div class="col-12">
+            <button id="startBookingProcessButton" class="btn btn-float btn-circle btn-dark"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Employee block out time -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scheduleSpecificViewOption" aria-hidden="true" id="blockoutSpecificViewOption">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Blocked out time information</h5>
+            </div>
+            <div id="blockoutSpecificView" class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="blockoutTimeTitle">REASON TO BLOCKOUT TIME</label>
+                        <input type="text" class="form-control" id="blockoutTimeTitle" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="blockoutTimeDate">DATE</label>
+                        <input type="date" class="form-control" id="blockoutTimeDate" style="border-radius: 5px; border: 1px solid lightgrey">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="blockoutTimeStart">START TIME</label>
+                        <select class="form-control" id="blockoutTimeStart" style="border-radius: 5px; border: 1px solid lightgrey"></select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="blockoutTimeEnd">END TIME</label>
+                        <select class="form-control" id="blockoutTimeEnd" style="border-radius: 5px; border: 1px solid lightgrey"></select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="blockoutTimeEmployees">FOR EMPLOYEE/S</label>
+                        <select multiple class="form-control" id="blockoutTimeEmployees" style="border-radius: 5px; border: 1px solid lightgrey"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary col-sm-6" id="confirmBlockoutProcessCompletedButton">CONFIRM</button>
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User booking action options -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="employeesScheduleToViewModal" aria-hidden="true" id="scheduleDayClickContextOption">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select an option</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="bookingToViewOrCancel">
+                <div class="list-group list-group-flush col-12">
+                    <button type="button" id="btnCanUserViewBooking" class="list-group-item list-group-item-action" onclick="scheduleModule.viewBookingDetails()">VIEW BOOKING</button>
+                    <button type="button" id="btnCanUserCancelBooking" class="list-group-item list-group-item-action" onclick="scheduleModule.cancelBooking()">CANCEL BOOKING</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User view specific booking option -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scheduleSpecificViewOption" aria-hidden="true" id="scheduleSpecificViewOption">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Booking</h5>
+            </div>
+            <div id="bookingSpecificView" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger col-sm-6" onclick="scheduleModule.cancelBooking()">CANCEL BOOKING</button>
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Employee Schedule To Select Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="employeesScheduleToViewModal" aria-hidden="true" id="employeesScheduleToViewModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a schedule to view</h5>
+            </div>
+            <div class="modal-body">
+                <div class="list-group list-group-flush col-12" id="employeesScheduleToViewResultList">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Cancellation Queue Modal -->
+<div class="modal fade join-cancellation-queue-modal" tabindex="-1" role="dialog" aria-labelledby="joinCancellationQueueModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridSystemModalLabel">FILL IN THE DETAILS TO JOIN THE QUEUE</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <label for="selectCancellationStartDate">START DATE</label>
+                        <input type="date" class="cancellationDateStart form-control" id="selectCancellationStartDate">
+
+                        <label for="selectCancellationEndDate">END DATE</label>
+                        <input type="date" class="cancellationDateEnd form-control" id="selectCancellationEndDate">
+                    </div>
+
+                    <div class="col-12 col-sm-6">
+                        <label for="cancellationStartTime">START TIME</label>
+                        <select name="cancellationStartTime" id="cancellationStartTime" class="form-control"></select>
+
+                        <label for="cancellationEndTime">END TIME</label>
+                        <select name="cancellationEndTime" id="cancellationEndTime" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <label for="selectCancellationStartDate">EMPLOYEE</label>
+                        <select name="employeeId" id="selectCancellationEmployee" class="cancellationEmployee form-control"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="joinCancellationQueueClose" type="button" class="btn btn-dark offset-4 col-4">CLOSE</button>
+                <button id="joinCancellationQueue" type="button" class="btn btn-dark col-4">JOIN</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Cancellation Queue Modal -->
+<div class="modal fade view-cancellation-queue-modal" tabindex="-1" role="dialog" aria-labelledby="viewCancellationQueueModal"  aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Queue</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Notification Start</th>
+                            <th>Notification End</th>
+                            <th>Client Name</th>
+                            <th>Client Email</th>
+                        </tr>
+                        </thead>
+                        <tbody id="viewCancellationQueueResults">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="viewCancellationQueueClose" type="button" class="btn btn-dark btn-block col-4">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms and Agreement Modal -->
+<div class="modal fade terms-and-agreement-modal" tabindex="-1" role="dialog" aria-labelledby="termsAndAgreementModal"  aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <div class="col-12 text-center" style="font-weight: bold; font-size: 14px">
+                    Wash N Vac Carwash
+                </div>
+<!--                <div class="col-12 text-center" style="font-size: 12px">-->
+<!--                    (Reg number: 2015/407398/07)-->
+<!--                </div>-->
+                <div class="col-12 text-center" style="font-weight: bold; font-size: 12px">
+                    ("Company")
+                </div>
+                <div class="col-12 text-center" style="font-weight: bold; font-size: 12px; border-top: 2px solid black; border-bottom: 2px solid black;">
+                    Terms and Conditions of Website
+                </div>
+            </div>
+            <div class="modal-body row" style="height: 600px; overflow-y: scroll; font-size: 14px; margin-bottom: 15px">
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>Introduction</b><br><br>
+                    <b>A</b> Please read these Terms and Conditions (interchangeably referred to as “Terms” and this “Agreement”) carefully before accessing or using our website.<br>
+                    <b>B</b> In these Terms “we” “us” and “our” refers to Wash N Vac Carwash.  Your access to and use of all information on this is provided subject to the following Terms. The information is intended for residents of South Africa only.<br>
+                    <b>C</b> The Terms set out below, including any additional document incorporated by reference, sets out the terms of engagement and applies to any person who accesses or makes use of our website (“you” or “your” including cognitive terms).<br>
+                    <b>D</b> We may change our Terms from time to time. Such changes will take effect as and when published. Therefore, you should keep up-to-date with their content and read these Terms at all times prior to making use of our website since the then current version of the terms will apply to your use.<br>
+                    <b>E</b> OUR TERMS CONTAIN SPECIFIC PROVISIONS TO LIMIT OUR LIABILITY. THESE TERMS HAVE BEEN SET OUT IN CAPITAL LETTERS. YOU SHOULD PAY PARTICULAR ATTENTION TO THESE TERMS SINCE THEY LIMIT YOUR ABILITY TO RECOVER LOSSES THAT YOU MAY INCUR IN CONNECTION WITH YOUR USE OF OUR WEBSITE.<br>
+                    <b>F</b> These Terms expressly supersede prior agreements or arrangements with you. THE COMPANY MAY IMMEDIATELY TERMINATE THESE TERMS OR ANY SERVICES WITH RESPECT TO YOU, OR GENERALLY CEASE OFFERING OR DENY ACCESS TO OUR WEBSITE OR ANY PORTION THEREOF, AT ANY TIME, FOR ANY REASON.<br>
+                    <b>G</b> For purposed of this Agreement our contact details are as follow:<br><br>
+                    Telephone number: 072 639 2058<br>
+                    E-mail: info@washnvac.co.za<br>
+                    WhatsApp: 082 792 5988<br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>1 Site Access</b><br><br>
+                    <b>1.1</b> Your access and use of our website constitutes your agreement to be bound by these Terms, which establish a contractual relationship between you and the Company. If you do not agree to these Terms, you may not access or use our website.<br>
+                    <b>1.2</b> If you make use of our website, you do so entirely at your own risk.<br>
+                    <b>1.3</b> When you visit our website, we give you a limited licence to access and use our information for personal use.<br>
+                    <b>1.4</b> You are permitted to download a copy of the information on this website to your computer for your personal use only provided that you do not delete or change any copyright symbol, trade mark or other proprietary notice. Your use of our content in any other way infringes our intellectual property rights.<br>
+                    <b>1.5</b> Except as permitted under the Copyright Act 1978, you are not permitted to copy, reproduce, republish, distribute or display any of the information on this website without our prior written permission.<br>
+                    <b>1.6</b> The licence to access and use the information on our website does not include the right to use any data mining robots or other extraction tools.  The licence also does not permit you to metatag or mirror our website without our prior written permission. We reserve the right to serve you with notice if we become aware of your metatag or mirroring of our website. Intellectual Property Rights<br>
+                    <b>1.7</b> The copyright to all content on this website including applets, graphics, images, layouts and text belongs to us or we have a licence to use those materials.<br>
+                    <b>1.8</b> All trademarks, brands and logos generally identified either with the symbols TM or ® which are used on this website are either owned by us or we have a licence to use them. Your access to our website does not license you to use those marks in any commercial way without our prior written permission.<br>
+                    <b>1.9</b> Any comment, feedback, idea or suggestion (called “Comments”) which you provide to us through this website becomes our property.  If in future we use your Comments in promoting our website or in any other way, we will not be liable for any similarities which may appear from such use.  Furthermore, you agree that we are entitled to use your Comments for any commercial or non-commercial purpose without compensation to you or to any other person who has transmitted your Comments.<br>
+                    <b>1.10</b> If you provide us with Comments, you acknowledge that you are responsible for the content of such material including its legality, originality and copyright.<br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>2 User responsibilities and warranties</b><br><br>
+                    <b>2.1</b> By using our website, you warrant that:<br>
+                    <ul>
+                        <ol>(1) you have read and agreed to these Terms and will use our website in accordance with them;</ol>
+                        <ol>(2) you are responsible for obtaining the data network access necessary to use the website.</ol>
+                        <ol>(3) you will not post, upload, replicate or transmit any abusive content on the website that is or could reasonably be considered threatening, harassing, defamatory, abusive, racist, sexist, discriminatory, in breach of confidence, in breach of privacy or restrict any user in any way from properly using the website;</ol>
+                        <ol>(4) you will not send any unsolicited electronic messages or use any software, routine or device to interfere or attempt to interfere electronically or manually with the operation or functionality of the website;</ol>
+                        <ol>(5) you will not infringe any third party or the website’s intellectual property or other rights or transmit content that the user does not own or does not have the right to publish or distribute; and/or</ol>
+                        <ol>(6) facilitate or assist any third party to do any of the above.</ol>
+                    </ul>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>3 Intellectual property protection</b><br><br>
+                    <b>3.1</b> All material, information, data, software, icons, text, graphics, lay-outs, images, sound clips, advertisements, video clips, trade names, logos, trade-marks, designs, copyright and/or service marks (as well as the organisation and layout of the website) together with the underlying software code and everything submitted by you to the website and the Company in use of the services, (“the Intellectual Property”) are owned (or co-owned or licenced, as the case may be) by the Company and/or its affiliates whether directly or indirectly, and as such, are protected from infringement by law. <br>
+                    <b>3.2</b> You may not copy, download, print, modify, alter, publish, broadcast, distribute, sell or transfer any intellectual property, editorial content, graphics or other material on the website without the written consent of the Company. <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>4 Privacy and personal information</b><br><br>
+                    We recognise the importance of protecting the privacy of information collected about visitors to our website, in particular information that is capable of identifying an individual ("Personal Information"). This Privacy and personal information clause (“Privacy Policy”) governs the manner in which your personal information, obtained through the website, will be dealt with. This Privacy Policy should be reviewed periodically so that you are updated on any changes. We welcome your comments and feedback.
+                    <br>
+                    <b>4.1 Personal information</b><br>
+                        Personal Information about visitors to our site is collected only when knowingly and voluntarily submitted. For example, we may need to collect such information to provide you with further services or to answer or forward any requests or enquiries. It is our intention that this Privacy Policy will protect your personal information from being dealt with in any way that is inconsistent with applicable privacy laws in South Africa.
+                    <br>
+                    <b>4.2 Use of information</b><br>
+                        Personal information that visitors submit to our website is used only for the purpose for which it is submitted or for such other secondary purposes that are related to the primary purpose, unless we disclose other uses in this Privacy Policy or at the time of collection. Copies of correspondence sent from the website, that may contain personal information, are stored as archives for record-keeping and back-up purposes only.
+                    <br>
+                    <b>4.3 Collection information on registered members</b><br>
+                        <ul>
+                            <ol>(1) As part of registering with us, we collect personal information about you in order for you to take full advantage of our website and book appointments. To do this it may be necessary for you to provide additional information to us as detailed below.</ol>
+                            <ol>(2) Registration <br>
+
+                                Registration is [completely/not] optional. Registration may include submitting your [name, email address, address, telephone numbers, option on receiving updates and promotional material and other information]. You may access this information at any time by logging in and going to your account.</ol>
+                            <ol>(3) Disclosure <br>
+                                Apart from where you have consented, or disclosure is necessary to achieve the purpose for which it was submitted, personal information may be disclosed in special situations where we have reason to believe that doing so is necessary to identify, contact or bring legal action against anyone damaging, injuring, or interfering (intentionally or unintentionally) with our rights or property, users, or anyone else who could be harmed by such activities. Also, we may disclose personal information when we believe in good faith that the law requires disclosure.
+                            </ol>
+                        </ul>
+                    <br>
+                    <b>4.4 Disclosure</b><br>
+                        <ul>
+                            <ol>(1)
+                                Apart from where you have consented, or disclosure is necessary to achieve the purpose for which it was submitted, personal information may be disclosed in special situations where we have reason to believe that doing so is necessary to identify, contact or bring legal action against anyone damaging, injuring, or interfering (intentionally or unintentionally) with our rights or property, users, or anyone else who could be harmed by such activities. Also, we may disclose personal information when we believe in good faith that the law requires disclosure.
+                            </ol>
+                            <ol>(2)
+                                We may engage third parties to provide you with goods or services on our behalf. In that circumstance, we may disclose your personal information to those third parties in order to meet your request for goods or services.
+                            </ol>
+                        </ul>
+                    <br>
+                    <b>4.5 Security</b><br>
+                        <ul>
+                            <ol>(1)
+                                We strive to ensure the security, integrity and privacy of Personal Information submitted to our sites, and we review and update our security measures in light of current technologies. Unfortunately, no data transmission over the Internet can be guaranteed to be totally secure.
+                            </ol>
+                            <ol>(2)
+                                However, we will endeavour to take all reasonable steps to protect the personal information you may transmit to us or from our online products and services. Once we do receive your transmission, we will also make our best efforts to ensure its security on our systems.
+                            </ol>
+                            <ol>(3)
+                                In addition, our employees and the contractors who provide services related to our information systems are obliged to respect the confidentiality of any personal information held by us. HOWEVER, WE WILL NOT BE HELD RESPONSIBLE FOR EVENTS ARISING FROM UNAUTHORISED ACCESS TO YOUR PERSONAL INFORMATION.
+                            </ol>
+                        </ul>
+                    <br>
+                    <b>4.6 Collecting information for users</b><br>
+                        <ul>
+                            <ol>(1) IP Addresses <br>
+                                Our web servers gather your IP address to assist with the diagnosis of problems or support issues with our services. Again, information is gathered in aggregate only and cannot be traced to an individual user.
+                            </ol>
+                            <ol>(2) Cookies and Applets <br>
+                                We use cookies to provide you with a better experience. These cookies and Applets allow us to increase your security by storing your session ID and are a way of monitoring single user access.
+                                This aggregate, non-personal information is collated and provided to us to assist in analysing the usage of the site.
+                            </ol>
+                        </ul>
+                    <br>
+                    <b>4.7 General data protection regulation</b><br>
+                        We ensure we manage any data we collect from you in accordance with the GDPR where applicable.
+                    <br>
+                    <b>4.8 Access to information</b><br>
+                        <ul>
+                            <ol>(1)
+                                We will endeavour to take all reasonable steps to keep secure any information which we hold about you, and to keep this information accurate and up to date. If, at any time, you discover that information held about you is incorrect, you may contact us to have the information corrected.
+                            </ol>
+                            <ol>(2)
+                                In addition, our employees and the contractors who provide services related to our information systems are obliged to respect the confidentiality of any personal information held by us.
+                            </ol>
+                        </ul>
+                    <br>
+                    <b>4.9 Links to other sites</b><br>
+                        WE PROVIDE LINKS TO WEBSITES OUTSIDE OF OUR WEBSITES, AS WELL AS TO THIRD PARTY WEBSITES. THESE LINKED SITES ARE NOT UNDER OUR CONTROL, AND WE CANNOT ACCEPT RESPONSIBILITY FOR THE CONDUCT OF COMPANIES LINKED TO OUR WEBSITE. BEFORE DISCLOSING YOUR PERSONAL INFORMATION ON ANY OTHER WEBSITE, WE ADVISE YOU TO EXAMINE THE TERMS AND CONDITIONS OF USING THAT WEBSITE AND ITS PRIVACY STATEMENT.
+                    <br>
+                    <b>4.10 Problems or questions</b><br>
+                    If we become aware of any ongoing concerns or problems with our websites, we will take these issues seriously and work to address these concerns. If you have any further queries relating to our Privacy Policy, or you have a problem or complaint, please contact us.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>5 Disclaimers and warranties</b><br><br>
+                    <b>5.1</b> WE DO NOT PROVIDE ANY WARRANTY EITHER EXPRESS OR IMPLIED INCLUDING WITHOUT LIMITATION WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE OF OUR WEBSITE.  <br>
+                    <b>5.2</b> To the extent permitted by law, any condition or warranty which would otherwise be implied into these Terms is excluded. <br>
+                    <b>5.3</b> THE COMPANY TAKES REASONABLE SECURITY MEASURES TO ENSURE THE SAFETY AND INTEGRITY OF THE WEBSITE AND TO EXCLUDE VIRUSES, UNLAWFUL MONITORING AND/OR ACCESS FROM THE WEBSITES. HOWEVER, THE COMPANY DOES NOT WARRANT OR REPRESENT THAT YOUR ACCESS TO THE WEBSITE WILL BE UNINTERRUPTED OR ERROR FREE OR THAT ANY INFORMATION, DATA, CONTENT, SOFTWARE OR OTHER MATERIAL ACCESSIBLE THROUGH THE WEBSITE WILL BE FREE OF BUGS, VIRUSES, WORMS, TROJAN HORSES OR OTHER HARMFUL COMPONENTS. THE USER’S ACCESS TO AND USE OF THE WEBSITE REMAINS SOLELY AT THE USER’S OWN RISK AND THE USER SHOULD TAKE THEIR OWN PRECAUTIONS ACCORDINGLY.<br>
+                    <b>5.4</b> FROM TIME TO TIME WE MAY HOST THIRD PARTY CONTENT ON OUR WEBSITE SUCH AS ADVERTISEMENTS AND ENDORSEMENTS BELONGING TO OTHER TRADERS.  RESPONSIBILITY FOR THE CONTENT OF SUCH MATERIAL RESTS WITH THE OWNERS OF THAT MATERIAL AND WE ARE NOT RESPONSIBLE FOR ANY ERRORS OR OMISSIONS IN SUCH MATERIAL.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>6 Indemnities</b><br><br>
+                    <b>6.1</b>
+                    YOU INDEMNIFY AND HOLD HARMLESS THE COMPANY, ITS MEMBERS, EMPLOYEES, AND PARTNERS FROM ANY DEMAND, ACTION OR APPLICATION OR OTHER PROCEEDINGS, INCLUDING FOR ATTORNEYS’ FEES AND RELATED COSTS SUCH AS TRACING FEES, MADE BY ANY THIRD PARTY AND ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF OUR WEBSITE.
+                    <br>
+                    <b>6.2</b>
+                    THE USER AGREES TO INDEMNIFY, DEFEND AND HOLD THE COMPANY HARMLESS FROM ANY DIRECT OR INDIRECT LIABILITY, LOSS, CLAIM AND EXPENSE (INCLUDING REASONABLE LEGAL FEES) RELATED TO THE USER’S BREACH OF THESE TERMS.
+                    <br>
+                    <b>6.3</b>
+                    THIS CLAUSE WILL SURVIVE TERMINATION OF THIS AGREEMENT.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>7 Dispute Resolution</b><br><br>
+                    <b>7.1</b>
+                    Should any dispute, disagreement or claim arise between you and the Company (each a “Party” together the “Parties”) regarding the use of our website, the Parties shall endeavour to resolve the dispute amicably, by negotiation, and with the best interests of both Parties in mind.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>8 Termination of Services</b><br><br>
+                    <b>8.1</b>
+                    IN ADDITION TO THE CONDITIONS PROVIDED FOR ABOVE, THE COMPANY RESERVES THE RIGHT TO TERMINATE YOUR USE OF ITS WEBSITE IF YOU BREACH ANY OF THE TERMS, OR FOR ANY OTHER REASON.
+                    <br>
+                    <b>8.2</b>
+                    If you wish to terminate the Agreement with the Company, you may do so by not accessing our website.
+                    <br>
+                    <b>8.3</b>
+                    The obligations and liabilities of the Parties incurred prior to the termination date of the Agreement shall survive the termination of this Agreement for all purposes.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>9 Jurisdiction</b><br><br>
+                    <b>9.1</b>
+                    These Terms are to be governed by and construed in accordance with the laws of South African and any claim made by either party against the other which in any way arises out of these Terms will be heard in South African and you agree to submit to the jurisdiction of those courts.
+                    <br>
+                    <b>9.2</b>
+                    If any provision in these Terms is invalid under any law the provision will be limited, narrowed, construed or altered as necessary to render it valid but only to the extent necessary to achieve such validity.  If necessary, the invalid provision will be deleted from these Terms and the remaining provisions will remain in full force and effect.
+                    <br>
+                </div>
+
+                <div class="col-12" style=" margin-bottom: 15px">
+                    <b>10 General</b><br><br>
+                    <b>10.1</b>
+                    This Agreement is the whole agreement between the Parties in regard to its subject matter.
+                    <br>
+                    <b>10.2</b>
+                    No addition to or variation or consensual cancellation of this Agreement, including this clause, has effect unless in writing and accepted by both Parties.
+                    <br>
+                    <b>10.3</b>
+                    No indulgence by a Party to another Party, or failure strictly to enforce the terms of this Agreement, will be interpreted as a waiver or be capable of founding an estoppel.
+                    <br>
+                    <b>10.4</b>
+                    The Parties undertake to do everything reasonable in their power necessary for or incidental to the effectiveness and performance of this Agreement.
+                    <br>
+                    <b>10.5</b>
+                    Save as is specifically provided in this Agreement, no Party is entitled to cede any of its rights or delegate any of its obligations under this Terms and Conditions without the prior written consent of the other Party affected by the transfer of rights or obligations which may not be unreasonably withheld.
+                    </br>
+                    <b>10.6</b>
+                    In the event of the client breaching these Terms, the client shall be liable for all legal costs (on the scale as between attorney and client) (including collection commission) which may be incurred by the Company in relation to the payment, failure or breach.
+                    <br>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="acceptTermsAndAgreement" type="button" class="btn btn-dark btn-block col-4">Accept Terms</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Confirmation Modal -->
+<div class="modal fade booking-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="bookingConfirmationModal"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Booking Confirmation</h4>
+            </div>
+            <div class="modal-body confirmation-message">
+
+            </div>
+            <div class="modal-footer">
+                <button id="bookingConfirmationModalClose" type="button" class="btn btn-dark btn-block col-4">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/modules/schedule/scheduleModule.js"></script>
+<script>
+    scheduleModule.initialiseModule();
+</script>

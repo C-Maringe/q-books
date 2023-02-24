@@ -1,0 +1,248 @@
+<div id="reportingView">
+    <div class="row">
+        <div class="col-12 col-sm-10 offset-sm-1">
+            <div class="card">
+                <div class="card-header primary-color primary-text-color">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Reporting</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12" style="padding-right: 0; padding-left: 0;">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="top-client-tab" data-toggle="tab" href="#top-client" role="tab" aria-controls="top-client" aria-selected="true">Top Clients Booking Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="top-treatments-tab" data-toggle="tab" href="#top-treatments" role="tab" aria-controls="top-client" aria-selected="true">Top Services Booking Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="true">Booking Reports</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="clients-tab" data-toggle="tab" href="#clients" role="tab" aria-controls="clients" aria-selected="true">Client Signup Reports</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="insites-tab" data-toggle="tab" href="#insites" role="tab" aria-controls="insites" aria-selected="true">Client Insight Reports</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-12" style="padding-right: 0; padding-left: 0;">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="top-client">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-3">
+                                            <input type="date" class="form-control" id="startDateTime" name="startDateTime">
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <input type="date" class="form-control" id="endDateTime" name="endDateTime">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <button class="btn btn-primary btn-block" type="button" id="searchClientButton">SEARCH</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group list-group-flush" id="clientResultLists">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="top-treatments">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-3">
+                                            <input type="date" class="form-control" id="startDateTimeTreatment" name="startDateTimeTreatment">
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <input type="date" class="form-control" id="endDateTimeTreatment" name="endDateTimeTreatment">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <button class="btn btn-primary btn-block" type="button" id="searchTopTreatmentButton">SEARCH</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group list-group-flush" id="treatmentResultLists">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="bookings">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <label for="fromDate">From Date</label>
+                                            <input type="date" id="fromDate" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <label for="toDate">To Date</label>
+                                            <input type="date" id="toDate" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <label for="bookingStatusOption">Booking Status</label>
+                                            <select id="bookingStatusOption" class="form-control">
+                                                <option value="All">All Bookings</option>
+                                                <option value="Active">Successful Bookings</option>
+                                                <option value="Cancelled">Cancelled Bookings</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <label for="clientOption">Client List</label>
+                                            <select id="clientOption" class="form-control"></select>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <label for="employeeOption">Employee List</label>
+                                            <select id="employeeOption" class="form-control"></select>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <label for="searchBookings" class="primary-text-color">Search Button</label>
+                                            <button class="btn btn-primary btn-block" type="button" id="searchBookings">SEARCH</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row sendBookingsInvoiceSection" style="display: none;">
+                                        <div class="col-12 col-sm-4 offset-sm-8">
+                                            <label for="sendBookingsInvoice" class="primary-text-color">Send Invoice</label>
+                                            <button class="btn btn-success btn-block" type="button" id="sendBookingsInvoice">INVOICE</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row grandTotals bg-success primary-text-color" style="display: none">
+                                        <div class="col-12 col-sm-4 totalHeadingValue text-left">
+                                            Report Totals -
+                                        </div>
+                                        <div class="col-12 col-sm-4 totalHeadingValue text-left">
+                                            <i class="fa fa-money-bill-alt"></i> <span id="totalRevenueMade"></span>
+                                        </div>
+                                        <div class="col-12 col-sm-4 totalHeadingValue text-left">
+                                            <i class="fa fa-clock"></i> <span id="totalTimeSpent"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group list-group-flush" id="bookingsResultList">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="clients">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <label for="fromClientDate">From Date</label>
+                                            <input type="date" id="fromClientDate" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <label for="toClientDate">To Date</label>
+                                            <input type="date" id="toClientDate" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-12 col-sm-4">
+                                            <label for="searchClients" class="primary-text-color">Search Button</label>
+                                            <button class="btn btn-primary btn-block" type="button" id="searchClients">SEARCH</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row signupsGrandTotals bg-success primary-text-color" style="display: none">
+                                        <div class="col-12 col-sm-3 totalClientsHeadingValue text-left">
+                                            Report Totals -
+                                        </div>
+                                        <div class="col-12 col-sm-3 totalClientsHeadingValue text-left">
+                                            Total Signed Up (<span id="totalClientsSignedUp" style="font-weight:bold"></span>)
+                                        </div>
+                                        <div class="col-12 col-sm-3 totalClientsHeadingValue text-left">
+                                            Active Profiles (<span id="totalActiveProfiles" style="font-weight:bold"></span>)
+                                        </div>
+                                        <div class="col-12 col-sm-3 totalClientsHeadingValue text-left">
+                                            Clients With Bookings (<span id="totalClientsWithBookings" style="font-weight:bold"></span>)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group list-group-flush" id="clientResultList">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="insites">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="userInsightFilter" class="primary-text-color">Select client to view</label>
+                                            <select id="userInsightFilter" class="form-control"></select>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <label for="searchClients" class="primary-text-color">Search Button</label>
+                                            <button class="btn btn-primary btn-block" type="button" id="searchUserInsites">SEARCH</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group list-group-flush" id="clientInsiteResultList">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="quickEmailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Quick Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="row">
+                        <div class="col-12">
+                            <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject">
+                        </div>
+                        <div class="col-12">
+                            <textarea name="body" id="body" cols="30" rows="10" class="form-control" style="margin-top: 10px;"></textarea>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success col-6" id="btnSendEmail">SEND EMAIL</button>
+                <button type="button" class="btn btn-dark btn-block col-6" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/libs/jquery-ui.min.js"></script>
+<script src="/js/modules/reporting/reportingModule.js"></script>
+<script>
+    reportingModule.initialiseModule();
+</script>

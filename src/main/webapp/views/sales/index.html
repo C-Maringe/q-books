@@ -1,0 +1,235 @@
+<div id="salesView">
+    <div id="cashupSection" class="row">
+        <div class="col-12 col-sm-4">
+            <label for="dateToView">SELECT DATE</label>
+            <input type="date" id="dateToView" class="form-control" placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+        </div>
+        <div class="col-12 col-sm-4">
+            <label for="getBookings" class="primary-text-color">SELECT DATE</label>
+            <button type="button" class="btn btn-dark btn-block" id="getBookings">START CASH UP</button>
+        </div>
+        <div class="col-12 col-sm-4" style="display: none" id="completedDailyCashup">
+            <label for="continueCashup" class="primary-text-color">continue</label>
+            <button type="button" class="btn btn-success btn-block" id="continueCashup">COMPLETE CASH UP</button>
+        </div>
+        <div class="col-12" style="margin-top: 10px;">
+            <div class="card">
+                <h5 class="card-header primary-color primary-text-color">
+                    CASH UP
+                </h5>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" id="bookingResults">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="backNavbar" style="display: none">
+        <div class="row">
+            <div id="backToCashupView" class="col-2">
+                <i class="fas fa-arrow-left"></i> BACK
+            </div>
+        </div>
+    </div>
+
+    <div id="salesTreatmentsSection" class="row" style="display: none; margin-top: 10px;">
+        <div class="col-12" id="bookingTimeAndDateOptions" style="padding-left: 0; padding-right: 0">
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <label for="saleDate">SELECT DATE</label>
+                    <input type="date" class="form-control" id="saleDate" placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" readonly>
+                </div>
+
+                <div class="col-12 col-sm-4 responsive-top-margin">
+                    <label for="saleTime">SELECT TIME</label>
+                    <select name="bookingTime" id="saleTime" class="form-control"></select>
+                    <span id="timeList" class="secondary-text-color"></span>
+                </div>
+
+                <div class="col-12 col-sm-4 responsive-top-margin">
+                    <label for="saleTime" class="primary-text-color">COMPLETE CHANGES</label>
+                    <button id="completeBooking" class="btn btn-primary btn-block">COMPLETE CHANGES</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12" style="margin-top: 10px;">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="background-color primary-text-color">
+                        <tr>
+                            <th scope="col">Service</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="treatmentLists">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newSaleTreatmentsSection" class="row" style="display: none">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <label for="bookingTime">SELECT TIME</label>
+                    <select name="bookingTime" id="bookingTime" class="form-control"></select>
+                    <span id="emptyTimeListForEmployeeText" class="secondary-text-color"></span>
+                </div>
+
+                <div class="col-12 col-sm-3">
+                    <label for="clientList">SELECT CLIENT</label>
+                    <select name="clientList" id="clientList" class="form-control"></select>
+                </div>
+
+                <div class="col-12 col-sm-3">
+                    <label for="employeeList">SELECT EMPLOYEE</label>
+                    <select name="employeeList" id="employeeList" class="form-control"></select>
+                </div>
+
+                <div class="col-12 col-sm-3">
+                    <label for="employeeList" class="primary-text-color">SELECT EMPLOYEE</label>
+                    <button class="btn btn-block btn-success" id="btnCompleteNewSaleBooking">BOOK NOW</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" style="margin-top: 10px">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="background-color primary-text-color">
+                        <tr>
+                            <th scope="col">Service</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="newSaleTreatmentLists">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newSaleProductsSection" class="row" style="display: none">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-sm-3 offset-sm-9">
+                    <button class="btn btn-block btn-success" id="btnCompleteNewSaleProduct">SUBMIT NOW</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" style="margin-top: 10px">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="background-color primary-text-color">
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="newSaleProductLists">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <button id="startNewSaleBookingProcessButton" style="display: none;" class="btn btn-float btn-circle btn-dark"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="captureSaleItem" aria-hidden="true" id="captureSaleItemModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title totalToPay"></h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="saleItemCaptureForm" name="saleItemCaptureForm" action="javascript:;" method="POST">
+                    <div class="col-12">
+                        <div class="form-group deposit-paid" style="display: none">
+                            <label for="depositPaid" class="secondary-text-color">Total Deposit Paid</label>
+                            <input type="text" class="form-control" id="depositPaid" placeholder="Total Cash Paid" value="0.0" min="0.0" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="totalCashPaid" class="secondary-text-color">Total Cash Paid</label>
+                            <input name="totalCashPaid" type="text" class="form-control" id="totalCashPaid" placeholder="Total Cash Paid" value="0.0" min="0.0" >
+                        </div>
+                        <div class="form-group">
+                            <label for="totalCardPaid" class="secondary-text-color">Total Card Paid</label>
+                            <input name="totalCardPaid" type="text" class="form-control" id="totalCardPaid" placeholder="Total Card Paid" value="0.0" min="0.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="totalEFTPaid" class="secondary-text-color">Total EFT Paid</label>
+                            <input name="totalEFTPaid" type="text" class="form-control" id="totalEFTPaid" placeholder="Total EFT Paid" value="0.0" min="0.0">
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input name="discounted" type="checkbox" id="discounted" class="custom-control-input" >
+                            <label class="custom-control-label" for="discounted">Check if discounted.</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="discountPercentage" class="secondary-text-color">Discounted Percentage</label>
+                            <input name="discountPercentage" type="text" class="form-control" id="discountPercentage" placeholder="Discounted Percentage" value="0.0" min="0.0" >
+                        </div>
+                        <div class="form-group">
+                            <label for="totalVoucherPaid" class="secondary-text-color">Total Voucher Paid</label>
+                            <input name="totalVoucherPaid" type="text" class="form-control" id="totalVoucherPaid" placeholder="Total Voucher Paid" value="0.0" min="0.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="voucherNumber" class="secondary-text-color">Voucher Number</label>
+                            <input name="voucherNumber" type="text" class="form-control" id="voucherNumber" placeholder="Voucher Number">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-6">
+                                <button type="button" class="btn btn-dark btn-block" onclick="salesModule.closeModal()">CANCEL</button>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmCashupCompleted" aria-hidden="true" id="confirmCashupCompleted">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cashup Confirmation</h5>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure you want to complete the cash up? This cannot be undone.</h5>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark col-sm-6" data-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-success col-sm-6" onclick="salesModule.confirmDayCanBeCashedUp()">CONFIRM</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/modules/sales/salesModule.js"></script>
+<script>
+    salesModule.initialiseModule();
+</script>
