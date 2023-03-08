@@ -24,6 +24,9 @@ public class MobileBookingCancellationQueueResource {
     @PostMapping
     public ResponseEntity<BookingCancellationQueueModel> addClientToBookingCancellationQueue
             (@RequestHeader("Authorization") String Authorization,@RequestBody NewJoinBookingCancellationQueueModel newJoinBookingCancellationQueueModel) {
+        if(Authorization.startsWith("Bearer")){
+            Authorization = Authorization.substring(7);
+        }
         log.info( "MobileBookingCancellationQueueResource.addClientToBookingCancellationQueue() called at " + System.currentTimeMillis());
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yy-MM-dd");
         BookingCancellationQueueMember bookingCancellationQueueMember = new BookingCancellationQueueMember();

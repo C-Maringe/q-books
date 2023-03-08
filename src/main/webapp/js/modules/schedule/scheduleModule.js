@@ -891,6 +891,8 @@ var scheduleModule = (function(){
                 repeatEventDetails.endDateTime          = moment(blockoutTimeDate.val()).format("YYYY-MM-DD") + ' ' + blockoutTimeEnd.val();
                 repeatEventDetails.employees            = blockoutTimeEmployeesSelect.val();
 
+                console.log(JSON.stringify(repeatEventDetails))
+
             } else {
                 toastr["info"]("Please ensure you have selected the correct booking date, time and employees.","Info");
                 return;

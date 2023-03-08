@@ -46,6 +46,9 @@ public class MobileScheduleResource {
 	public ResponseEntity<BookingCreatedModel> bookClient(@RequestHeader("Authorization") String Authorization, @RequestBody NewBookingModel newBookingModel) {
         log.info("MobileBookingCancellationQueueResource.bookClient() called at " + System.currentTimeMillis());
         log.info("MobileBookingCancellationQueueResource.bookClient() ended at " + System.currentTimeMillis());
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
         return new ResponseEntity<>(scheduleServices.createBookingForClient(Authorization, newBookingModel), HttpStatus.CREATED);
 	}
 }

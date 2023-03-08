@@ -23,6 +23,9 @@ public class MobileProfileResource {
 
 	@GetMapping
 	public ResponseEntity<ViewClientModel> viewClientProfile(@RequestHeader("Authorization") String Authorization) {
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
         log.info("MobileProfileResource.viewClientProfile() called at " + System.currentTimeMillis());
         log.info("MobileProfileResource.viewClientProfile() ended at " + System.currentTimeMillis());
         return new ResponseEntity<>(clientServices.viewClientProfile(authTokenServices.extractUserId(Authorization)), HttpStatus.OK);
@@ -30,6 +33,9 @@ public class MobileProfileResource {
 
 	@PutMapping
 	public ResponseEntity<ViewClientModel> updateProfile(@RequestHeader("Authorization") String Authorization,@RequestBody UpdateClientModel updateClientModel) {
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
         log.info("MobileProfileResource.updateProfile() called at " + System.currentTimeMillis());
         log.info("MobileProfileResource.updateProfile() ended at " + System.currentTimeMillis());
         return new ResponseEntity<>(clientServices.editProfile(authTokenServices.extractUserId(Authorization), updateClientModel), HttpStatus.OK);
@@ -39,12 +45,18 @@ public class MobileProfileResource {
 			@RequestHeader("Authorization") String Authorization,
 			final @RequestBody ReceiveMarketingEmailModel receiveMarketingEmail
 	) {
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
 		return new ResponseEntity<>(clientServices.activateMarketingEmailsRetrieval(authTokenServices.extractUserId(Authorization), receiveMarketingEmail), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/marketing-email")
 	public ResponseEntity<ReceiveMarketingEmailModel> getUser(@RequestHeader("Authorization") String Authorization)
 	{
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
 		ReceiveMarketingEmailModel receiveMarketingEmailModel = clientServices.findReceiveMarketingEmailsPermissionOfUser(authTokenServices.extractUserId(Authorization));
 		return new ResponseEntity<>(receiveMarketingEmailModel, HttpStatus.OK);
 	}
