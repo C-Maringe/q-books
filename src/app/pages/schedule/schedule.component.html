@@ -24,15 +24,20 @@
           <div class="buttons-and-inputs-filters">
             <div style="margin-left: 10px;">
               <button type="button" class="btn" style="border-color:#D7DBEC; background-color: white;" nz-button
-                nz-dropdown [nzDropdownMenu]="menu1">
+                nz-dropdown [nzDropdownMenu]="DropdownEmployeeSelectSchedule">
                 Select Schedule <span class="ri-arrow-down-s-line"></span>
                 <i nz-icon nzType="down"></i>
               </button>
-              <nz-dropdown-menu #menu1="nzDropdownMenu">
+              <nz-dropdown-menu #DropdownEmployeeSelectSchedule="nzDropdownMenu">
                 <ul nz-menu>
-                  <li nz-menu-item>menu1 1st menu item</li>
-                  <li nz-menu-item>menu1 2nd menu item</li>
-                  <li nz-menu-item>menu1 3rd menu item</li>
+                  <ul *ngFor="let data of EmployeeScheduleTableData ">
+                    <li *ngIf="blockOutTime.employees[0]!==data.employeeId" nz-menu-item
+                      (click)="EmployeeScheduleSelectValue=data;blockOutTime.employees[0]=data.employeeId">
+                      {{data.employeeFullName}}
+                    </li>
+                  </ul>
+                  <li *ngIf="EmployeeScheduleSelectValue.employeeFullName!==''" nz-menu-item
+                    (click)="EmployeeScheduleSelectValue.employeeFullName=''">Reset</li>
                 </ul>
               </nz-dropdown-menu>
             </div>
@@ -60,49 +65,46 @@
             </div>
           </div>
           <div>
-            <button type="button" class="btn"
-              style="background-color:#21D59B;font-weight: 600;margin-left: 10px;">Cancellation
+            <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+              data-bs-toggle="modal" data-bs-target="#exampleModalFullscreenXl"
+              (click)="fullXLModal(fullXlBookingScheduleModal);fetchBookingSchedule()">Cancellation
               List</button>
-            <button type="button" class="btn"
-              style="border-color:#D7DBEC;margin-left: 10px;background-color: white;">Blockout Time</button>
+            <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;background-color: white;"
+              data-bs-toggle="modal" data-bs-target="#signupModals" (click)="signupModal(signupDataModal)">Blockout
+              Time</button>
           </div>
-
-          <ng-template #fullXlDataModal let-modal>
+          <ng-template #fullXlBookingScheduleModal let-modal>
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalFullscreenXlLabel">X New Employee</h5>
-                <!-- <div *ngIf="selectedEmployeeId===''">
-                  <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
-                    (click)="onEmployeeSubmit()">Save</button>
+                <h5 class="modal-title" id="exampleModalFullscreenXlLabel">Cancellation Queue</h5>
+                <div>
                   <button type="button" class="btn" id="close-employee-modal"
                     style="background-color:white;font-weight: 600;margin-left: 10px;border-color:#D7DBEC;"
-                    (click)="modal.dismiss('Cross click');reintialiseEmployee()">Cancel</button>
-                </div> -->
+                    (click)="modal.dismiss('Cross click');">Close</button>
+                </div>
               </div>
               <div style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="row">
                   <div class="col-lg-12">
-                    <label class="form-label">Emplpoyee goals Table</label>
-
                     <div class="table-responsive">
-                      <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
+                      <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="BookingScheduleTableData"
                         (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
                         <thead>
                           <tr style="background-color:#D2F7EB;">
                             <th style="background-color:#D2F7EB;">#</th>
-                            <th style="background-color:#D2F7EB;">Goal Date</th>
-                            <th style="background-color:#D2F7EB;">Goal Amount</th>
-                            <th style="background-color:#D2F7EB;">Final Amount</th>
-                            <th style="background-color:#D2F7EB;">Difference</th>
+                            <th style="background-color:#D2F7EB;">Notification Start</th>
+                            <th style="background-color:#D2F7EB;">Notification End</th>
+                            <th style="background-color:#D2F7EB;">Client Name</th>
+                            <th style="background-color:#D2F7EB;">Client Email</th>
                           </tr>
                         </thead>
                         <tbody style="background-color: #F5F6FA;">
                           <tr *ngFor="let data of rowSelectionTable.data ">
-                            <td data-column-id="company" class="gridjs-td">{{data.id}}</td>
-                            <td data-column-id="company" class="gridjs-td">{{data.date}}</td>
-                            <td data-column-id="company" class="gridjs-td">{{data.amount}}</td>
-                            <td data-column-id="company" class="gridjs-td">{{data.final_amount}}</td>
-                            <td data-column-id="company" class="gridjs-td">{{data.final_amount-data.amount}}</td>
+                            <td data-column-id="company" class="gridjs-td">{{data.queuePosition}}</td>
+                            <td data-column-id="company" class="gridjs-td">{{data.startDateTime}}</td>
+                            <td data-column-id="company" class="gridjs-td">{{data.endDateTime}}</td>
+                            <td data-column-id="company" class="gridjs-td">{{data.clientFullName}}</td>
+                            <td data-column-id="company" class="gridjs-td">{{data.clientEmail}}</td>
                           </tr>
                         </tbody>
                       </nz-table>
@@ -112,6 +114,66 @@
                 </div>
               </div>
             </div>
+          </ng-template>
+
+          <ng-template #signupDataModal let-modal>
+            <div class="modal-content border-0 overflow-hidden">
+              <div class="modal-header p-3">
+                <h4 class="card-title mb-0">Blocked out time information</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="fullName" class="form-label">REASON TO BLOCKOUT TIME</label>
+                    <input type="text" class="form-control" placeholder="Reason to block out time"
+                      [(ngModel)]="blockOutTime.blockoutTimeTitle" name="blockoutTimeTitle">
+                  </div>
+                  <div class="mb-3">
+                    <label for="emailInput" class="form-label">SELECT DATE</label>
+                    <input class="form-control flatpickr-input" type="text" [(ngModel)]="blockOutTimeDateSelected"
+                      mwlFlatpickr [altInput]="true" [convertModelValue]="true" name="blockOutTimeDateSelected"
+                      style="margin-left: 10px;font-weight:600;background-color: #D2F7EB;" placeholder="date">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">SELECT START TIME</label>
+                    <input class="form-control flatpickr-input" type="text" placeholder="Start time" mwlFlatpickr
+                      [noCalendar]="true" [enableTime]="true" [dateFormat]="'H:i'"
+                      [(ngModel)]="blockOutTime.startDateTime" name="startDateTime">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">SELECT END TIME</label>
+                    <input class="form-control flatpickr-input" type="text" placeholder="End time" mwlFlatpickr
+                      [noCalendar]="true" [enableTime]="true" [dateFormat]="'H:i'"
+                      [(ngModel)]="blockOutTime.endDateTime" name="endDateTime">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">SELECT EMPLOYEE</label>
+                    <input type="text" class="form-control" placeholder="Employee" readonly
+                      [(ngModel)]="EmployeeScheduleSelectValue.employeeFullName" name="employees" nz-button nz-dropdown
+                      [nzDropdownMenu]="DropdownEmployee">
+                    <nz-dropdown-menu #DropdownEmployee="nzDropdownMenu">
+                      <ul nz-menu>
+                        <ul *ngFor="let data of EmployeeScheduleTableData ">
+                          <li *ngIf="blockOutTime.employees[0]!==data.employeeId" nz-menu-item
+                            (click)="EmployeeScheduleSelectValue=data;blockOutTime.employees[0]=data.employeeId">
+                            {{data.employeeFullName}}
+                          </li>
+                        </ul>
+                        <li *ngIf="EmployeeScheduleSelectValue.employeeFullName!==''" nz-menu-item
+                          (click)="EmployeeScheduleSelectValue.employeeFullName=''">Reset</li>
+                      </ul>
+                    </nz-dropdown-menu>
+                  </div>
+                  <div class="d-flex text-end">
+                    <button type="submit" class="btn btn-primary" (click)="onBlockOutTime()">Confirm</button>
+                    <button class="btn" style="border-color:#D7DBEC;margin-left: 10px;background-color: white;"
+                      (click)="modal.dismiss('Cross click')" id="close-Schedule-Blockout-modal">Close</button>
+                  </div>
+                </form>
+              </div>
+            </div><!-- /.modal-content -->
           </ng-template>
 
         </div>

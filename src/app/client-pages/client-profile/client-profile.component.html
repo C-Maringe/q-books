@@ -1,0 +1,94 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">PROFILE</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Profile
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="position: relative; width: 100%;">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body" style="background-color: #F5F6FA;">
+        <div class="d-flex align-items-center mb-3 " style="display: flex;">
+          <button type="button" class="btn" style="border-color:#D7DBEC; margin-left: 10px;"
+            [style]="ActiveSelectedTab===1?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=1">
+            Details
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC; margin-left: 10px;"
+            [style]="ActiveSelectedTab===2?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=2">
+            Bookings
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;"
+            [style]="ActiveSelectedTab===3?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=3">
+            Loyalty Points
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;"
+            [style]="ActiveSelectedTab===4?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=4">
+            Notifications
+          </button>
+        </div>
+      </div>
+      <div style="background-color: white;">
+        <div *ngIf="ActiveSelectedTab===1">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-xxl-6">
+                <label for="firstName" class="form-label">FIRST NAME</label>
+                <input class="form-control flatpickr-input" type="text" name="firstName"
+                  [(ngModel)]="userProfileInfoToupdate.firstName" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="first name">
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="lastName" class="form-label">LAST NAME</label>
+                <input class="form-control flatpickr-input" type="text" name="lastName"
+                  [(ngModel)]="userProfileInfoToupdate.lastName" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="last name">
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="emailAddress" class="form-label">EMAIL</label>
+                <input class="form-control flatpickr-input" type="email" name="emailAddress"
+                  [(ngModel)]="userProfileInfoToupdate.emailAddress" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="email">
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="mobileNumber" class="form-label">MOBILE NUMBER</label>
+                <input class="form-control flatpickr-input" type="text" name="mobileNumber"
+                  [(ngModel)]="userProfileInfoToupdate.mobileNumber" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="mobile number">
+              </div><!--end col-->
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="onUpdateUserInfo()">UPDATE</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+        </div>
+        <div *ngIf="ActiveSelectedTab===2">
+          Bookings
+        </div>
+        <div *ngIf="ActiveSelectedTab===3">
+          Loyalty Points
+        </div>
+        <div *ngIf="ActiveSelectedTab===4">
+          Notifications
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

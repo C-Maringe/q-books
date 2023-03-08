@@ -6,6 +6,7 @@ import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/no
 import { ApiService } from 'src/app/core/services/api.service';
 import { tokenData } from 'src/app/reducers/token/token.reducer';
 
+
 interface BlockOutTime {
   blockoutTimeTitle: string,
   startDateTime: string,
@@ -13,6 +14,14 @@ interface BlockOutTime {
   employees: [
     string
   ]
+}
+
+interface MobileCancellationQueue {
+  startDate: string,
+  endDate: string,
+  startTime: string,
+  endTime: string,
+  employeeId: string
 }
 
 interface ScheduleItems {
@@ -37,11 +46,11 @@ interface ItemData {
 }
 
 @Component({
-  selector: 'app-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  selector: 'app-client-schedule',
+  templateUrl: './client-schedule.component.html',
+  styleUrls: ['./client-schedule.component.scss']
 })
-export class ScheduleComponent {
+export class ClientScheduleComponent {
   dateFormat = 'dd MM yyyy';
   token$: any;
 
@@ -63,7 +72,7 @@ export class ScheduleComponent {
 
   receivedMessage = ''
 
-  placement = 'topLeft';
+  placement = 'topRight';
 
   schedule: ScheduleItems = {
     employeeId: '',
@@ -80,25 +89,37 @@ export class ScheduleComponent {
     employees: ['']
   }
 
-  onBlockOutTime() {
-    this.blockOutTime.startDateTime = moment(this.blockOutTimeDateSelected).format("YYYY-MM-DD") + " " + this.blockOutTime.startDateTime
-    this.blockOutTime.endDateTime = moment(this.blockOutTimeDateSelected).format("YYYY-MM-DD") + " " + this.blockOutTime.endDateTime
-    if (this.blockOutTime.blockoutTimeTitle && this.blockOutTime.startDateTime
-      && this.blockOutTime.endDateTime && this.blockOutTime.employees[0] &&
-      this.blockOutTimeDateSelected !== '') {
-      this.apiService.post('/api/auth/schedule/blockout-time', this.blockOutTime)
+  mobileCancellationQueue: MobileCancellationQueue = {
+    startDate: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+    employeeId: ''
+  }
+
+  selectedEmployeeForCancellation = ''
+
+  onMobileCancellationQueueSubmit() {
+    if (this.mobileCancellationQueue.startDate && this.mobileCancellationQueue.endDate &&
+      this.mobileCancellationQueue.startTime && this.mobileCancellationQueue.endTime &&
+      this.mobileCancellationQueue.employeeId !== '') {
+      this.mobileCancellationQueue.startDate = moment(this.mobileCancellationQueue.startDate).format('yyyy-MM-DD')
+      this.mobileCancellationQueue.endDate = moment(this.mobileCancellationQueue.endDate).format('yyyy-MM-DD')
+      this.apiService.post('/api/mobile/booking-cancellation', this.mobileCancellationQueue)
         .then(response => {
           this.receivedMessage = response.message
           setTimeout(() => {
             this.SuccessNotification('success', 'topRight')
           }, 200)
           setTimeout(() => {
-            document.getElementById('close-Schedule-Blockout-modal')?.click()
-            this.blockOutTime = {
-              blockoutTimeTitle: '',
-              startDateTime: '',
-              endDateTime: '',
-              employees: ['']
+            document.getElementById('close-client-schedule-cancellation-modal')?.click()
+            this.selectedEmployeeForCancellation = ''
+            this.mobileCancellationQueue = {
+              startDate: '',
+              endDate: '',
+              startTime: '',
+              endTime: '',
+              employeeId: ''
             }
           }, 600)
         })
@@ -115,7 +136,7 @@ export class ScheduleComponent {
         })
     }
     else {
-      this.receivedMessage = 'Form is missing some values, please input values'
+      this.receivedMessage = `Please fill all fields`
       setTimeout(() => {
         this.LoginFailedNotification('error', 'topRight')
       }, 200)
@@ -124,14 +145,20 @@ export class ScheduleComponent {
 
   onDateIncrement() {
     this.datePicked.datePicked = moment(this.datePicked.datePicked).add(1, 'day').format('yyyy-MM-DD')
+    this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
+    this.fetchEmployeeBookingSchedule()
   }
 
   onDateDecrement() {
     this.datePicked.datePicked = moment(this.datePicked.datePicked).subtract(1, 'day').format('yyyy-MM-DD')
+    this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
+    this.fetchEmployeeBookingSchedule()
   }
 
   onDateToday() {
     this.datePicked.datePicked = Date.now()
+    this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
+    this.fetchEmployeeBookingSchedule()
   }
 
   initialproducts = this.schedule;
@@ -157,7 +184,7 @@ export class ScheduleComponent {
   column = Object.keys(this.TableData[0] || {});
 
   ScheduleHeaderTableData: any[] = [];
-  BookingScheduleTableData: any[] = [];
+  EmployeeBookingScheduleTableData: any[] = [];
   EmployeeScheduleTableData: any[] = [];
 
   EmployeeScheduleSelectValue = {
@@ -178,12 +205,24 @@ export class ScheduleComponent {
       .catch(error => console.log(error));
   }
 
-  fetchBookingSchedule() {
-    this.apiService.get('/api/auth/schedule/booking-cancellation')
-      .then(response => {
-        this.BookingScheduleTableData = response;
-      })
-      .catch(error => console.log(error));
+  fetchEmployeeBookingSchedule() {
+    if (this.EmployeeScheduleSelectValue.employeeId !== '') {
+      this.apiService.get(`/api/mobile/schedule/employees/${this.EmployeeScheduleSelectValue.employeeId}/${moment(this.datePicked.datePicked).format('yyyy-MM-DD')}`)
+        .then(response => {
+          this.EmployeeBookingScheduleTableData = response;
+        })
+        .catch(error => console.log(error));
+    }
+    else {
+      this.receivedMessage = `Please select schedule to view availability`
+      setTimeout(() => {
+        this.LoginFailedNotification('error', 'topRight')
+      }, 200)
+    }
+  }
+
+  largeModal(largeDataModal: any) {
+    this.modalService.open(largeDataModal, { size: 'lg', centered: true, backdrop: 'static' });
   }
 
   fetchEmployeeSchedule() {
@@ -194,20 +233,17 @@ export class ScheduleComponent {
       .catch(error => console.log(error));
   }
 
+  DateOfTheWeek: string = ''
+
   ngOnInit(): void {
     this.fetchSchedule();
-    this.fetchBookingSchedule();
+    // this.fetchEmployeeBookingSchedule();
     this.fetchEmployeeSchedule();
-    // console.log(this.datePicked.datePicked)
+    this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
   }
 
-  onValueChange() {
-    this.TableData = this.GridJs.filter((data: any) =>
-      this.column.some((column) =>
-        data[column] === null ? "" : data[column].toString()
-          .toLowerCase().indexOf(this.form.search.toString().toLowerCase()) > -1
-      )
-    )
+  DateOfTheWeekRun() {
+    this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
   }
   listOfCurrentPageData: readonly ItemData[] = [];
 

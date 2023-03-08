@@ -1,10 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MENU } from './menu';
+import { MENU_EMPLOYEE, MENU_CLIENT } from './menu';
 import { MenuItem } from './menu.model';
 
 import { Location } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { LoggedInUserData } from 'src/app/reducers/loggedInUser/LoggedInUser.reducer';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,10 +20,21 @@ export class SidebarComponent implements OnInit {
   menuItems: MenuItem[] = [];
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
+  LoggedInUser$ = {
+    token: '',
+    fullName: '',
+    role: '',
+    userPermissionList: [],
+    hasAcceptedTerms: false
+  }
 
   constructor(
     private router: Router,
-    private location: Location) {
+    private location: Location,
+    private store: Store) {
+    store.select(LoggedInUserData).subscribe((value: any) => {
+      this.LoggedInUser$ = value
+    })
   }
 
   hovered = false;
@@ -30,9 +43,11 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     // Menu Items
-    this.menuItems = MENU; 
-
-    if (this.location.path() === '/schedule') { this.activeIndex = 1 }
+    this.menuItems = this.LoggedInUser$.role === 'client' ? MENU_CLIENT : MENU_EMPLOYEE;
+    if (this.location.path() === '/client/profile') { this.activeIndex = 1 }
+    else if (this.location.path() === '/client/schedule') { this.activeIndex = 2 }
+    else if (this.location.path() === '/client/products') { this.activeIndex = 3 }
+    else if (this.location.path() === '/schedule') { this.activeIndex = 1 }
     else if (this.location.path() === '/bookings') { this.activeIndex = 2 }
     else if (this.location.path() === '/cash-up') { this.activeIndex = 3 }
     else if (this.location.path() === '/services') { this.activeIndex = 4 }
@@ -43,7 +58,6 @@ export class SidebarComponent implements OnInit {
     else if (this.location.path() === '/marketing') { this.activeIndex = 9 }
     else if (this.location.path() === '/reporting') { this.activeIndex = 10 }
     else { this.activeIndex = 11 }
-
   }
 
   /***

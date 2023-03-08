@@ -1,0 +1,164 @@
+<div class="row">
+  <div style="width: 99%;">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">SCHEDULE</h4>
+
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <ng-container>
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Schedule
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="position: relative; width: 100%;">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body" style="background-color: #F5F6FA;">
+        <div class="d-flex align-items-center mb-3 buttons-and-inputs-container"
+          style="display: flex;justify-content: space-between;">
+          <div class="buttons-and-inputs-filters">
+            <div style="margin-left: 10px;">
+              <button type="button" class="btn" style="border-color:#D7DBEC; background-color: white;" nz-button
+                nz-dropdown [nzDropdownMenu]="DropdownEmployeeSelectSchedule">
+                Select Schedule <span class="ri-arrow-down-s-line"></span>
+                <i nz-icon nzType="down"></i>
+              </button>
+              <nz-dropdown-menu #DropdownEmployeeSelectSchedule="nzDropdownMenu">
+                <ul nz-menu>
+                  <ul *ngFor="let data of EmployeeScheduleTableData ">
+                    <li *ngIf="blockOutTime.employees[0]!==data.employeeId" nz-menu-item
+                      (click)="EmployeeScheduleSelectValue=data;blockOutTime.employees[0]=data.employeeId;fetchEmployeeBookingSchedule()">
+                      {{data.employeeFullName}}
+                    </li>
+                  </ul>
+                  <li *ngIf="EmployeeScheduleSelectValue.employeeFullName!==''" nz-menu-item
+                    (click)="EmployeeScheduleSelectValue.employeeFullName='';fetchEmployeeBookingSchedule()">Reset</li>
+                </ul>
+              </nz-dropdown-menu>
+            </div>
+          </div>
+          <div class="buttons-and-inputs">
+            <div class="buttons-and-inputs-filters">
+              <button (click)="onDateDecrement()" type="button" class="btn"
+                style="margin-left: 10px; border-color:#D7DBEC;font-weight:600;">
+                <span class=" ri-arrow-left-s-line"></span></button>
+              <div style="margin-left: 10px">
+
+              </div>
+              <input class="form-control flatpickr-input" type="text" [(ngModel)]="datePicked.datePicked" mwlFlatpickr
+                [altInput]="true" [convertModelValue]="true" (ngModelChange)="DateOfTheWeekRun()"
+                style="margin-left: 10px;font-weight:600;background-color: #D2F7EB;">
+              <button (click)="onDateIncrement()" type="button" class="btn"
+                style="margin-left: 10px;border-color:#D7DBEC;font-weight:600;">
+                <span class="ri-arrow-right-s-line"></span></button>
+              <div style="margin-left: 10px">
+                <button (click)="onDateToday()" type="button" class="btn"
+                  style="border-color:#D7DBEC;font-weight:600;background-color: white;">
+                  Today
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn" style="background-color:#21D59B;font-weight: 600;margin-left: 10px;"
+              data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg" (click)="largeModal(largeDataModal)">Join
+              Cancellation queue
+              List</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="EmployeeBookingScheduleTableData" nzSize="middle"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
+            <thead style="border-color:#D7DBEC;">
+              <tr style="background-color:#D2F7EB;">
+                <th class="gridjs-td">
+                  <div style="display: flex;flex-direction: column;align-items: center;">
+                    <span style="color: #21D59B;font-weight: 500;">{{EmployeeScheduleSelectValue.employeeFullName !== ''
+                      ? 'Showing Schedule for ' + EmployeeScheduleSelectValue.employeeFullName +' on ' : ''}}
+                      {{DateOfTheWeek}}</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody style="background-color: white;">
+              <tr *ngFor="let data of rowSelectionTable.data ">
+                <td class="gridjs-td">{{data.time +" "+ (data.available ?'available':"not available")}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+        <ng-template #largeDataModal let-modal>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalgridLabel">FILL IN THE DETAILS TO JOIN THE QUEUE</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Cross click')" id="close-client-schedule-cancellation-modal"></button>
+            </div>
+            <div class="modal-body">
+              <form action="javascript:void(0);">
+                <div class="row g-3">
+                  <div class="col-xxl-6">
+                    <label for="firstName" class="form-label">SELECT START DATE</label>
+                    <input class="form-control flatpickr-input" type="text"
+                      [(ngModel)]="mobileCancellationQueue.startDate" mwlFlatpickr [altInput]="true"
+                      [convertModelValue]="true" name="startDate"
+                      style="margin-left: 10px;font-weight:600;background-color: #D2F7EB;" placeholder="Start date">
+                  </div><!--end col-->
+                  <div class="col-xxl-6">
+                    <label for="lastName" class="form-label">SELECT START TIME</label>
+                    <input class="form-control flatpickr-input" type="text" placeholder="Start time" mwlFlatpickr
+                      [noCalendar]="true" [enableTime]="true" [dateFormat]="'H:i'"
+                      [(ngModel)]="mobileCancellationQueue.startTime" name="startTime">
+                  </div><!--end col-->
+                  <div class="col-xxl-6">
+                    <label for="lastName" class="form-label">SELECT END DATE</label>
+                    <input class="form-control flatpickr-input" type="text"
+                      [(ngModel)]="mobileCancellationQueue.endDate" mwlFlatpickr [altInput]="true"
+                      [convertModelValue]="true" name="endDate"
+                      style="margin-left: 10px;font-weight:600;background-color: #D2F7EB;" placeholder="End date">
+                  </div><!--end col-->
+                  <div class="col-xxl-6">
+                    <label for="emailInput" class="form-label">SELECT END TIME</label>
+                    <input class="form-control flatpickr-input" type="text" placeholder="End time" mwlFlatpickr
+                      [noCalendar]="true" [enableTime]="true" [dateFormat]="'H:i'"
+                      [(ngModel)]="mobileCancellationQueue.endTime" name="Endtime">
+                  </div><!--end col-->
+                  <div class="col-xxl-6">
+                    <label for="passwordInput" class="form-label">SELECT EMPLOYEE</label>
+                    <input type="text" class="form-control" placeholder="Employee" readonly
+                      [(ngModel)]="selectedEmployeeForCancellation" name="selectedEmployeeForCancellation" nz-button
+                      nz-dropdown [nzDropdownMenu]="DropdownEmployee">
+                    <nz-dropdown-menu #DropdownEmployee="nzDropdownMenu">
+                      <ul nz-menu>
+                        <ul *ngFor="let data of EmployeeScheduleTableData ">
+                          <li nz-menu-item
+                            (click)="mobileCancellationQueue.employeeId=data.employeeId;selectedEmployeeForCancellation=data.employeeFullName">
+                            {{data.employeeFullName}}
+                          </li>
+                        </ul>
+                      </ul>
+                    </nz-dropdown-menu>
+                  </div><!--end col-->
+                  <div class="col-lg-12">
+                    <div class="hstack gap-2 justify-content-end">
+                      <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        (click)="modal.close('Close click')">CANCEL</button>
+                      <button (click)="onMobileCancellationQueueSubmit()" class="btn btn-primary">JOIN</button>
+                    </div>
+                  </div><!--end col-->
+                </div><!--end row-->
+              </form>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+
+</div>

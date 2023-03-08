@@ -1,9 +1,11 @@
-<div class="auth-page-wrapper pt-5">
+<div class="auth-page-wrapper pt-5" style=" display: flex;
+  flex-direction: column;
+  min-height: 100vh;">
   <ng-particles [id]="id" [options]="particlesOptions" [particlesInit]="particlesInit"
     (particlesLoaded)="particlesLoaded($event)">
   </ng-particles>
   <!-- auth page content -->
-  <div class="auth-page-content">
+  <div class="auth-page-content" style="flex: 1;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -34,12 +36,12 @@
                 <p class="text-muted">Sign in to continue to Quick Books.</p>
               </div>
               <div class="p-2 mt-4">
-                <form [formGroup]="loginform" role="form" (ngSubmit)="HandleLogin()">
+                <form role="form" (ngSubmit)="HandleLogin()">
 
                   <div class="mb-3">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" class="form-control" id="email" formControlName="email"
-                      placeholder="Enter email" [(ngModel)]="form.username" name="email">
+                    <input type="email" class="form-control" id="email"
+                      placeholder="Enter email" [(ngModel)]="form.username" name="email" required>
                     <div *ngIf="" class="invalid-feedback">
                       <div *ngIf="">Email is required</div>
                       <div *ngIf="">Email must be a valid email address
@@ -54,8 +56,8 @@
                     <label class="form-label" for="password-input">Password</label>
                     <div class="position-relative auth-pass-inputgroup mb-3">
                       <input [type]="fieldTextType ? 'text' : 'password'" class="form-control pe-5"
-                        placeholder="Enter password" id="password-input" formControlName="password"
-                        [(ngModel)]="form.password" name="password">
+                        placeholder="Enter password" id="password-input"
+                        [(ngModel)]="form.password" name="password" required>
                       <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                         type="button" id="password-addon"><i class="mdi align-middle" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType
                                           }"></i></button>
@@ -67,7 +69,7 @@
 
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="form.keepMeLoggedIn"
-                      id="login-remember-check">
+                      id="login-remember-check" name="keepMeLoggedIn">
                     <label class="form-check-label" for="login-remember-check">Remember me</label>
                   </div>
 
@@ -96,7 +98,7 @@
   <!-- end auth page content -->
 
   <!-- footer -->
-  <footer class="footer">
+  <footer class="footer" style=" margin-top: auto;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">

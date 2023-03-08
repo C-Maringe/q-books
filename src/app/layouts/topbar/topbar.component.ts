@@ -12,6 +12,8 @@ import { CartModel } from './topbar.model';
 import { cartData } from './data';
 import { Store } from '@ngrx/store';
 import { isLoggedIn } from 'src/app/reducers/authService/auth-service.actions';
+import { LoggedInUserData } from 'src/app/reducers/loggedInUser/LoggedInUser.reducer';
+import { LoggedInUser } from 'src/app/reducers/loggedInUser/LoggedInUser.actions';
 
 @Component({
   selector: 'app-topbar',
@@ -36,14 +38,24 @@ export class TopbarComponent implements OnInit {
   cookieValue: any;
   userData: any;
 
+  LoggedInUser$ = {
+    token: '',
+    fullName: '',
+    role: '',
+    userPermissionList: [],
+    hasAcceptedTerms: false
+  }
+
   constructor(
     @Inject(DOCUMENT) private document: any,
     private eventService: EventService,
     private authService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService,
     private router: Router,
-    private TokenStorageService: TokenStorageService,
-    private store: Store) { }
+    private store: Store) {
+    store.select(LoggedInUserData).subscribe((value: any) => {
+      this.LoggedInUser$ = value
+    })
+  }
 
   setIsloggedOut() {
     this.store.dispatch(isLoggedIn({
@@ -53,9 +65,9 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData = {
-      first_name: 'Quick',
-      last_name: 'Books',
-      role: 'Admin'
+      first_name: this.LoggedInUser$.fullName.split(" ")[0],
+      last_name: this.LoggedInUser$.fullName.split(" ")[1],
+      role: this.LoggedInUser$.role
     }
     this.element = document.documentElement;
 

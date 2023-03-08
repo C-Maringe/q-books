@@ -1,19 +1,21 @@
-<div id="layout-wrapper">
-    <!-- Top Bar -->
-    <app-topbar (mobileMenuButtonClicked)="onToggleMobileMenu()"></app-topbar>
-    <!-- Side Bar -->
-    <!-- <app-sidebar></app-sidebar> -->
-    <app-horizontal-topbar></app-horizontal-topbar>
-    <div class="main-content" style="background-color: #F5F6FA;">
-        <div class="page-content">
-            <div class="container-fluid">
-                <!-- Main Content -->
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-        <!-- Footer -->
-        <app-footer></app-footer>
+<div id="layout-wrapper" style=" display: flex;
+  flex-direction: column;
+  min-height: 100vh;">
+  <!-- Top Bar -->
+  <app-topbar (mobileMenuButtonClicked)="onToggleMobileMenu()"></app-topbar>
+  <!-- Side Bar -->
+  <!-- <app-sidebar></app-sidebar> -->
+  <app-horizontal-topbar></app-horizontal-topbar>
+  <div class="main-content" style="background-color: #F5F6FA;">
+    <div class="page-content" style="flex: 1;">
+      <div class="container-fluid">
+        <!-- Main Content -->
+        <router-outlet></router-outlet>
+      </div>
     </div>
+    <!-- Footer -->
+    <app-footer></app-footer>
   </div>
-  <!-- Right Side Bar -->
-  <app-rightsidebar  (settingsButtonClicked)="onSettingsButtonClicked()"></app-rightsidebar>
+</div>
+<!-- Right Side Bar -->
+<app-rightsidebar (settingsButtonClicked)="onSettingsButtonClicked()"></app-rightsidebar>

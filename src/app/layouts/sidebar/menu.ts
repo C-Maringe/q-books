@@ -1,6 +1,32 @@
 import { MenuItem } from './menu.model';
 
-export const MENU: MenuItem[] = [
+export const MENU_CLIENT: MenuItem[] = [
+  {
+    id: 1,
+    label: 'Menu',
+    isTitle: true
+  },
+  {
+    id: 2,
+    label: 'Profile',
+    icon: 'mdi mdi-account-circle',
+    link: '/client/profile'
+  },
+  {
+    id: 3,
+    label: 'Schedule',
+    icon: 'mdi mdi-calendar-check-outline',
+    link: '/client/schedule'
+  },
+  {
+    id: 4,
+    label: 'Products',
+    icon: 'ri-apps-line',
+    link: '/client/products'
+  }
+];
+
+export const MENU_EMPLOYEE: MenuItem[] = [
   {
     id: 1,
     label: 'Menu',
@@ -72,5 +98,4 @@ export const MENU: MenuItem[] = [
     icon: 'ri-bar-chart-grouped-line',
     link: '/analytics'
   },
-
 ];

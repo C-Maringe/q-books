@@ -14,6 +14,8 @@ import { tokenData } from 'src/app/reducers/token/token.reducer';
 import { addToken, Token } from 'src/app/reducers/token/token.actions';
 
 import { AuthService, isLoggedIn } from 'src/app/reducers/authService/auth-service.actions';
+import { LoggedInUserData } from 'src/app/reducers/loggedInUser/LoggedInUser.reducer';
+import { addLoggedInUser, LoggedInUser } from 'src/app/reducers/loggedInUser/LoggedInUser.actions';
 
 interface LoginForm {
   username: String,
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   token$: Observable<any>;
+  loggedInUser$: Observable<any>;
 
   constructor(
     private elementRef: ElementRef, private renderer: Renderer2,
@@ -64,6 +67,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private store: Store) {
     this.token$ = store.select(tokenData);
+    this.loggedInUser$ = store.select(LoggedInUserData)
   }
 
   ngAfterViewInit() {
@@ -84,6 +88,10 @@ export class LoginComponent implements OnInit {
 
   setIsloggedIn(isLogged: AuthService) {
     this.store.dispatch(isLoggedIn(isLogged));
+  }
+
+  setLoggedInUser(loggedInUser: LoggedInUser) {
+    this.store.dispatch(addLoggedInUser(loggedInUser));
   }
 
   form: LoginForm = {
@@ -110,10 +118,19 @@ export class LoginComponent implements OnInit {
           this.tokenParams.token = data.token
           this.isLoggedInParams.isLoggedIn_status = true;
           this.SuccessNotification('success')
+          this.setLoggedInUser(data)
           setTimeout(() => {
             this.setToken(this.tokenParams)
             this.setIsloggedIn(this.isLoggedInParams)
-            this.router.navigate(['/schedule'])
+            // this.store.select(LoggedInUserData).subscribe((value: {}) => {
+            //   console.log(value);
+            // })
+            if (data.role === 'employee') {
+              this.router.navigate(['/schedule'])
+            }
+            else {
+              this.router.navigate(['/client/schedule'])
+            }
           }, 2000)
         })
         .catch(error => {
@@ -176,7 +193,7 @@ export class LoginComponent implements OnInit {
         width: 1,
       },
       collisions: {
-        enable: true,
+        enable: false,
       },
       move: {
         direction: MoveDirection.none,

@@ -150,9 +150,9 @@
               </span>
             </span>
           </button>
-          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu *ngIf="this.LoggedInUser$.role==='employee'">
             <!-- item-->
-            <h6 class="dropdown-header">Welcome Casper!</h6>
+            <h6 class="dropdown-header">Welcome {{LoggedInUser$.fullName.split(" ")[0]}}!</h6>
             <a class="dropdown-item" routerLink="/schedule"><i
                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                 class="align-middle">Schedule</span></a>
@@ -167,6 +167,24 @@
                 class="badge bg-soft-success text-success mt-1 float-end">New</span><i
                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                 class="align-middle">Settings</span></a>
+            <a class="dropdown-item" routerLink="/login" (click)="setIsloggedOut()"><i
+                class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle"
+                data-key="t-logout">Logout</span></a>
+          </div>
+          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu *ngIf="this.LoggedInUser$.role==='client'">
+            <!-- item-->
+            <h6 class="dropdown-header">Welcome {{LoggedInUser$.fullName.split(" ")[0]}}!</h6>
+            <a class="dropdown-item" routerLink="/client/profile"><i
+                class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
+                class="align-middle">Profile</span></a>
+            <a class="dropdown-item" routerLink="/client/schedule"><i
+                class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i> <span
+                class="align-middle">Schedule</span></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="/client/profile"><i
+                class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i>
+              <span class="align-middle">Balance :
+                <b>$5971.67</b></span></a>
             <a class="dropdown-item" routerLink="/login" (click)="setIsloggedOut()"><i
                 class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle"
                 data-key="t-logout">Logout</span></a>

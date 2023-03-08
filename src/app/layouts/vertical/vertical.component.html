@@ -3,12 +3,16 @@
   <app-topbar (mobileMenuButtonClicked)="onToggleMobileMenu()"></app-topbar>
   <!-- Side Bar -->
   <app-sidebar></app-sidebar>
-  <div class="main-content" style="background-color: #F5F6FA;">
-    <div class="page-content">
+  <div class="main-content" style=" display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #F5F6FA;">
+    <div class="page-content" style="flex: 1;">
       <div class="container-fluid">
 
         <!-- Main Content -->
         <router-outlet></router-outlet>
+
       </div>
     </div>
     <!-- Footer -->

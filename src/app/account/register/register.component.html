@@ -1,10 +1,12 @@
-<div class="auth-page-wrapper pt-5" style="background-color:#21D59B;">
+<div class="auth-page-wrapper pt-5" style=" background-color:#21D59B;display: flex;
+  flex-direction: column;
+  min-height: 100vh;">
   <ng-particles [id]="id" [options]="particlesOptions" [particlesInit]="particlesInit"
     (particlesLoaded)="particlesLoaded($event)">
   </ng-particles>
 
   <!-- auth page content -->
-  <div class="auth-page-content">
+  <div class="auth-page-content" style="flex: 1;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -29,12 +31,12 @@
                 <h5 class="text-primary">Create New Account</h5>
               </div>
               <div class="p-2 mt-4">
-                <form [formGroup]="signupForm" role="form" (ngSubmit)="HandleLogin()">
+                <form role="form" (ngSubmit)="HandleLogin()">
 
                   <div class="mb-3">
                     <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="first_name" placeholder="Enter first name" required
-                      [(ngModel)]="form.firstName" formControlName="first_name"
+                      [(ngModel)]="form.firstName" name="firstName"
                       [ngClass]="{ 'is-invalid': submitted && f['first_name'].errors }">
                     <div class="invalid-feedback">
                       Please enter first name
@@ -43,7 +45,7 @@
                   <div class="mb-3">
                     <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="last_name" placeholder="Enter last name" required
-                      [(ngModel)]="form.lastName" formControlName="last_name"
+                      [(ngModel)]="form.lastName" name="lastName"
                       [ngClass]="{ 'is-invalid': submitted && f['last_name'].errors }">
                     <div class="invalid-feedback">
                       Please enter last name
@@ -53,7 +55,7 @@
                   <div class="mb-3">
                     <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
                     <input type="email" class="form-control" id="useremail" placeholder="Enter email address" required
-                      [(ngModel)]="form.emailAddress" formControlName="email"
+                      [(ngModel)]="form.emailAddress" name="emailAddress"
                       [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
                     <div class="invalid-feedback">
                       Please enter email
@@ -63,7 +65,7 @@
                     <label for="mobile_number" class="form-label">Mobile Number <span
                         class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="mobile_number" placeholder="Enter mobile number"
-                      required formControlName="mobile_number" [(ngModel)]="form.mobileNumber"
+                      required name="mobile_number" [(ngModel)]="form.mobileNumber"
                       [ngClass]="{ 'is-invalid': submitted && f['mobile_number'].errors }">
                     <div class="invalid-feedback">
                       Please enter mobile number
@@ -73,7 +75,7 @@
                   <div class="mb-2">
                     <label for="userpassword" class="form-label">Password <span class="text-danger">*</span></label>
                     <input type="password" class="form-control" id="userpassword" placeholder="Enter password" required
-                      [(ngModel)]="form.password" formControlName="password"
+                      [(ngModel)]="form.password" name="password"
                       [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
                     <div class="invalid-feedback">
                       Please enter password
@@ -84,7 +86,7 @@
                     <label for="confirm_password" class="form-label">Confirm Password <span
                         class="text-danger">*</span></label>
                     <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password"
-                      required formControlName="confirm_password" [(ngModel)]="form.confirmPassword"
+                      required name="confirm_password" [(ngModel)]="form.confirmPassword"
                       [ngClass]="{ 'is-invalid': submitted && f['confirm_password'].errors }">
                     <div class="invalid-feedback">
                       Please enter confirm password
@@ -112,7 +114,7 @@
 
           <div class="mt-4 text-center">
             <p class="mb-0">Already have an account ? <a routerLink="/login"
-                class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
+                class="fw-semibold text-decoration-underline" style="color:white"> Click Here </a> </p>
           </div>
 
         </div>
@@ -124,14 +126,12 @@
   <!-- end auth page content -->
 
   <!-- footer -->
-  <footer class="footer">
+  <footer class="footer" style=" margin-top: auto;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="text-center">
-            <p class="mb-0 text-muted">&copy;
-              <script>document.write(new Date().getFullYear())</script> Q-books.
-            </p>
+            <p class="mb-0" style="color:white">&copy; {{year}} Q-Books.</p>
           </div>
         </div>
       </div>
