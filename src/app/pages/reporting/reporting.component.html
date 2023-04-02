@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-        <h4 class="mb-sm-0">REPORING</h4>
+        <h4 class="mb-sm-0">REPORTING</h4>
 
         <div class="page-title-right">
           <ol class="breadcrumb m-0">
@@ -18,4 +18,339 @@
   </div>
 </div>
 
-<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+<div class="row" style="position: relative; width: 100%;">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body" style="background-color: #F5F6FA;">
+        <div class="d-flex align-items-center mb-3 " style="display: flex;">
+          <button type="button" class="btn" style="border-color:#D7DBEC; margin-left: 10px;"
+            [style]="ActiveSelectedTab===1?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=1">
+            Top Clients Booking Report
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC; margin-left: 10px;"
+            [style]="ActiveSelectedTab===2?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=2">
+            Top Services Booking Report
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;"
+            [style]="ActiveSelectedTab===3?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=3">
+            Booking Reports
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;"
+            [style]="ActiveSelectedTab===4?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=4">
+            Client Signup Reports
+          </button>
+          <button type="button" class="btn" style="border-color:#D7DBEC;margin-left: 10px;"
+            [style]="ActiveSelectedTab===5?'background-color: #21D59B;color:white;':'background-color: white;'"
+            (click)="ActiveSelectedTab=5">
+            Client Insight Reports
+          </button>
+        </div>
+      </div>
+      <div style="background-color: white;">
+        <div *ngIf="ActiveSelectedTab===1">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <label for="firstName" class="form-label">SELECT DATE RANGE</label>
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" mode="range" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="Date range" [(ngModel)]="selectedDateRangeTab1" name="selectedDateRangeTab1">
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="handleTab1Submit()">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+          <div class="table-responsive" *ngIf="topClientsBookingReport.length>0">
+            <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="topClientsBookingReport"
+              class="table table-gridjs">
+              <thead>
+                <tr style="background-color:#D2F7EB;">
+                  <th style="background-color:#D2F7EB;">Client Name</th> 
+                  <th style="background-color:#D2F7EB;">Client Email</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: #F5F6FA;">
+                <tr *ngFor="let data of rowSelectionTable.data ">
+                  <td data-column-id="company" class="gridjs-td">{{data.clientName.split('(')[0]}}</td>
+                  <td data-column-id="company" class="gridjs-td">{{data.clientName.split('(')[1].split(')')[0]}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+        <div *ngIf="ActiveSelectedTab===2">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <label for="firstName" class="form-label">SELECT DATE RANGE</label>
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" mode="range" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="Date range" [(ngModel)]="selectedDateRangeTab2" name="selectedDateRangeTab2">
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="handleTab2Submit()">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+          <div class="table-responsive" *ngIf="topServicesBookingReport.length>0">
+            <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="topServicesBookingReport"
+              class="table table-gridjs">
+              <thead>
+                <tr style="background-color:#D2F7EB;">
+                  <th style="background-color:#D2F7EB;">Treatment Name</th>
+                  <th style="background-color:#D2F7EB;">Total Bookings</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: #F5F6FA;">
+                <tr *ngFor="let data of rowSelectionTable.data ">
+                  <td data-column-id="company" class="gridjs-td">{{data.treatmentName}}</td>
+                  <td data-column-id="company" class="gridjs-td">{{data.totalBookings}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+        <div *ngIf="ActiveSelectedTab===3">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <label for="firstName" class="form-label">SELECT DATE RANGE</label>
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" mode="range" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="Date range" [(ngModel)]="selectedDateRangeTab3" name="selectedDateRangeTab3">
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div>
+                  <label class="form-label">BOOKING STATUS</label>
+                  <input type="text" class="form-control" nz-icon nzType="down" readonly
+                    placeholder="Select Bookings status" nz-button nz-dropdown [nzDropdownMenu]="booking_status"
+                    [(ngModel)]="booking_statusValue" name="booking_statusData">
+                  <nz-dropdown-menu #booking_status="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item (click)="booking_statusData='All';booking_statusValue='All Bookings'">All
+                        Bookings</li>
+                      <li nz-menu-item (click)="booking_statusData='Active';booking_statusValue='Successful Bookings'">
+                        Successful Bookings</li>
+                      <li nz-menu-item
+                        (click)="booking_statusData='Cancelled';booking_statusValue='Cancelled Bookings'">Cancelled
+                        Bookings</li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div>
+                  <label class="form-label">CLIENT LIST</label>
+                  <input type="text" class="form-control" nz-icon nzType="down" readonly
+                    placeholder="Select Bookings status" nz-button nz-dropdown [nzDropdownMenu]="client_list"
+                    [(ngModel)]="optionClientSelectValue3" name="optionClientSelectValue3">
+                  <nz-dropdown-menu #client_list="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item
+                        (click)="ClientSelectValue3=EmployessSelectValueInitial;optionClientSelectValue3='All Clients'">
+                        All Clients</li>
+                      <ul *ngFor="let data of ClientsTableData3 ">
+                        <li nz-menu-item
+                          (click)="ClientSelectValue3=data;optionClientSelectValue3=data.firstName + ' ' + data.lastName + ' (' + data.emailAddress + ')'">
+                          {{data.firstName + ' ' + data.lastName +' ('+ data.emailAddress+')'}}
+                        </li>
+                      </ul>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div>
+                  <label class="form-label">EMPLOYEE LIST</label>
+                  <input type="text" class="form-control" nz-icon nzType="down" readonly
+                    placeholder="Select Bookings status" nz-button nz-dropdown [nzDropdownMenu]="employee_list"
+                    [(ngModel)]="optionEmployessSelectValue3" name="optionEmployessSelectValue3">
+                  <nz-dropdown-menu #employee_list="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item
+                        (click)="EmployessSelectValue3=EmployessSelectValueInitial;optionEmployessSelectValue3='All Employees'">
+                        All Employees</li>
+                      <ul *ngFor="let data of EmployessTableData ">
+                        <li nz-menu-item
+                          (click)="EmployessSelectValue3=data;optionEmployessSelectValue3=data.firstName + ' ' + data.lastName + ' (' + data.emailAddress + ')'">
+                          {{data.firstName + ' ' + data.lastName +' ('+ data.emailAddress+')'}}
+                        </li>
+                      </ul>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="handleTab3Submit()">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+        </div>
+        <div *ngIf="ActiveSelectedTab===4">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <label for="firstName" class="form-label">SELECT DATE RANGE</label>
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" mode="range" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="Date range" [(ngModel)]="selectedDateRangeTab4" name="selectedDateRangeTab4">
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="handleTab4Submit()">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+          <div style="padding: 20px;" *ngIf="topSignupsReportArray.length>0">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body" style="background-color: #F5F6FA;">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="col-md">
+                            <div>
+                              <div class="hstack gap-3 flex-wrap">
+                                <div> Total Active Clients</div>
+                                <div class="vr"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="col-md">
+                            <div>
+                              <div class="hstack gap-3 flex-wrap">
+                                <div>{{topSignupsReport.totalActiveClients}}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="col-md">
+                            <div>
+                              <div class="hstack gap-3 flex-wrap">
+                                <div>Total Clients With Bookings</div>
+                                <div class="vr"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="col-md">
+                            <div>
+                              <div class="hstack gap-3 flex-wrap">
+                                <div>{{topSignupsReport.totalClientsWithBookings}}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive" *ngIf="topSignupsReportArray.length>0">
+            <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="topSignupsReportArray" class="table table-gridjs">
+              <thead>
+                <tr style="background-color:#D2F7EB;">
+                  <th style="background-color:#D2F7EB;">Client Name</th>
+                  <th style="background-color:#D2F7EB;">Email</th>
+                  <th style="background-color:#D2F7EB;">Date registered</th>
+                  <th style="background-color:#D2F7EB;">Active</th>
+                  <th style="background-color:#D2F7EB;">Total Bookings</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: #F5F6FA;">
+                <tr *ngFor="let data of rowSelectionTable.data ">
+                  <td data-column-id="company" class="gridjs-td" [style.backgroundColor]="data.active? '' : '#fff3cd'">
+                    {{data.firstName+' '+ data.lastName}}</td>
+                  <td data-column-id="company" class="gridjs-td" [style.backgroundColor]="data.active? '' : '#fff3cd'">
+                    {{data.contactDetails.emailAddress}}</td>
+                  <td data-column-id="company" class="gridjs-td" [style.backgroundColor]="data.active? '' : '#fff3cd'">
+                    {{moment(data.dateRegistered).format('YYYY-MM-DD')}}</td>
+                  <td data-column-id="company" class="gridjs-td" [style.backgroundColor]="data.active? '' : '#fff3cd'">
+                    {{data.active?'Yes':'No'}}</td>
+                  <td data-column-id="company" class="gridjs-td" [style.backgroundColor]="data.active? '' : '#fff3cd'">
+                    {{data.totalBookingsMade}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+        <div *ngIf="ActiveSelectedTab===5">
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <div>
+                  <label class="form-label">SELECT CLIENT</label>
+                  <input type="text" class="form-control" nz-icon nzType="down" readonly
+                    placeholder="Select Bookings status" nz-button nz-dropdown [nzDropdownMenu]="booking_status"
+                    [(ngModel)]="optionClientSelectValue" name="optionClientSelectValue">
+                  <nz-dropdown-menu #booking_status="nzDropdownMenu">
+                    <ul nz-menu>
+                      <ul *ngFor="let data of ClientsTableData ">
+                        <li nz-menu-item
+                          (click)="ClientSelectValue=data;optionClientSelectValue=data.firstName + ' ' + data.lastName + ' (' + data.emailAddress + ')'">
+                          {{data.firstName + ' ' + data.lastName +' ('+ data.emailAddress+')'}}
+                        </li>
+                      </ul>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white"
+                    (click)="handleTab5Submit()">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
+          <div class="table-responsive" *ngIf="getTopServiceItemsPerClient.length>0">
+            <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="getTopServiceItemsPerClient"
+              class="table table-gridjs">
+              <thead>
+                <tr style="background-color:#D2F7EB;">
+                  <th style="background-color:#D2F7EB;">Treatment Name</th>
+                  <th style="background-color:#D2F7EB;">Total Bookings</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: #F5F6FA;">
+                <tr *ngFor="let data of rowSelectionTable.data">
+                  <td data-column-id="company" class="gridjs-td">{{data.treatmentName}}</td>
+                  <td data-column-id="company" class="gridjs-td">{{data.totalBooked}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

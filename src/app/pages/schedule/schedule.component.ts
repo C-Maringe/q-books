@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiService } from 'src/app/core/services/api.service';
 import { tokenData } from 'src/app/reducers/token/token.reducer';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface BlockOutTime {
   blockoutTimeTitle: string,
@@ -42,6 +43,23 @@ interface ItemData {
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent {
+  countries: any[] = [
+    { name: 'Australia', code: 'AU' },
+    { name: 'Brazil', code: 'BR' },
+    { name: 'China', code: 'CN' },
+    { name: 'Egypt', code: 'EG' },
+    { name: 'France', code: 'FR' },
+    { name: 'Germany', code: 'DE' },
+    { name: 'India', code: 'IN' },
+    { name: 'Japan', code: 'JP' },
+    { name: 'Spain', code: 'ES' },
+    { name: 'United States', code: 'US' }
+  ];
+
+  selectedCountry = { name: '', code: '', time: '' }
+
+
+
   dateFormat = 'dd MM yyyy';
   token$: any;
 
@@ -104,7 +122,7 @@ export class ScheduleComponent {
         })
         .catch(error => {
           setTimeout(() => {
-            this.LoginFailedNotification('error', 'topRight')
+            this.FailedNotification('error', 'topRight')
           }, 200)
           if (error.error.detail === undefined) {
             this.receivedMessage = 'Server Error'
@@ -117,7 +135,7 @@ export class ScheduleComponent {
     else {
       this.receivedMessage = 'Form is missing some values, please input values'
       setTimeout(() => {
-        this.LoginFailedNotification('error', 'topRight')
+        this.FailedNotification('error', 'topRight')
       }, 200)
     }
   }
@@ -144,7 +162,7 @@ export class ScheduleComponent {
     );
   }
 
-  LoginFailedNotification(type: string, position: NzNotificationPlacement): void {
+  FailedNotification(type: string, position: NzNotificationPlacement): void {
     this.notification.create(
       type,
       this.receivedMessage, '',
@@ -156,9 +174,11 @@ export class ScheduleComponent {
   TableData: any[] = [];
   column = Object.keys(this.TableData[0] || {});
 
-  ScheduleHeaderTableData: any[] = [];
+  ScheduleClientTableData: any[] = [];
   BookingScheduleTableData: any[] = [];
   EmployeeScheduleTableData: any[] = [];
+  TimeTableData: any[] = [];
+  TreatmentsTableDate: any[] = [];
 
   EmployeeScheduleSelectValue = {
     employeeFullName: '',
@@ -166,22 +186,121 @@ export class ScheduleComponent {
     employeeTitle: ''
   }
 
+  SelectedDateModal: any = ''
+
+  selectedEmployeeModal = {
+    employeeFullName: "",
+    employeeId: "",
+    employeeTitle: ""
+  }
+  selectedClientModal = {
+    clientFullName: "",
+    clientId: ""
+  }
+
+  selectedTimeModal = {
+    time: "",
+    available: false
+  }
+
   ngAfterViewInit() {
     this.renderer.setStyle(this.elementRef.nativeElement.ownerDocument.body, 'background-color', 'white');
   }
 
-  fetchSchedule() {
-    this.apiService.get('/api/auth/schedule/employees')
+  fetchTreatmentsSchedule() {
+    this.apiService.get('/api/auth/sales/treatments')
       .then(response => {
-        this.ScheduleHeaderTableData = response;
+        this.TreatmentsTableDate = response;
+        this.TreatmentsTableDate = this.TreatmentsTableDate.map(({ ...rest }, index) => ({ ...rest, index: index + 1, times: 0 }));
       })
       .catch(error => console.log(error));
   }
 
-  fetchBookingSchedule() {
-    this.apiService.get('/api/auth/schedule/booking-cancellation')
+  SubtractTimes(data: any) {
+    if (data.times <= 0) {
+      this.receivedMessage = 'Times Cant be less than 1'
+      setTimeout(() => {
+        this.FailedNotification('error', 'topRight')
+      }, 200)
+    }
+    else {
+      this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+        return data_map.treatmentId === data.treatmentId ? {
+          ...data_map, times: data.times - 1
+        } : data_map
+      })
+    }
+  }
+
+  AddTimes(data: any) {
+    this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+      return data_map.treatmentId === data.treatmentId ? {
+        ...data_map, times: data.times + 1
+      } : data_map
+    })
+  }
+
+  onBookNow() {
+    var data = {
+      startDateTime: moment(this.SelectedDateModal).format('YYYY-M-D') + " " + this.selectedTimeModal.time,
+      employeeId: this.selectedEmployeeModal.employeeId,
+      clientId: this.selectedClientModal.clientId,
+      scheduleNewBookingItemModels: this.TreatmentsTableDate.filter((data) => data.times !== 0).map((data) => ({
+        id: data.treatmentId, quantity: data.times, specialOffer: data.special
+      })),
+      depositRequired: true
+    }
+    if (data.employeeId && data.clientId !== '' && data.startDateTime !== ' ') {
+      this.apiService.post('/api/auth/schedule/employee-book', data)
+        .then(response => {
+          this.receivedMessage = response.message
+          setTimeout(() => {
+            this.SuccessNotification('success', 'topRight')
+          }, 200)
+          document.getElementById('close-booking-schedule-modal')?.click()
+          this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+            return {
+              ...data_map, times: 0
+            }
+          })
+          this.SelectedDateModal = ''
+          this.selectedEmployeeModal = { employeeFullName: "", employeeId: "", employeeTitle: "" }
+          this.selectedClientModal = { clientFullName: "", clientId: "" }
+          this.selectedTimeModal = { time: "", available: false }
+        })
+        .catch(error => {
+          setTimeout(() => {
+            this.FailedNotification('error', 'topRight')
+          }, 200)
+          if (error.error.detail === undefined) {
+            this.receivedMessage = 'Server Error'
+          }
+          else {
+            this.receivedMessage = error.error.detail
+          }
+        });
+    }
+    else {
+      this.receivedMessage = 'Please select all fields to book'
+      setTimeout(() => {
+        this.FailedNotification('error', 'topRight')
+      }, 200)
+    }
+
+  }
+
+  fetchTimeSchedule() {
+    this.apiService.get('/api/auth/sales/times')
       .then(response => {
-        this.BookingScheduleTableData = response;
+        this.TimeTableData = response;
+      })
+      .catch(error => console.log(error));
+  }
+
+  fetchClientSchedule() {
+    this.apiService.get('/api/auth/schedule/clients')
+      .then(response => {
+        this.ScheduleClientTableData = response;
       })
       .catch(error => console.log(error));
   }
@@ -194,11 +313,20 @@ export class ScheduleComponent {
       .catch(error => console.log(error));
   }
 
+  fetchBookingSchedule() {
+    this.apiService.get('/api/auth/schedule/booking-cancellation')
+      .then(response => {
+        this.BookingScheduleTableData = response;
+      })
+      .catch(error => console.log(error));
+  }
+
   ngOnInit(): void {
-    this.fetchSchedule();
+    this.fetchClientSchedule();
     this.fetchBookingSchedule();
     this.fetchEmployeeSchedule();
-    // console.log(this.datePicked.datePicked)
+    this.fetchTimeSchedule();
+    this.fetchTreatmentsSchedule();
   }
 
   onValueChange() {

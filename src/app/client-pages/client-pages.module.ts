@@ -37,6 +37,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { ClientServicesComponent } from './client-services/client-services.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -48,7 +49,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   declarations: [
     ClientProfileComponent,
     ClientScheduleComponent,
-    ClientProductsComponent
+    ClientProductsComponent,
+    ClientServicesComponent
   ],
   imports: [
     CommonModule,

@@ -46,7 +46,8 @@ export class SidebarComponent implements OnInit {
     this.menuItems = this.LoggedInUser$.role === 'client' ? MENU_CLIENT : MENU_EMPLOYEE;
     if (this.location.path() === '/client/profile') { this.activeIndex = 1 }
     else if (this.location.path() === '/client/schedule') { this.activeIndex = 2 }
-    else if (this.location.path() === '/client/products') { this.activeIndex = 3 }
+    else if (this.location.path() === '/client/services') { this.activeIndex = 3 }
+    else if (this.location.path() === '/client/products') { this.activeIndex = 4 }
     else if (this.location.path() === '/schedule') { this.activeIndex = 1 }
     else if (this.location.path() === '/bookings') { this.activeIndex = 2 }
     else if (this.location.path() === '/cash-up') { this.activeIndex = 3 }

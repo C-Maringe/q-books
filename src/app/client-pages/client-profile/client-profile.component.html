@@ -80,13 +80,146 @@
           </form>
         </div>
         <div *ngIf="ActiveSelectedTab===2">
-          Bookings
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <label for="firstName" class="form-label">SELECT DATE RANGE</label>
+                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                  [convertModelValue]="true" mode="range" style="font-weight:600;background-color: #D2F7EB;"
+                  placeholder="Date range" [(ngModel)]="selectedDateRangeTab3" name="selectedDateRangeTab3">
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div>
+                  <label class="form-label">BOOKING TYPE</label>
+                  <input type="text" class="form-control" nz-icon nzType="down" readonly
+                    placeholder="Select Bookings status" nz-button nz-dropdown [nzDropdownMenu]="booking_status"
+                    [(ngModel)]="booking_statusValue" name="booking_statusData">
+                  <nz-dropdown-menu #booking_status="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item (click)="booking_statusData='All';booking_statusValue='All Bookings'">All
+                        Bookings</li>
+                      <li nz-menu-item (click)="booking_statusData='Active';booking_statusValue='Successful Bookings'">
+                        Successful Bookings</li>
+                      <li nz-menu-item
+                        (click)="booking_statusData='Cancelled';booking_statusValue='Cancelled Bookings'">Cancelled
+                        Bookings</li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white">SEARCH</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+            <div class="table-responsive" *ngIf="BookingTableData.length>0">
+              <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="BookingTableData" class="table table-gridjs">
+                <thead>
+                  <tr style="background-color:#D2F7EB;">
+                    <th style="background-color:#D2F7EB;">Date</th>
+                    <th style="background-color:#D2F7EB;">Time</th>
+                    <th style="background-color:#D2F7EB;">Employee</th>
+                    <th style="background-color:#D2F7EB;">Items</th>
+                    <th style="background-color:#D2F7EB;">Deposit Paid</th>
+                    <th style="background-color:#D2F7EB;">Deposit Amount</th>
+                    <th style="background-color:#D2F7EB;">Booking Total Price</th>
+                    <th style="background-color:#D2F7EB;">Action</th>
+                  </tr>
+                </thead>
+                <tbody style="background-color: #F5F6FA;">
+                  <tr *ngFor="let data of rowSelectionTable.data ">
+                    <td data-column-id="company" class="gridjs-td">{{data.startTime}}</td>
+                    <td data-column-id="company" class="gridjs-td">{{data.endTime}}</td>
+                    <td data-column-id="company" class="gridjs-td">{{data.employeeFullName}}</td>
+                    <td data-column-id="company" class="gridjs-td">
+                      <div *ngFor="let item of data.treatmentNames ">{{item}}</div>
+                    </td>
+                    <td data-column-id="company" class="gridjs-td">{{data.depositPaid}}</td>
+                    <td data-column-id="company" class="gridjs-td">{{data.depositAmount}}</td>
+                    <td data-column-id="company" class="gridjs-td">R {{data.totalPrice}}</td>
+                    <td data-column-id="company" class="gridjs-td"><button class="btn"
+                        style="background-color: red;color:white">Cancel</button></td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </form>
         </div>
         <div *ngIf="ActiveSelectedTab===3">
-          Loyalty Points
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <p style="font-size: 22px;font-weight: 700;margin-top: 10px;">Total points available
+                    {{userProfileInfo.loyaltyPoints}}</p>
+                  <div class="table-responsive">
+                    <nz-table #rowSelectionTable nzShowSizeChanger class="table table-gridjs">
+                      <thead>
+                        <tr style="background-color:#D2F7EB;">
+                          <th style="background-color:#D2F7EB;">Voucher Number</th>
+                          <th style="background-color:#D2F7EB;">Valid</th>
+                          <th style="background-color:#D2F7EB;">Created Date</th>
+                          <th style="background-color:#D2F7EB;">Expiry Date</th>
+                          <th style="background-color:#D2F7EB;">Redeemed Date</th>
+                          <th style="background-color:#D2F7EB;">Redeemed</th>
+                        </tr>
+                      </thead>
+                    </nz-table>
+                  </div>
+                </div>
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <p style="font-size: 22px;font-weight: 700;margin-top: 10px;">Terms and Conditions:</p>
+                  <div style="display:flex;flex-direction: column;">
+                    <label class="form-check-label form-label">Once you have 30 points we will send you an electronic
+                      voucher to the value of 5% discount</label>
+                    <label class="form-check-label form-label">Customers need to use it within 2 months of receiving the
+                      voucher.</label>
+                    <label class="form-check-label form-label">Customers will not be allowed to use the voucher during
+                      December.</label>
+                    <label class="form-check-label form-label">Customers can not use the voucher on products.</label>
+                    <label class="form-check-label form-label">Customers are not allowed to use the voucher on Specials
+                      or Promotional services</label>
+                  </div>
+                </div>
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <p style="font-size: 22px;font-weight: 700;margin-top: 10px;">Earning loyalty points is based on the
+                    following criteria</p>
+                  <div style="display:flex;flex-direction: column;">
+                    <label class="form-check-label form-label">Between R50 - R100 = 1 point</label>
+                    <label class="form-check-label form-label">Between R101 - R250 = 2 points</label>
+                    <label class="form-check-label form-label">Between R251 - R400 = 3 points</label>
+                    <label class="form-check-label form-label">Between R401 - R550 = 4 points</label>
+                    <label class="form-check-label form-label">Between R551 - R700 = 5 points</label>
+                    <label class="form-check-label form-label">Between R701 - R850 = 6 points</label>
+                    <label class="form-check-label form-label">Between R851 - R1000 = 7 points</label>
+                    <label class="form-check-label form-label">Between R1001 - R1500 =8 points</label>
+                    <label class="form-check-label form-label">Between R1501 - R2000 = 9 points</label>
+                    <label class="form-check-label form-label">More than R2000 = 10 points</label>
+                  </div>
+                </div>
+              </div>
+            </div><!--end row-->
+          </form>
         </div>
         <div *ngIf="ActiveSelectedTab===4">
-          Notifications
+          <form action="javascript:void(0);" style="padding: 20px;">
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Thursday-available" name="keepMeLoggedIn">
+                  <label class="form-check-label form-label" for="Thursday-available">Would You Like To Receive
+                    Marketing Emails?</label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="hstack gap-2 justify-content-end">
+                  <button class="btn" style="background-color: #21D59B;color:white">UPDATE</button>
+                </div>
+              </div><!--end col-->
+            </div><!--end row-->
+          </form>
         </div>
       </div>
     </div>

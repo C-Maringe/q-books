@@ -125,7 +125,7 @@ export class ClientScheduleComponent {
         })
         .catch(error => {
           setTimeout(() => {
-            this.LoginFailedNotification('error', 'topRight')
+            this.FailedNotification('error', 'topRight')
           }, 200)
           if (error.error.detail === undefined) {
             this.receivedMessage = 'Server Error'
@@ -138,7 +138,7 @@ export class ClientScheduleComponent {
     else {
       this.receivedMessage = `Please fill all fields`
       setTimeout(() => {
-        this.LoginFailedNotification('error', 'topRight')
+        this.FailedNotification('error', 'topRight')
       }, 200)
     }
   }
@@ -171,7 +171,7 @@ export class ClientScheduleComponent {
     );
   }
 
-  LoginFailedNotification(type: string, position: NzNotificationPlacement): void {
+  FailedNotification(type: string, position: NzNotificationPlacement): void {
     this.notification.create(
       type,
       this.receivedMessage, '',
@@ -185,7 +185,17 @@ export class ClientScheduleComponent {
 
   ScheduleHeaderTableData: any[] = [];
   EmployeeBookingScheduleTableData: any[] = [];
+
+  // sdfghjgfdsdghhgfdhjhgfdgjdsdfh
+
+
+
+
+
+  BookingScheduleTableData: any[] = [];
   EmployeeScheduleTableData: any[] = [];
+  TimeTableData: any[] = [];
+  TreatmentsTableDate: any[] = [];
 
   EmployeeScheduleSelectValue = {
     employeeFullName: '',
@@ -193,9 +203,132 @@ export class ClientScheduleComponent {
     employeeTitle: ''
   }
 
+  SelectedDateModal: any = ''
+
+  selectedEmployeeModal = {
+    employeeFullName: "",
+    employeeId: "",
+    employeeTitle: ""
+  }
+
+  selectedTimeModal = {
+    time: "",
+    available: false
+  }
+
   ngAfterViewInit() {
     this.renderer.setStyle(this.elementRef.nativeElement.ownerDocument.body, 'background-color', 'white');
   }
+
+  fetchTreatmentsSchedule() {
+    this.apiService.get('/api/mobile/schedule/treatments')
+      .then(response => {
+        this.TreatmentsTableDate = response;
+        this.TreatmentsTableDate = this.TreatmentsTableDate.map(({ ...rest }, index) => ({ ...rest, index: index + 1, times: 0 }));
+      })
+      .catch(error => console.log(error));
+  }
+
+  SubtractTimes(data: any) {
+    if (data.times <= 0) {
+      this.receivedMessage = 'Times Cant be less than 0'
+      setTimeout(() => {
+        this.FailedNotification('error', 'topRight')
+      }, 200)
+    }
+    else {
+      this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+        return data_map.treatmentId === data.treatmentId ? {
+          ...data_map, times: data.times - 1
+        } : data_map
+      })
+    }
+  }
+
+  AddTimes(data: any) {
+    this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+      return data_map.treatmentId === data.treatmentId ? {
+        ...data_map, times: data.times + 1
+      } : data_map
+    })
+  }
+
+  onBookNow() {
+    var data = {
+      startDateTime: moment(this.SelectedDateModal).format('YYYY-M-D') + " " + this.selectedTimeModal.time,
+      employeeId: this.selectedEmployeeModal.employeeId,
+      newBookingItemModel: this.TreatmentsTableDate.filter((data) => data.times !== 0).map((data) => ({
+        id: data.treatmentId, quantity: data.times, specialOffer: data.special
+      })),
+      depositRequired: true
+    }
+    if (data.employeeId !== '' && data.startDateTime !== ' ') {
+      this.apiService.post('/api/auth/schedule/client-book', data)
+        .then(response => {
+          this.receivedMessage = response.message
+          setTimeout(() => {
+            this.SuccessNotification('success', 'topRight')
+          }, 200)
+          document.getElementById('close-booking-schedule-modal')?.click()
+          this.TreatmentsTableDate = this.TreatmentsTableDate.map((data_map) => {
+            return {
+              ...data_map, times: 0
+            }
+          })
+          this.SelectedDateModal = ''
+          this.selectedEmployeeModal = { employeeFullName: "", employeeId: "", employeeTitle: "" }
+          this.selectedTimeModal = { time: "", available: false }
+        })
+        .catch(error => {
+          setTimeout(() => {
+            this.FailedNotification('error', 'topRight')
+          }, 200)
+          if (error.error.detail === undefined) {
+            this.receivedMessage = 'Server Error'
+          }
+          else {
+            this.receivedMessage = error.error.detail
+          }
+        });
+    }
+    else {
+      this.receivedMessage = 'Please select all fields to book'
+      setTimeout(() => {
+        this.FailedNotification('error', 'topRight')
+      }, 200)
+    }
+
+  }
+
+  fetchTimeSchedule() {
+    if (this.SelectedDateModal && this.selectedEmployeeModal.employeeId !== '') {
+      this.apiService.get(`/api/mobile/schedule/employees/${this.selectedEmployeeModal.employeeId}/${moment(this.SelectedDateModal).format('YYYY-M-D')}`)
+        .then(response => {
+          this.TimeTableData = response.filter((data: { available: boolean; }) => data.available !== false);
+          console.log(this.TimeTableData)
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  onDateChanged() {
+    setTimeout(() => {
+      this.fetchTimeSchedule()
+    }, 200)
+  }
+
+
+
+
+  // uikvcjkjhgrcvjkjfcvyuyhfcvjhdfvjhfj
+
+
+
+
+
+
+
+
 
   fetchSchedule() {
     this.apiService.get('/api/auth/schedule/employees')
@@ -216,7 +349,7 @@ export class ClientScheduleComponent {
     else {
       this.receivedMessage = `Please select schedule to view availability`
       setTimeout(() => {
-        this.LoginFailedNotification('error', 'topRight')
+        this.FailedNotification('error', 'topRight')
       }, 200)
     }
   }
@@ -237,8 +370,8 @@ export class ClientScheduleComponent {
 
   ngOnInit(): void {
     this.fetchSchedule();
-    // this.fetchEmployeeBookingSchedule();
     this.fetchEmployeeSchedule();
+    this.fetchTreatmentsSchedule();
     this.DateOfTheWeek = moment(this.datePicked.datePicked).format('dddd')
   }
 

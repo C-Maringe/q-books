@@ -92,21 +92,21 @@
                 </p>
                 <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
                   <div class="row gy-4">
-                    <div class="col-xxl-3 col-md-6">
+                    <div class="col-xxl-6 col-md-6">
                       <div>
                         <label class="form-label">Product Title</label>
                         <input type="text" class="form-control" placeholder="Product Title"
                           [(ngModel)]="products.productName" name="productName">
                       </div>
                     </div>
-                    <div class="col-xxl-3 col-md-6">
+                    <div class="col-xxl-6 col-md-6">
                       <div>
                         <label class="form-label">Category</label>
                         <input type="text" class="form-control" placeholder="Category" [(ngModel)]="products.category"
                           name="category">
                       </div>
                     </div>
-                    <div class="col-xxl-3 col-md-6">
+                    <div class="col-xxl-6 col-md-6">
                       <div>
                         <label class="form-label">Product Description</label>
                         <input type="text" class="form-control" placeholder="Product Description"
@@ -121,27 +121,27 @@
                   </div>
                   <div class="col-lg-12" style="margin-top: 10px; margin-bottom: 10px;">
                     <div class="row gy-4">
-                      <div class="col-xxl-3 col-md-6">
+                      <div class="col-xxl-6 col-md-6">
                         <div>
                           <label class="form-label">Price (Rands, excluding VAT)</label>
                           <input type="number" class="form-control" placeholder="Price" [(ngModel)]="products.price"
                             name="price">
                         </div>
                       </div>
-                      <div class="col-xxl-3 col-md-6">
+                      <div class="col-xxl-6 col-md-6">
                         <div>
                           <label class="form-label">Special Price (Rands, excluding VAT)</label>
                           <input type="number" class="form-control" placeholder="Special Price"
                             [(ngModel)]="products.specialPrice" name="specialPrice">
                         </div>
                       </div>
-                      <div class="col-xxl-3 col-md-6 form-check">
+                      <div class="col-xxl-6 col-md-6 form-check">
                         <input class="form-check-input" type="checkbox" value="" id="products-remember-check"
                           style="margin-left: -10px;" [(ngModel)]="products.special">
                         <label class="text-muted" style="margin-left: 10px;" for="products-remember-check">Check to make
                           this a special</label>
                       </div>
-                      <div *ngIf="products.special" class="col-xxl-3 col-md-6">
+                      <div *ngIf="products.special" class="col-xxl-6 col-md-6">
                         <div>
                           <label class="form-label">Select Special Price Date</label>
                           <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
@@ -191,5 +191,3 @@
   </div>
   <!-- end col -->
 </div>
-
-<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

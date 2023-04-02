@@ -1,12 +1,11 @@
 <div class="row">
   <div style="width: 99%;">
     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-      <h4 class="mb-sm-0">PRODUCTS</h4>
-
+      <h4 class="mb-sm-0">CLIENT-SERVICES</h4>
       <div class="page-title-right">
         <ol class="breadcrumb m-0">
           <ng-container>
-            <li class="breadcrumb-item" [ngClass]="{'active': true}">Products
+            <li class="breadcrumb-item" [ngClass]="{'active': true}">Client-Services
             </li>
           </ng-container>
         </ol>
@@ -19,7 +18,7 @@
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title mb-0 flex-grow-1">Available Products Table</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Available Services Table</h4>
       </div><!-- end card header -->
 
       <div class="card-body">
@@ -36,41 +35,41 @@
             <div class="buttons-and-inputs-filters">
               <div style="margin-left: 10px;">
                 <button type="button" class="btn" style="border-color:#D7DBEC;" nz-button nz-dropdown
-                  [nzDropdownMenu]="menu1">{{productsFilterValue}}
-                  <span class="ri-arrow-down-s-line"></span>
+                  [nzDropdownMenu]="menu1">
+                  {{employeeFilterType}} <span class="ri-arrow-down-s-line"></span>
                   <i nz-icon nzType="down"></i>
                 </button>
                 <nz-dropdown-menu #menu1="nzDropdownMenu">
                   <ul nz-menu>
-                    <ul *ngFor="let data of FilterTableDataItems ">
-                      <li *ngIf="productsFilterValue!==data" nz-menu-item (click)="productsFilterCategory(data)">
-                        {{data}}
-                      </li>
+                    <ul *ngFor="let data of employeeTypesData">
+                      <li *ngIf="employeeFilterType!==data.employeeType" nz-menu-item
+                        (click)="employeeFilterTypeSelect(data.employeeType)">{{data.employeeType}}</li>
                     </ul>
-                    <li *ngIf="productsFilterValue!=='Filter by Category'" nz-menu-item
-                      (click)="productsFilterCategory('Filter by Category')">Reset</li>
+                    <li *ngIf="employeeFilterType!=='Filter by Employe Type'" nz-menu-item
+                      (click)="employeeFilterTypeSelect('Filter by Employe Type')">Reset</li>
                   </ul>
                 </nz-dropdown-menu>
               </div>
             </div>
           </div>
-
         </div>
         <div class="table-responsive">
           <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="TableData"
             (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" class="table table-gridjs">
             <thead>
               <tr style="background-color:#D2F7EB;">
-                <th style="background-color:#D2F7EB;">Products</th>
-                <th style="background-color:#D2F7EB;">Category</th>
+                <th style="background-color:#D2F7EB;">Service</th>
+                <th style="background-color:#D2F7EB;">Duration</th>
                 <th style="background-color:#D2F7EB;">Price</th>
+                <th style="background-color:#D2F7EB;">Employee Type</th>
               </tr>
             </thead>
             <tbody style="background-color: #F5F6FA;">
-              <tr *ngFor="let data of rowSelectionTable.data ">
-                <td data-column-id="company" class="gridjs-td">{{data.productName}}</td>
-                <td data-column-id="company" class="gridjs-td">{{data.category}}</td>
-                <td data-column-id="company" class="gridjs-td">{{data.price}}</td>
+              <tr *ngFor="let data of TableData ">
+                <td data-column-id="company" class="gridjs-td">{{data.treatmentName}}</td>
+                <td data-column-id="company" class="gridjs-td">duration ({{data.duration}} in minutes)</td>
+                <td data-column-id="company" class="gridjs-td">R {{data.seniorPrice}}</td>
+                <td data-column-id="company" class="gridjs-td">{{data.employeeType}}</td>
               </tr>
             </tbody>
           </nz-table>

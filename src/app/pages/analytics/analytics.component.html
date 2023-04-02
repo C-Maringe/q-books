@@ -19,4 +19,71 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-xl-4 col-md-6" *ngFor="let data of tileBoxs1">
+    <!-- card -->
+    <div class="card card-animate">
+      <div class="card-body">
+        <div class="d-flex align-items-center">
+          <div class="flex-grow-1">
+            <p class="text-uppercase fw-medium text-{{data.labelClass}} mb-0">{{data.label}}</p>
+          </div>
+          <div class="flex-shrink-0">
+            <h5 class="text-{{data.percentageClass}} fs-14 mb-0">
+              <i class="{{data.percentageIcon}} fs-13 align-middle"></i> {{data.percentage}}
+            </h5>
+          </div>
+        </div>
+        <div class="d-flex align-items-end justify-content-between mt-4">
+          <div>
+            <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+              {{data.prefix}}<span [CountTo]="data.counter" class="counter-value" [from]="0"
+                [duration]="data.decimals"></span>{{data.suffix}}</h4>
+            <a href="javascript:void(0);" class="text-decoration-underline">{{data.caption}}</a>
+          </div>
+          <div class="avatar-sm flex-shrink-0">
+            <span class="avatar-title bg-soft-{{data.iconClass}} rounded fs-3">
+              <i class="{{data.icon}} text-{{data.iconClass}}"></i>
+            </span>
+          </div>
+        </div>
+      </div><!-- end card body -->
+    </div><!-- end card -->
+  </div><!-- end col -->
+</div>
+
+<div class="row">
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">New Sign Ups</h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <apx-chart [series]="ColumnWithRotatedChart.series" [chart]="ColumnWithRotatedChart.chart"
+          [dataLabels]="ColumnWithRotatedChart.dataLabels" [plotOptions]="ColumnWithRotatedChart.plotOptions"
+          [yaxis]="ColumnWithRotatedChart.yaxis" [xaxis]="ColumnWithRotatedChart.xaxis"
+          [stroke]="ColumnWithRotatedChart.stroke" [grid]="ColumnWithRotatedChart.grid"
+          [fill]="ColumnWithRotatedChart.fill" [annotations]="ColumnWithRotatedChart.annotations"
+          [colors]="ColumnWithRotatedChart.colors"></apx-chart>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">Bookings Per Month</h4>
+      </div><!-- end card header -->
+
+      <div class="card-body">
+        <apx-chart [series]="basicAreaChart.series" [chart]="basicAreaChart.chart" [xaxis]="basicAreaChart.xaxis"
+          [stroke]="basicAreaChart.stroke" [dataLabels]="basicAreaChart.dataLabels" [yaxis]="basicAreaChart.yaxis"
+          [labels]="basicAreaChart.labels" [legend]="basicAreaChart.legend" [title]="basicAreaChart.title"
+          [subtitle]="basicAreaChart.subtitle" [colors]="basicAreaChart.colors"></apx-chart>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
+  </div>
+</div>
+
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

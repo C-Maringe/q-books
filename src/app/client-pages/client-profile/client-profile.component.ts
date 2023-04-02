@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiService } from 'src/app/core/services/api.service';
+import * as moment from 'moment';
 
 interface UserProfileInfoToupdate {
   firstName: string,
@@ -65,13 +66,22 @@ export class ClientProfileComponent {
     );
   }
 
-  LoginFailedNotification(type: string, position: NzNotificationPlacement): void {
+  FailedNotification(type: string, position: NzNotificationPlacement): void {
     this.notification.create(
       type,
       this.receivedMessage, '',
       { nzPlacement: position }
     );
   }
+
+  selectedDateRangeTab3: any = ''
+
+  booking_statusData = 'All'
+  booking_statusValue = 'All'
+
+  BookingTableData: any = []
+
+  moment = moment
 
   fetchUserInfo() {
     this.apiService.get('/api/mobile/profile')
@@ -81,6 +91,14 @@ export class ClientProfileComponent {
         this.userProfileInfoToupdate.emailAddress = response.emailAddress
         this.userProfileInfoToupdate.mobileNumber = response.mobileNumber
         this.userProfileInfo = response
+      })
+      .catch(error => console.log(error));
+  }
+
+  fetchBookingsInfo() {
+    this.apiService.get('/api/mobile/bookings')
+      .then(response => {
+        this.BookingTableData = response
       })
       .catch(error => console.log(error));
   }
@@ -100,7 +118,7 @@ export class ClientProfileComponent {
         })
         .catch(error => {
           setTimeout(() => {
-            this.LoginFailedNotification('error', 'topRight')
+            this.FailedNotification('error', 'topRight')
           }, 200)
           if (error.error.detail === undefined) {
             this.receivedMessage = 'Server Error'
@@ -113,12 +131,13 @@ export class ClientProfileComponent {
     else {
       this.receivedMessage = `One or more of the fields can${'`'}t be blank`
       setTimeout(() => {
-        this.LoginFailedNotification('error', 'topRight')
+        this.FailedNotification('error', 'topRight')
       }, 200)
     }
   }
 
   ngOnInit() {
     this.fetchUserInfo()
+    this.fetchBookingsInfo()
   }
 }

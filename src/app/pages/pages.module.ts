@@ -2,6 +2,11 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbToastModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 
+// Apex Charts
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgChartsModule } from 'ng2-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
+
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -9,7 +14,6 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CountToModule } from 'angular-count-to';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -50,6 +54,20 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileComponent } from './clientPages/profile/profile.component';
 
+
+
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RatingModule } from 'primeng/rating';
+import { ToolbarModule } from 'primeng/toolbar';
+
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto'
@@ -71,9 +89,14 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
     //to be removed
     ModalsComponent,
-     ProfileComponent
+    ProfileComponent
   ],
   imports: [
+    NgApexchartsModule,
+    NgChartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     CommonModule,
     NgbToastModule,
     NgbProgressbarModule,
@@ -97,14 +120,25 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NgClass,
     NzModalModule,
     NzDrawerModule,
-    NzNotificationModule
+    NzNotificationModule,
+    InputTextModule,
+    DialogModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    RatingModule,
+    InputNumberModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    DropdownModule,
+    ButtonModule,
+    TableModule
   ],
   providers: [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
     }
-  ], 
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule {

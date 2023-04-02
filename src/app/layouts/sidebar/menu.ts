@@ -20,6 +20,12 @@ export const MENU_CLIENT: MenuItem[] = [
   },
   {
     id: 4,
+    label: 'Services',
+    icon: 'ri-list-settings-line',
+    link: '/client/services'
+  },
+  {
+    id: 5,
     label: 'Products',
     icon: 'ri-apps-line',
     link: '/client/products'

@@ -18,4 +18,81 @@
   </div>
 </div>
 
-<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+<div class="row" style="position: relative; width: 100%;">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body" style="background-color: #F5F6FA;">
+        <div class="row">
+          <div class="col-lg-6">
+            <label for="firstName" class="form-label">SELECT DATE</label>
+            <input class="form-control flatpickr-input" type="text" [(ngModel)]="selectedDate" mwlFlatpickr
+              [altInput]="true" [convertModelValue]="true"
+              style="margin-left: 10px;font-weight:600;background-color: #D2F7EB;">
+          </div>
+          <div class="col-lg-6">
+            <label for="firstName" class="form-label ">'</label>
+            <button class="btn form-control flatpickr-input" style="background-color: #21D59B;color:white"
+              (click)="handleSearchSales()">START CASH UP</button>
+          </div><!--end col-->
+        </div>
+      </div>
+      <div style="padding: 20px;" *ngIf="cashUpStartData.length>0">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body" style="background-color: #F5F6FA;">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="col-lg-6">
+                    <div class="col-md">
+                      <div>
+                        <div class="hstack gap-3 flex-wrap">
+                          <div> Cash Up</div>
+                          <div class="vr"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="col-md">
+                    <div>
+                      <div class="hstack gap-3 flex-wrap">
+                        <div>R {{CashUpSummedData.overviewTotal.toFixed(2)}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive" *ngIf="cashUpStartData.length>0">
+        <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="cashUpStartData" class="table table-gridjs">
+          <thead>
+            <tr style="background-color:#D2F7EB;">
+              <th style="background-color:#D2F7EB;">Client Name</th>
+              <th style="background-color:#D2F7EB;">Booking slot</th>
+              <th style="background-color:#D2F7EB;">Service</th>
+              <th style="background-color:#D2F7EB;">Total</th>
+              <th style="background-color:#D2F7EB;">Captured</th>
+              <th style="background-color:#D2F7EB;">Actions</th>
+            </tr>
+          </thead>
+          <tbody style="background-color: #F5F6FA;">
+            <tr *ngFor="let data of rowSelectionTable.data ">
+              <td data-column-id="company" class="gridjs-td">{{data.clientFullName}}</td>
+              <td data-column-id="company" class="gridjs-td">{{data.bookingSlot}}</td>
+              <td data-column-id="company" class="gridjs-td">{{data.treatments}}</td>
+              <td data-column-id="company" class="gridjs-td">{{data.bookingTotal}}</td>
+              <td data-column-id="company" class="gridjs-td">{{data.captured?'Yes':'No'}}</td>
+              <td data-column-id="company" class="gridjs-td">{{data.captured?'':'Actions'}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+</div>

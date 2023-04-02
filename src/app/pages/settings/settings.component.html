@@ -18,4 +18,160 @@
   </div>
 </div>
 
-<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Application Configuration Settings</h4>
+      </div><!-- end card header -->
+
+      <div style="background-color: white;">
+        <form action="javascript:void(0);" style="padding: 20px;">
+          <div class="row g-3">
+            <div class="col-xxl-12">
+              <label class="form-label">TIME BETWEEN BOOKINGS</label>
+              <input class="form-control flatpickr-input" type="text" name="sessionDurations"
+                style="font-weight:600;background-color: #D2F7EB;" placeholder="minutes"
+                [(ngModel)]="configurationsSettings.sessionDurations">
+              <p style="margin-top: 5px;">This value is measured in minutes and will determine how much time before the
+                next booking can be made after another one</p>
+            </div><!--end col-->
+            <div class="row g-3">
+              <h4 class="card-title mb-0 flex-grow-1">DAYS AVAILABLE</h4>
+
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Sunday-available" name="Sunday.available"
+                    [(ngModel)]="Sunday.available">
+                  <label class="form-check-label form-label" for="Sunday-available">Sunday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Sunday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Sunday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Monday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Monday.available">
+                  <label class="form-check-label form-label" for="Monday-available">Monday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Monday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Monday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Tuesday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Tuesday.available">
+                  <label class="form-check-label form-label" for="Tuesday-available">Tuesday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Tuesday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Tuesday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Wednesday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Wednesday.available">
+                  <label class="form-check-label form-label" for="Wednesday-available">Wednesday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Wednesday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Wednesday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Thursday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Thursday.available">
+                  <label class="form-check-label form-label" for="Thursday-available">Thursday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Thursday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Thursday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Friday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Friday.available">
+                  <label class="form-check-label form-label" for="Friday-available">Friday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Friday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Friday.workEndTime">
+              </div><!--end col-->
+              <div class="col-xxl-3">
+                <div class="form-check" style="margin-bottom: 10px;">
+                  <input class="form-check-input" type="checkbox" id="Saturday-available" name="keepMeLoggedIn"
+                    [(ngModel)]="Saturday.available">
+                  <label class="form-check-label form-label" for="Saturday-available">Saturday</label>
+                </div>
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;"
+                  class="form-control flatpickr-input" placeholder="Start time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="startDateTime" [(ngModel)]="Saturday.workStartTime">
+                <input type="text" style="font-weight:600;background-color: #D2F7EB;margin-top: 5px;"
+                  class="form-control flatpickr-input" placeholder="End time" mwlFlatpickr [noCalendar]="true"
+                  [enableTime]="true" [dateFormat]="'H:i'" name="endDateTime" [(ngModel)]="Saturday.workEndTime">
+              </div><!--end col-->
+            </div>
+            <div class="row g-3">
+              <div class="col-xxl-6">
+                <label for="bookingNotice" class="form-label">AMOUNT OF NOTICE PRIOR TO BOOKING</label>
+                <input class="form-control flatpickr-input" type="text" name="bookingNotice"
+                  style="font-weight:600;background-color: #D2F7EB;" placeholder="minutes"
+                  [(ngModel)]="configurationsSettings.bookingNotice">
+                <p style="margin-top: 5px;">This value is measured in minutes.</p>
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="cancelNotice" class="form-label">AMOUNT OF NOTICE PRIOR TO CANCELLATION</label>
+                <input class="form-control flatpickr-input" type="text" name="cancelNotice"
+                  style="font-weight:600;background-color: #D2F7EB;" placeholder="minutes"
+                  [(ngModel)]="configurationsSettings.cancelNotice">
+                <p style="margin-top: 5px;">This value is measured in minutes.</p>
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="depositThreshold" class="form-label">DEPOSIT THRESHOLD</label>
+                <input class="form-control flatpickr-input" type="text" name="depositThreshold"
+                  style="font-weight:600;background-color: #D2F7EB;" placeholder="rands"
+                  [(ngModel)]="configurationsSettings.depositThreshold">
+                <p style="margin-top: 5px;">This value is measured in rands.</p>
+              </div><!--end col-->
+              <div class="col-xxl-6">
+                <label for="depositPercentage                                                 "
+                  class="form-label">DEPOSIT AMOUNT</label>
+                <input class="form-control flatpickr-input" type="text" name="depositPercentage"
+                  style="font-weight:600;background-color: #D2F7EB;" placeholder="percentage"
+                  [(ngModel)]="configurationsSettings.depositPercentage">
+                <p style="margin-top: 5px;">This value is a flat fee measured.</p>
+              </div><!--end col-->
+            </div>
+
+            <div class="col-lg-12">
+              <div class="hstack gap-2 justify-content-end">
+                <button class="btn" style="background-color: #21D59B;color:white"
+                  (click)="onUpdateSettings()">UPDATE</button>
+              </div>
+            </div><!--end col-->
+          </div><!--end row-->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
