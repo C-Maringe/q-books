@@ -33,6 +33,9 @@ public class AuthTokenServicesImpl implements AuthTokenServices {
 	private final EmployeeRepository employeeRepository;
 	@Override
 	public String extractUserId(String authToken) {
+		if(authToken.startsWith("Bearer")){
+			authToken = authToken.substring(7);
+		}
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(TextCodec.BASE64.decode("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")).parseClaimsJws(authToken);
 
@@ -45,6 +48,9 @@ public class AuthTokenServicesImpl implements AuthTokenServices {
 
 	@Override
 	public String extractUserIdForReset(String resetToken) {
+		if(resetToken.startsWith("Bearer")){
+			resetToken = resetToken.substring(7);
+		}
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(TextCodec.BASE64.decode("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")).parseClaimsJws(resetToken);
 

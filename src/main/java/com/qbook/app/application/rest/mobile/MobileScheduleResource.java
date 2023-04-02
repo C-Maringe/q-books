@@ -5,7 +5,14 @@ import com.qbook.app.application.models.BookingItemModel;
 import com.qbook.app.application.models.NewBookingModel;
 import com.qbook.app.application.models.TimeSlotModel;
 import com.qbook.app.application.models.employeeModels.EmployeeScheduleModel;
+import com.qbook.app.application.models.employeeModels.ViewEmployeeType;
+import com.qbook.app.application.models.productModels.ViewProductModel;
+import com.qbook.app.application.models.scheduleModels.ScheduleTreatmentModel;
+import com.qbook.app.application.models.treatmentModels.ViewTreatmentModel;
+import com.qbook.app.application.services.appservices.ProductServices;
 import com.qbook.app.application.services.appservices.ScheduleServices;
+import com.qbook.app.application.services.appservices.SuperUserServices;
+import com.qbook.app.application.services.appservices.TreatmentServices;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
@@ -20,6 +27,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MobileScheduleResource {
 	private final ScheduleServices scheduleServices;
+	private final ProductServices productServices;
+	private final TreatmentServices treatmentServices;
+	private final SuperUserServices superUserServices;
 
 	@GetMapping("employees")
 	public ResponseEntity<List<EmployeeScheduleModel>> viewClientBookingsForDate(@RequestHeader("Authorization") String Authorization) {
@@ -49,6 +59,27 @@ public class MobileScheduleResource {
 		if(Authorization.startsWith("Bearer")){
 			Authorization = Authorization.substring(7);
 		}
+		log.info(Authorization);
         return new ResponseEntity<>(scheduleServices.createBookingForClient(Authorization, newBookingModel), HttpStatus.CREATED);
+	}
+
+	@GetMapping("treatments")
+	public ResponseEntity<List<ScheduleTreatmentModel>> getAllTreatments() {
+		return new ResponseEntity<>(scheduleServices.viewTreatmentListForSchedule(), HttpStatus.OK);
+	}
+
+	@GetMapping("all-treatments")
+	public ResponseEntity<List<ViewTreatmentModel>> getAllTreatmentsNow(){
+		return new ResponseEntity<>(treatmentServices.viewAllTreatments(), HttpStatus.OK);
+	}
+
+	@GetMapping("products")
+	public ResponseEntity<List<ViewProductModel>> getAllProducts(){
+		return new ResponseEntity<>(productServices.viewAllProducts(), HttpStatus.OK);
+	}
+
+	@GetMapping("employee-types")
+	public ResponseEntity<List<ViewEmployeeType>> viewEmployeeTypes(){
+		return new ResponseEntity<>(superUserServices.getAllEmployeeTypes(), HttpStatus.OK);
 	}
 }

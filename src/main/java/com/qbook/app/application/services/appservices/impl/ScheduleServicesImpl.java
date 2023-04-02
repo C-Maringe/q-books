@@ -253,6 +253,7 @@ public class ScheduleServicesImpl implements ScheduleServices {
 
 	@Override
 	public BookingCreatedModel createBookingForClient(String clientId, NewBookingModel newBookingModel) {
+
 		Booking booking = bookingValidationService.validateBookingAndCreate(authTokenServices.extractUserId(clientId), newBookingModel, BookingCreatedBy.CLIENT);
 
 		final BookingCreatedModel bookingCreatedModel = new BookingCreatedModel();

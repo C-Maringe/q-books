@@ -7,6 +7,7 @@ import com.qbook.app.application.services.appservices.AuthTokenServices;
 import com.qbook.app.application.services.appservices.BookingCancellationQueueService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class MobileBookingCancellationQueueResource {
 
     @PostMapping
     public ResponseEntity<BookingCancellationQueueModel> addClientToBookingCancellationQueue
-            (@RequestHeader("Authorization") String Authorization,@RequestBody NewJoinBookingCancellationQueueModel newJoinBookingCancellationQueueModel) {
+            (@NotNull @RequestHeader("Authorization") String Authorization, @RequestBody NewJoinBookingCancellationQueueModel newJoinBookingCancellationQueueModel) {
         if(Authorization.startsWith("Bearer")){
             Authorization = Authorization.substring(7);
         }

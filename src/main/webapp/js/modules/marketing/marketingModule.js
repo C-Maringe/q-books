@@ -181,6 +181,7 @@ var marketingModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function(results){
+            console.log(clientsToSendTo)
             toastr["success"]("Your campaign email list was successfully setup.", "Success");
             // load next screen
             viewAllClients.hide();
@@ -274,6 +275,7 @@ var marketingModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function (response) {
+            console.log(url,response)
             if(response.resending) {
                 batchEmailIdToResend.val(response.batchEmailId);
                 // change views

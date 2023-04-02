@@ -62,11 +62,13 @@ public class ScheduleFactory {
     }
 
     public BookingItemModel buildBookingItemModel(Treatment treatment) {
+        System.out.println(treatment);
         BookingItemModel bookingItemModel = new BookingItemModel();
         bookingItemModel.setId(treatment.getId().toString());
         bookingItemModel.setName(treatment.getTreatmentName());
         bookingItemModel.setDescription(treatment.getTreatmentDescription());
         bookingItemModel.setDuration(treatment.getDuration());
+        System.out.println(bookingItemModel);
         if(treatment.isDoneByJunior()) {
             bookingItemModel.setPrice(
                     Double.parseDouble(applicationProperties.getDecimalFormat().format(treatment.getJuniorPrice() * applicationProperties.getVatAmount()))

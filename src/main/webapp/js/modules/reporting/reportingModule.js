@@ -96,6 +96,7 @@ var reportingModule = (function(){
             }
         })
             .done(function (response) {
+                console.log("/api/auth/reporting/topBookedClient/"+start.valueOf()+"/"+end.valueOf())
                 var html = "";
 
                 _.each(response, function(reportItem) {
@@ -132,6 +133,7 @@ var reportingModule = (function(){
             }
         })
             .done(function (response) {
+                console.log("/api/auth/reporting/topBookedServiceItem/"+start.valueOf()+"/"+end.valueOf())
                 var html = "";
 
                 _.each(response, function(reportItem) {
@@ -168,7 +170,7 @@ var reportingModule = (function(){
                 }
             })
             .done(function (response) {
-
+console.log(reportingModuleBaseUrl + "/bookings/" + searchBookingsFromDate.val() + "/"+ searchBookingsToDate.val() +"/"+searchBookingsStatusOptions.val()+"/"+searchBookingsClientOptions.val()+"/"+searchBookingsEmployeeOptions.val())
                 if(response.reportBookingModels) {
                     searchBookingsTotalRevenueMade.empty().append("<div style='font-size: 12px'>R " + response.totalRevenue + " Excl. VAT <br>" + "R " + response.totalRevenueInclVAT + " Incl. VAT <br></div>");
                     searchBookingsTotalTimeSpent.empty().append((response.totalTimeWorked / 60).toFixed(2) + " (hours)");
@@ -275,6 +277,7 @@ var reportingModule = (function(){
                     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
                 }
             }).done(function (response) {
+                console.log(quickEmail,reportingModuleBaseUrl + "/client/email")
                 toastr["success"](response.message, "Success");
                 quickEmailModal.modal('hide');
             })
@@ -298,6 +301,7 @@ var reportingModule = (function(){
                 }
             })
             .done(function (response) {
+                console.log(reportingModuleBaseUrl + "/signups/" + searchClientsFromDate.val() + "/" + searchClientsToDate.val())
                 totalActiveProfiles.empty().append(response.totalActiveClients);
                 totalClientsWithBookings.empty().append(response.totalClientsWithBookings);
                 totalClientsSignedUp.empty().append(response.reportClientSignUpModels.length);
@@ -351,6 +355,7 @@ var reportingModule = (function(){
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function (response) {
+            console.log(reportingModuleBaseUrl + "/getTopServiceItemsPerClient/"+userInsightFilter.val())
             var html = "";
 
             _.each(response, function(reportClientInsightsModel) {
@@ -399,6 +404,7 @@ var reportingModule = (function(){
                     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
                 }
             }).done(function (response) {
+                console.log(reportingModuleBaseUrl + "/client/invoice/email",clientInvoice)
                 toastr["success"](response.message, "Success");
             })
             .fail(function(response){
@@ -420,6 +426,7 @@ var reportingModule = (function(){
             }
         })
         .done(function (response) {
+            console.log(reportingModuleBaseUrl + "/client/disable/"+element.dataset.clientid,)
             toastr["success"](response.message, "Success");
             __searchClient();
         })

@@ -23,6 +23,9 @@ public class MobileBookingResource {
 
 	@GetMapping("{date}")
 	public ResponseEntity<List<BookingViewModel>> viewClientBookingsForDate(@RequestHeader("Authorization") String Authorization, @PathVariable("date") String date) {
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
         log.info("MobileProfileResource.viewClientBookingsForDate() called at " + System.currentTimeMillis());
         log.info("MobileProfileResource.viewClientBookingsForDate() ended at " + System.currentTimeMillis());
         return new ResponseEntity<>(bookingServices.allBookingsForDateAndClient(date, authTokenServices.extractUserId(Authorization)), HttpStatus.OK);
@@ -30,14 +33,20 @@ public class MobileBookingResource {
 
 	@PutMapping("{bookingId}/cancel")
 	public ResponseEntity<BookingCancellationModel> cancelBooking(@RequestHeader("Authorization") String Authorization, @PathVariable("bookingId") String bookingId) {
-        log.info("MobileProfileResource.cancelBooking() called at " + System.currentTimeMillis());
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
+		log.info("MobileProfileResource.cancelBooking() called at " + System.currentTimeMillis());
         log.info("MobileProfileResource.cancelBooking() ended at " + System.currentTimeMillis());
         return new ResponseEntity<>(bookingServices.cancel(new ObjectId(bookingId), new ObjectId(authTokenServices.extractUserId(Authorization))), HttpStatus.OK);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<BookingViewModel>> viewAllClientBookings(@RequestHeader("Authorization") String Authorization) {
-        log.info("MobileProfileResource.viewAllClientBookings() called at " + System.currentTimeMillis());
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
+		log.info("MobileProfileResource.viewAllClientBookings() called at " + System.currentTimeMillis());
         log.info("MobileProfileResource.viewAllClientBookings() ended at " + System.currentTimeMillis());
         return new ResponseEntity<>(bookingServices.allBookingsForClient(authTokenServices.extractUserId(Authorization)), HttpStatus.OK);
 	}
@@ -49,6 +58,9 @@ public class MobileBookingResource {
 			@RequestParam("endDate") Long endDate,
 			@RequestParam("status") String status
 	) {
+		if(Authorization.startsWith("Bearer")){
+			Authorization = Authorization.substring(7);
+		}
 		log.info("MobileProfileResource.filterClientBookings() called at " + System.currentTimeMillis());
 		log.info("MobileProfileResource.filterClientBookings() ended at " + System.currentTimeMillis());
 		return new ResponseEntity<>(bookingServices.filterBookingsForClient(

@@ -83,6 +83,7 @@ var salesModule = (function () {
                     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
                 }
             }).done(function (response) {
+                console.log(JSON.stringify(salesCashupCompleteModel))
                 toastr["success"](response.message, "Success");
 
                 confirmCashupCompleted.modal('hide');
@@ -126,6 +127,7 @@ var salesModule = (function () {
                     xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
                 }
             }).done(function (response) {
+                console.log(JSON.stringify(saleItemCapture))
                 toastr["success"](response.message, "Success");
 
                 bookingsList = [];
@@ -166,6 +168,7 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function(bookings){
+            console.log(baseSalesUrl + "/cashup-start/" + dateSelected)
             if(bookings.salesBookingModelList.length > 0) {
                 var html = "";
                 _.each(bookings.salesBookingModelList, function (booking) {
@@ -252,6 +255,7 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function(booking){
+            console.log(baseSalesUrl + "/view/" + bookingIdToCapture)
             if(booking.depositPaid) {
                 $(".deposit-paid").show();
                 $("#depositPaid").val(booking.depositAmount);
@@ -400,6 +404,13 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function () {
+            console.log({
+                url : baseSalesUrl + "/product/capture",
+                type: 'POST',
+                data: JSON.stringify({
+                    bookingId: bookingIdToCapture,
+                    products: productList
+                })})
             bookingIdToCapture = "";
 
             productList = [];
@@ -428,7 +439,12 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function (response) {
-            console.log(response);
+            console.log({
+                url: baseSalesUrl+"/view/"+$(btn).data('bookingid'),
+                beforeSend: function (xhr){
+                    xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+                }
+            });
             bookingId = $(btn).data('bookingid');
             saleDate.val(new moment(response.bookingDate).format('YYYY-MM-DD'));
 
@@ -670,6 +686,12 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function (response) {
+            console.log({
+                url: baseSalesUrl + "/treatments",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+                }
+            })
             bookingsList = [];
             var html = '';
 
@@ -760,6 +782,16 @@ var salesModule = (function () {
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             }
         }).done(function (response) {
+            console.log({
+                url : baseSalesUrl + "/book",
+                type: 'POST',
+                data: JSON.stringify(newBooking),
+                contentType: "application/json;charset=utf-8",
+                dataType:"json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+                }
+            })
             toastr["success"](response.message, "Success");
 
             bookingsList = [];

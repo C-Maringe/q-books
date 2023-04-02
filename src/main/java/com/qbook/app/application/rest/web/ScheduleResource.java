@@ -114,6 +114,7 @@ public class ScheduleResource {
 	public ResponseEntity<BookingCreatedModel> createBookingForEmployee(
 			@RequestBody ScheduleNewBookingModel scheduleNewBookingModel
 	){
+//        System.out.println(scheduleNewBookingModel);
 		return new ResponseEntity<>(scheduleServices.createBookingForClientByEmployee(scheduleNewBookingModel), HttpStatus.CREATED);
 	}
 
